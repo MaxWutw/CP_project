@@ -17,4 +17,4 @@
 *        #數字我取名叫key
 */
 
-char* __int_to_key_format( int32_t key );
+int32_t get_text( FILE *p_file , int32_t key , char **text );

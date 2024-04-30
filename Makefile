@@ -1,10 +1,5 @@
-SOURCES := $(wildcard *.c)
-EXECUTABLES := $(SOURCES:.c=)
-
-all: $(EXECUTABLES)
-
-%: %.c
-	-gcc $< -o $@
+all:
+	-gcc main.c toml_parse.c -o main
 
 clean:
-	rm -f $(EXECUTABLES)
+	rm test
