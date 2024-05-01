@@ -18,11 +18,7 @@
  *        
  *        #數字我取名叫key
  */
-
-
-
-
-
+//------------------------------------------------------------------
 /*
  *  回傳:
  *      0 : 拿到title
@@ -46,11 +42,11 @@ int32_t get_text( FILE *p_file , int32_t key , char **text );
 
 /*
  *  回傳:
- *      0 : 拿到
+ *      0 : 拿到option
  *     -1 : 輸入空指標
  *      1 : 找不到[key]
  *      2 : 在[key]裡找不到option
  *      3 : 其他
  */ 
-int32_t get_option( FILE *p_file , int32_t key , char **text );
+int32_t get_option( FILE *p_file , int32_t key , int32_t option[3] );
 

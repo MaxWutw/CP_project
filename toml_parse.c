@@ -39,6 +39,8 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
     char buffer[132] = {0};
     char *s_key = __int_to_key_format(key);
 
+    fseek( p_file , 0 , SEEK_SET );
+
     while( !feof(p_file) ) {
 
         fgets( buffer , sizeof(buffer) , p_file );
@@ -117,9 +119,7 @@ int32_t get_option( FILE *p_file , int32_t key , int32_t option[3] ) {
         fgets( buffer , sizeof(buffer) , p_file );
         if( strstr( buffer , "option" ) != NULL ) {
             strcpy( tmp , strchr( buffer , '{') );
-            __delet_all_enter(tmp);
-
-            strcpy( *text , tmp );
+            sscanf( tmp , "{ %d , %d , %d }", &option[0] , &option[1] , &option[2] );
             return 0;
         }
         if( strchr( buffer , '[' ) != NULL ) {
