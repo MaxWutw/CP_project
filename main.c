@@ -3,7 +3,6 @@
 
 #include "toml_parse.h"
 
-#define START 6
 
 int main() {
 
@@ -18,7 +17,6 @@ int main() {
 
     get_text( p_script_file , 6 , &text );
     puts(text);
-    printf("%lu", sizeof(text));
 
     fclose( p_script_file );
 

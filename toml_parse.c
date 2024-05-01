@@ -9,6 +9,16 @@ void __delet_enter( char *s ) {
     return;
 }
 
+void __delet_all_enter( char *s ) {
+
+    for( int32_t i=0 ; s[i] != '\0' ; i++ ) {
+        if( s[i] == '\n' ) {
+            s[i] = '\0';
+        }
+    }
+    return;
+}
+
 char* __int_to_key_format( int32_t key ) {
 
     int32_t n = (int32_t)log10(key) + 1;
@@ -19,10 +29,10 @@ char* __int_to_key_format( int32_t key ) {
 }
 
 /*
-*  回傳:
-*      0 : 讀到key
-*     -1 : 找不到key
-*/ 
+ *  回傳:
+ *      0 : 讀到key
+ *     -1 : 找不到key
+ */ 
 
 int32_t __find_key( FILE *p_file , int32_t key ) {
 
@@ -39,25 +49,85 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
     return -1;
 }
 
-int32_t get_text( FILE *p_file , int32_t key , char **text ) {
+int32_t get_title( FILE *p_file , int32_t key , char **title ) {
+
+    if( !p_file || !title ) return -1;
 
     char buffer[256];
     char tmp[256];
 
-    __find_key( p_file , key );
+    if( __find_key( p_file , key ) == -1 ) return 1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "title" ) != NULL ) {
+            strcpy( tmp , strchr( buffer , '\"') );
+            __delet_all_enter(tmp);
+            //可再更好
+            *title = malloc( 500 );
+            strcpy( *title , tmp );
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
+        }
+    }
+    return 3;
+}
+
+int32_t get_text( FILE *p_file , int32_t key , char **text ) {
+
+    if( !p_file || !text ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return 1;
 
     while( !feof(p_file) ) {
 
         fgets( buffer , sizeof(buffer) , p_file );
         if( strstr( buffer , "text" ) != NULL ) {
-            break;
+            strcpy( tmp , strchr( buffer , '\"') );
+            __delet_all_enter(tmp);
+            //可再更好
+            *text = malloc( 1000 );
+            strcpy( *text , tmp );
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
         }
     }
-    
-    strcpy( tmp , strchr( buffer , '\"') );
-    *text = calloc( strlen(tmp) + 1 , sizeof(char) );
-    strcpy( *text , tmp );
-
-    return 0;
+    return 3;
 }
+
+int32_t get_option( FILE *p_file , int32_t key , int32_t option[3] ) {
+
+    if( !p_file ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return 1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "option" ) != NULL ) {
+            strcpy( tmp , strchr( buffer , '{') );
+            __delet_all_enter(tmp);
+
+            strcpy( *text , tmp );
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
+        }
+    }
+    return 3;
+}
+
+
 
