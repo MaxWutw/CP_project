@@ -7,4 +7,4 @@ all:
 	-gcc test.c toml_parse.c -o test
 
 clean:
-	rm test
+	rm -f test main game_frontend *.o
