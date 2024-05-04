@@ -21,7 +21,7 @@ int8_t initializeSDL(){
 
     int32_t imgFlags = IMG_INIT_JPG | IMG_INIT_PNG;
     if(!(IMG_Init(imgFlags) & imgFlags)){
-        printf("Error initializing Image: %s\n", SDL_GetERror());
+        printf("Error initializing Image: %s\n", SDL_GetError());
         return -1;
     }
     return 0;
