@@ -14,13 +14,13 @@
 #include <SDL_timer.h>
 #endif
 
-// // 定義按鈕的位置和大小
-// #define SCREEN_WIDTH 640
-// #define SCREEN_HEIGHT 480
-// #define BUTTON_WIDTH 200
-// #define BUTTON_HEIGHT 100
-// #define BUTTON_X (SCREEN_WIDTH - BUTTON_WIDTH) / 2
-// #define BUTTON_Y (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2
+// 定義按鈕的位置和大小
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
+#define BUTTON_WIDTH 200
+#define BUTTON_HEIGHT 100
+#define BUTTON_X (SCREEN_WIDTH - BUTTON_WIDTH) / 2
+#define BUTTON_Y (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2
 
 int main(int argc, char *argv[]){
     FILE *pFile = NULL;
@@ -60,13 +60,19 @@ int main(int argc, char *argv[]){
     // Surface
     SDL_Surface *surface;
     surface = IMG_Load("img/cover.jpg");
+    if(surface == NULL){
+        fprintf(stderr, "Error: Surface could not be created! Program Terminated!! \nSDL_Error: %s\n", SDL_GetError());
+        SDL_DestroyRenderer(render);
+        SDL_DestroyWindow(win);
+        return 0;
+    }
 
     SDL_Texture *tex = SDL_CreateTextureFromSurface(render, surface);
     SDL_FreeSurface(surface);
 
     // Button setup
-    // SDL_Rect buttonRect = {BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT};
-
+    SDL_Rect buttonRect = {BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT};
+    // printf("%d %d %d %d\n", BUTTON_X, BUTTON_Y, BUTTON_HEIGHT, BUTTON_WIDTH);
     int8_t quit = 0;
     while(!quit){
         SDL_Event event;
@@ -75,23 +81,25 @@ int main(int argc, char *argv[]){
                 quit = 1;
                 break;
             }
-            // else if(event.type == SDL_MOUSEBUTTONDOWN){
-            //     int32_t mousex, mousey;
-            //     SDL_GetMouseState(&mousex, &mousey);
-            //     if(SDL_PointInRect(&(SDL_Point){mousex, mousey}, &buttonRect)){
-            //         printf("Button Clicked\n");
-            //     }
-            // }
+            else if(event.type == SDL_MOUSEBUTTONDOWN){
+                int32_t mousex, mousey;
+                SDL_GetMouseState(&mousex, &mousey);
+                printf("Fdsfs");
+                if(SDL_PointInRect(&(SDL_Point){mousex, mousey}, &buttonRect)){
+                    printf("Button Clicked\n");
+                }
+            }
         }
 
         SDL_Rect dstrect = {270, 0, 900, 900};
         // clears the screen
+        SDL_SetRenderDrawColor(render, 255, 255, 255, 0);
         SDL_RenderClear(render);
 
         // Render the window
         SDL_RenderCopy(render, tex, NULL, &dstrect);
-        // SDL_SetRenderDrawColor(render, 0, 0, 255, 255);
-        // SDL_RenderFillRect(render, &buttonRect);
+        SDL_SetRenderDrawColor(render, 0, 0, 255, 255);
+        SDL_RenderFillRect(render, &buttonRect);
 
         // triggers the double buffers
         // for multiple rendering
