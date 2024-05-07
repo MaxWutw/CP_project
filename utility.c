@@ -27,6 +27,6 @@ int8_t initializeSDL(){
     return 0;
 }
 
-int8_t basic_background(){
+int8_t render_basic_background(){
     
 }
