@@ -204,7 +204,7 @@ int main(int argc, char *argv[]) {
     SDL_FreeSurface(surface);
 
     // Font
-    TTF_Font *font = TTF_OpenFont("lib/arial.ttf", 24);
+    TTF_Font *font = TTF_OpenFont("font_lib/Arial.ttf", 24);
     if (font == NULL) {
         SDL_Log("Error: Failed to load font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
         SDL_DestroyTexture(tex);
