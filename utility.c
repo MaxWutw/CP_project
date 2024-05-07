@@ -1,4 +1,5 @@
 #include "utility.h"
+#include "constants.h"
 
 
 /* Initialize SDL, adding it to the front of the code*/
@@ -27,6 +28,27 @@ int8_t initializeSDL(){
     return 0;
 }
 
-int8_t render_basic_background(){
+// int8_t process_input(){
+//     // SDL_Event event;
+//     // SDL_PollEvent(&event);
+//     // if(event.type == SDL_QUIT){
+//     //     game_is_running = FALSE;
+//     // }
+//     // else if(event.type == SDL_KEYDOWN){
+//     //     if(event.key.keysym.sym == SDLK_ESCAPE){
+//     //         game_is_running = FALSE;
+//     //     }
+//     // }
+// }
+
+// int8_t update_screen(){
     
-}
+// }
+
+// int8_t render_screen(){
+
+// }
+
+// void DestoryAll(){
+
+// }
