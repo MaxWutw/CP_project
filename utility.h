@@ -16,5 +16,6 @@
 #endif
 
 int8_t initializeSDL();
+int8_t basic_background();
 
 #endif

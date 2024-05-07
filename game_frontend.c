@@ -14,14 +14,6 @@
 #include <SDL_timer.h>
 #endif
 
-// 定義按鈕的位置和大小
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-#define BUTTON_WIDTH 200
-#define BUTTON_HEIGHT 100
-#define BUTTON_X (SCREEN_WIDTH - BUTTON_WIDTH) / 2
-#define BUTTON_Y (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2
-
 int main(int argc, char *argv[]){
     FILE *pFile = NULL;
     if(((pFile = fopen("script.toml", "r")) == NULL)){
@@ -42,7 +34,7 @@ int main(int argc, char *argv[]){
     SDL_DisplayMode DM;
     SDL_GetCurrentDisplayMode(0, &DM);
     win = SDL_CreateWindow(program_name , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DM.w, DM.h, SDL_WINDOW_RESIZABLE);
-    printf("window width: %d \n window height: %d\n", DM.w, DM.h);
+    printf("window width: %d \nwindow height: %d\n", DM.w, DM.h);
     SDL_ShowWindow(win);
     if(win == NULL){
         fprintf(stderr, "Error: Window could not be created! Program Terminated!! \nSDL_Error: %s\n", SDL_GetError());
@@ -71,8 +63,11 @@ int main(int argc, char *argv[]){
     SDL_FreeSurface(surface);
 
     // Button setup
-    SDL_Rect buttonRect = {BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT};
-    // printf("%d %d %d %d\n", BUTTON_X, BUTTON_Y, BUTTON_HEIGHT, BUTTON_WIDTH);
+    const int32_t start_button_width = 350, start_button_height = 100;
+    const int32_t start_button_x = (DM.w - start_button_width) / 2, start_button_y = (DM.h - start_button_height);
+    SDL_Rect buttonRect = {start_button_x, start_button_y, start_button_width, start_button_height};
+    // printf("%d %d %d %d\n", start_button_height, start_button_width, start_button_x, start_button_y);
+
     int8_t quit = 0;
     while(!quit){
         SDL_Event event;
@@ -84,7 +79,6 @@ int main(int argc, char *argv[]){
             else if(event.type == SDL_MOUSEBUTTONDOWN){
                 int32_t mousex, mousey;
                 SDL_GetMouseState(&mousex, &mousey);
-                printf("Fdsfs");
                 if(SDL_PointInRect(&(SDL_Point){mousex, mousey}, &buttonRect)){
                     printf("Button Clicked\n");
                 }
