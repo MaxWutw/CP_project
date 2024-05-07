@@ -5,7 +5,7 @@ static int32_t player_inventory[MAX_INVENTORY_SIZE] = {0};
 
 Player init_player(){
 	player_status = 0;
-	memset(player_inventory,-1,MAX_INVENTORY_SIZE);
+	memset(player_inventory,-1,sizeof(int32_t)*MAX_INVENTORY_SIZE);
 	Player player = {player_status,set_status,get_status,player_inventory,obtain_item,check_item,delete_item};
 	return player;
 }
