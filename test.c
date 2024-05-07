@@ -1,56 +1,62 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-// 回傳 int32_t 的函數
-int32_t getInt() {
-    return 42;
-}
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <curl/curl.h>
 
-// 回傳 char * 的函數
-char *getString() {
-    return "Hello, world!";
-}
+// // ChatGPT API 访问令牌
+// #define API_TOKEN "sk-proj-oYZIokTYINHZpLq84ZVAT3BlbkFJ47SBLYjP0oyAWbTMtNmd"
 
-// 回傳 void 的函數
-void voidFunction() {
-    printf("This is a void function\n");
-}
+// // ChatGPT API 端点
+// #define API_ENDPOINT "https://api.openai.com/v1/chat/completions"
 
-// 回傳 int8_t 的函數
-int8_t getInt8() {
-    return 8;
-}
+// // ChatGPT 提示语句
+// #define PROMPT "你想问什么？"
 
-void function(int32_t a){
-    printf("%d\n", a);
+// // 发送 POST 请求
+// static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+//     ((char *)userp)[0] = '\0';
+//     strncat((char *)userp, contents, size * nmemb);
+//     return size * nmemb;
+// }
 
-}
+// int main(void) {
+//     CURL *curl;
+//     CURLcode res;
+//     char post_fields[5000];
+//     char response[5000];
 
-// 定義一個結構，其中包含一個函數指針
-struct MyStruct {
-    void *(*funcPtr)();
-};
+//     // 初始化 libcurl
+//     curl = curl_easy_init();
+//     if (!curl) {
+//         fprintf(stderr, "Error initializing curl\n");
+//         return 1;
+//     }
 
-int main() {
-    // 創建結構實例
-    struct MyStruct myStruct;
+//     // 构建 POST 请求数据
+//     snprintf(post_fields, sizeof(post_fields), "{\"model\":\"text-davinci-002\",\"prompt\":\"%s\"}", PROMPT);
 
-    // 將各種類型的函數的地址分配給結構中的 funcPtr
-    myStruct.funcPtr = (void *)malloc(10000000000);
-    myStruct.funcPtr = (void *(*)())getInt;
-    int32_t intValue = *(int32_t *)(myStruct.funcPtr());
-    printf("Int value: %d\n", intValue);
+//     // 设置 libcurl 选项
+//     curl_easy_setopt(curl, CURLOPT_URL, API_ENDPOINT);
+//     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_fields);
+//     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+//     curl_easy_setopt(curl, CURLOPT_WRITEDATA, response);
+//     struct curl_slist *headers = NULL;
+//     headers = curl_slist_append(headers, "Content-Type: application/json");
+//     headers = curl_slist_append(headers, "Authorization: Bearer " API_TOKEN);
+//     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
-    myStruct.funcPtr = (void *(*)())getString;
-    char *stringValue = (char *)(myStruct.funcPtr());
-    printf("String value: %s\n", stringValue);
+//     // 发送请求
+//     res = curl_easy_perform(curl);
+//     if (res != CURLE_OK) {
+//         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+//     } else {
+//         // 输出回复
+//         printf("ChatGPT回答：%s\n", response);
+//     }
 
-    myStruct.funcPtr = (void *(*)())voidFunction;
-    myStruct.funcPtr();
-    
-    myStruct.funcPtr = (void *(*)())getInt8;
-    int8_t int8Value = *(int8_t *)(myStruct.funcPtr());
-    printf("Int8 value: %d\n", int8Value);
+//     // 清理 libcurl 资源
+//     curl_easy_cleanup(curl);
+//     curl_slist_free_all(headers);
 
-    return 0;
-}
+//     return 0;
+// }

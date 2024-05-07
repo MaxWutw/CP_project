@@ -54,7 +54,7 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
 const char *get_name( FILE *p_file ) {
 
     if( !p_file ) return NULL;
-
+    
     char buffer[256] = {0};
     char *p = NULL;
 
@@ -65,7 +65,7 @@ const char *get_name( FILE *p_file ) {
     }
 
     __delet_all_enter( p );
-    p = p + 8;
+    p = strchr( p , '\"' ) + 1;
     if( p[ strlen(p) - 1 ] == '\"' ) {
         p[ strlen(p) - 1 ] = '\0';
     }
