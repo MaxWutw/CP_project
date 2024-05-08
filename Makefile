@@ -13,7 +13,10 @@
 CFLAGS := `sdl2-config --cflags` -ggdb3 -O0 --std=c99 -Wall
 LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf
 
-all: game_frontend main test
+all: game_frontend main test program
+
+program: program.o utility.o toml_parse.o
+	gcc program.o utility.o toml_parse.o -o program $(LDFLAGS)
 
 game_frontend: game_frontend.o utility.o toml_parse.o
 	gcc game_frontend.o utility.o toml_parse.o -o game_frontend $(LDFLAGS)
@@ -23,6 +26,9 @@ main: main.o toml_parse.o
 
 test: test.o toml_parse.o
 	gcc test.o toml_parse.o -o test $(LDFLAGS)
+
+program.o: program.c
+	gcc -c program.c $(CFLAGS)
 
 game_frontend.o: game_frontend.c
 	gcc -c game_frontend.c $(CFLAGS)
@@ -40,5 +46,5 @@ toml_parse.o: toml_parse.c
 	gcc -c toml_parse.c $(CFLAGS)
 
 clean:
-	rm -f test main game_frontend *.o
+	rm -f test main game_frontend program *.o 
 
