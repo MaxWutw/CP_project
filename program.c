@@ -9,7 +9,7 @@
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
 #include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 #elif __APPLE__
 #include <SDL.h>
 #include <SDL_image.h>
@@ -47,8 +47,8 @@ int main(int argc, char *argv[]){
 
     while(game_is_running){
         game_is_running = process_input();
-        // update();
-        // render();
+        update_screen();
+        render_screen();
     }
     // close ttf
     TTF_CloseFont(TitleFont);
