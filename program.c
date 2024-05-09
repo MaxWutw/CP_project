@@ -25,7 +25,10 @@ int main(int argc, char *argv[]){
         return 0;
     }
     // atexit(DestoryAll);
-    game_is_running = initializeSDL();
+    if( (game_is_running = initializeSDL()) == 0){
+        fprintf(stderr, "Error: Failed to initialize SDL! Program Termainated!!\nSDL_Error: %s\n", SDL_GetError());
+        return 0;
+    }
 
     // get name
     const char *program_name = NULL;
