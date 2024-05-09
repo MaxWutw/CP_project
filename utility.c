@@ -70,12 +70,16 @@ int8_t process_input(){
     return TRUE;
 }
 
-int8_t update_screen(){
+int8_t update_title_screen(float *last_frame_time){
+    // int32_t del_time = (SDL_GetTicks() - last_frame_time) / 1000.0;
+    // last_frame_time = SDL_GetTicks();
+    
     
 }
 
-int8_t render_screen(){
-
+int8_t render_title_screen(SDL_Window *win, SDL_Renderer *renderer, \
+            SDL_Surface *surface, SDL_Texture *texture, TTF_Font *TitleFont){
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
 }
 
 void DestoryAll_and_Quit(TTF_Font* font, SDL_Texture *texture, SDL_Renderer *renderer, \
