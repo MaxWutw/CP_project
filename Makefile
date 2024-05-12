@@ -10,15 +10,15 @@
 # 	rm -f test main game_frontend *.o
 
 
-CFLAGS := `sdl2-config --cflags` -ggdb3 -O0 --std=c99 -Wall
+CFLAGS := `sdl2-config --cflags` -ggdb3 -O0 --std=gnu99 -Wall
 LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf
 
 all: game_frontend main test program
 
-program: program.o utility.o toml_parse.o
+program: program.o utility.o toml_parse.o utility.h
 	gcc program.o utility.o toml_parse.o -o program $(LDFLAGS)
 
-game_frontend: game_frontend.o utility.o toml_parse.o
+game_frontend: game_frontend.o utility.o toml_parse.o utility.h
 	gcc game_frontend.o utility.o toml_parse.o -o game_frontend $(LDFLAGS)
 
 main: main.o toml_parse.o

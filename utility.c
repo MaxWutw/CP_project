@@ -28,29 +28,29 @@ int8_t initializeSDL(){
     return TRUE;
 }
 
-int8_t setup(const char* program_name, SDL_Window *win, SDL_Renderer *renderer, \
-            SDL_Surface *surface, SDL_Texture *texture, TTF_Font *TitleFont, SDL_DisplayMode *DM){
+int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer, \
+            SDL_Surface **surface, SDL_Texture **texture, TTF_Font **TitleFont, SDL_DisplayMode *DM){
     SDL_GetCurrentDisplayMode(0, DM);
-    win = SDL_CreateWindow(program_name , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DM->w, DM->h, SDL_WINDOW_RESIZABLE);
+    *win = SDL_CreateWindow(program_name , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DM->w, DM->h, SDL_WINDOW_RESIZABLE);
     printf("window width: %d \nwindow height: %d\n", DM->w, DM->h);
-    SDL_ShowWindow(win);
-    if(win == NULL){
+    SDL_ShowWindow(*win);
+    if(*win == NULL){
         fprintf(stderr, "Error: Window could not be created! Program Terminated!! \nSDL_Error: %s\n", SDL_GetError());
         return 0;
     }
     // Renderer
-    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if(renderer == NULL){
+    *renderer = SDL_CreateRenderer(*win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if(*renderer == NULL){
         fprintf(stderr, "Error: Renderer could not be created! Program Terminated!! \nSDL_Error: %s\n", SDL_GetError());
-        SDL_DestroyWindow(win);
+        SDL_DestroyWindow(*win);
         return FALSE;
     }
 
     // Font
-    TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 48);
-    if (TitleFont == NULL) {
+    *TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 108);
+    if (*TitleFont == NULL) {
         fprintf(stderr, "Error: Failed to load font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
-        DestoryAll_and_Quit(TitleFont, texture, renderer, win);
+        DestoryAll_and_Quit(*TitleFont, *texture, *renderer, *win);
         return FALSE;
     }
     return TRUE;
@@ -62,26 +62,42 @@ int8_t process_input(){
     if(event.type == SDL_QUIT){
         return FALSE;
     }
-    else if(event.type == SDL_KEYDOWN){
-        if(event.key.keysym.sym == SDLK_ESCAPE){
-            return FALSE;
-        }
-    }
+    // else if(event.type == SDL_KEYDOWN){
+    //     if(event.key.keysym.sym == SDLK_ESCAPE){
+    //         return FALSE;
+    //     }
+    // }
     return TRUE;
 }
 
-int8_t update_title_screen(float *last_frame_time){
-    // int32_t del_time = (SDL_GetTicks() - last_frame_time) / 1000.0;
-    // last_frame_time = SDL_GetTicks();
+int8_t update_title_screen(uint32_t *last_frame_time, double *angle, SDL_Rect *textRect, double *inc){
+    uint32_t del_time = (SDL_GetTicks() - *last_frame_time) / 1000.0;
+    *last_frame_time = SDL_GetTicks();
+    printf("%lf\n", sin(*angle));
+    textRect->y += sin(*angle);
+    *angle += *inc;
+    if(*angle > 2 * M_PI){
+        // *angle -= (2 * M_PI);
+        *inc = -0.1;
+    }
+    else if(*angle < 0){
+        *inc = 0.1;
+    }
     
-    
+    return TRUE;
 }
 
-int8_t render_title_screen(SDL_Window *win, SDL_Renderer *renderer, \
-            SDL_Surface *surface, SDL_Texture *texture, TTF_Font *TitleFont){
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
+int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, \
+            SDL_Surface **surface, SDL_Texture **texture, TTF_Font **TitleFont, SDL_DisplayMode *DM, SDL_Rect *textRect){
+
+    // clears the screen
+    SDL_RenderClear(*renderer);
+    SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 0);
+    SDL_RenderCopy(*renderer, *texture, NULL, textRect);
+    SDL_RenderPresent(*renderer);
+
+
+    return TRUE;
 }
 
 void DestoryAll_and_Quit(TTF_Font* font, SDL_Texture *texture, SDL_Renderer *renderer, \
