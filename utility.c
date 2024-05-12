@@ -80,6 +80,8 @@ int8_t update_title_screen(float *last_frame_time){
 int8_t render_title_screen(SDL_Window *win, SDL_Renderer *renderer, \
             SDL_Surface *surface, SDL_Texture *texture, TTF_Font *TitleFont){
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
 }
 
 void DestoryAll_and_Quit(TTF_Font* font, SDL_Texture *texture, SDL_Renderer *renderer, \
