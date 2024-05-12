@@ -56,32 +56,44 @@ int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer
     return TRUE;
 }
 
-int8_t process_input(){
+int8_t process_input(int32_t *selected_item, const char **menu_items){
     SDL_Event event;
-    SDL_PollEvent(&event);
-    if(event.type == SDL_QUIT){
-        return FALSE;
+    while(SDL_PollEvent(&event)){
+        if(event.type == SDL_QUIT){
+            return FALSE;
+        }
+        else if(event.type == SDL_KEYDOWN){
+            if(event.key.keysym.sym == SDLK_ESCAPE){
+                return FALSE;
+            }
+            else if(event.key.keysym.sym == SDLK_UP){
+                selected_item = (selected_item - 1 + MENU_ITEM_COUNT) % MENU_ITEM_COUNT;
+            }
+            else if(event.key.keysym.sym == SDLK_DOWN){
+                selected_item = (selected_item + 1) % MENU_ITEM_COUNT;
+            }
+            else if(event.key.keysym.sym == SDLK_RETURN){
+                printf("Selected item: %s\n", menu_items[selected_item]);
+            }
+        }
     }
-    // else if(event.type == SDL_KEYDOWN){
-    //     if(event.key.keysym.sym == SDLK_ESCAPE){
-    //         return FALSE;
-    //     }
-    // }
     return TRUE;
 }
 
-int8_t update_title_screen(uint32_t *last_frame_time, double *angle, SDL_Rect *textRect, double *inc){
-    uint32_t del_time = (SDL_GetTicks() - *last_frame_time) / 1000.0;
-    *last_frame_time = SDL_GetTicks();
-    printf("%lf\n", sin(*angle));
-    textRect->y += sin(*angle);
-    *angle += *inc;
-    if(*angle > 2 * M_PI){
-        // *angle -= (2 * M_PI);
-        *inc = -0.1;
-    }
-    else if(*angle < 0){
-        *inc = 0.1;
+int8_t update_title_screen(uint32_t *last_frame_time, SDL_Rect *textRect, int32_t *inc, int32_t *base_y){
+    // int32_t time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - *last_frame_time);
+    // if(time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME){
+    //     SDL_Delay(time_to_wait);
+    // }
+    // uint32_t current_time = SDL_GetTicks();
+    // uint32_t del_time = (SDL_GetTicks() - *last_frame_time) / 1000.0;
+    // printf("%d\n", *last_frame_time);
+    // *last_frame_time = current_time;
+    // int32_t move = *velocity_y * del_time;
+    textRect->y += *inc; 
+    // printf("%d\n", textRect->y);
+    if(textRect->y >= *base_y + 50 || textRect->y <= *base_y - 50){
+        *inc = -*inc;
     }
     
     return TRUE;
@@ -91,11 +103,10 @@ int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, \
             SDL_Surface **surface, SDL_Texture **texture, TTF_Font **TitleFont, SDL_DisplayMode *DM, SDL_Rect *textRect){
 
     // clears the screen
-    SDL_RenderClear(*renderer);
     SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 0);
+    SDL_RenderClear(*renderer);
     SDL_RenderCopy(*renderer, *texture, NULL, textRect);
     SDL_RenderPresent(*renderer);
-
 
     return TRUE;
 }

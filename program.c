@@ -59,17 +59,24 @@ int main(int argc, char *argv[]){
     const char *TitleText = "Life Simulator";
     surface = TTF_RenderText_Blended(TitleFont, TitleText, color);
     texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
     // SDL_Rect textRect;
     SDL_QueryTexture(texture, NULL, NULL, &textRect.w, &textRect.h);
     textRect.x = ((DM.w - textRect.w) / 2);
-    textRect.y = ((DM.h - textRect.h) / 2) - 200;
-    double angle = 0.0;
-    double inc = 0.1;
+    textRect.y = ((DM.h - textRect.h) / 2) - 250;
+    int32_t inc = 1, base_y = textRect.y;
+
+    const char* menu_items[MENU_ITEM_COUNT] = {
+        "Start",
+        "Story",
+        "Author"
+    };
     while(game_is_running){
         game_is_running = process_input();
-        update_title_screen(&last_frame_time, &angle, &textRect, &inc);
+        if(game_is_running == 0) break;
+        update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
         render_title_screen(&win, &renderer, &surface, &texture, &TitleFont, &DM, &textRect);
-        SDL_Delay(1000 / 60);
+        // SDL_Delay(1000 / 60);
     }
     // close ttf
     TTF_CloseFont(TitleFont);
