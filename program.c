@@ -25,7 +25,10 @@ int main(int argc, char *argv[]){
         return 0;
     }
     // atexit(DestoryAll);
-    game_is_running = initializeSDL();
+    if( (game_is_running = initializeSDL()) == 0){
+        fprintf(stderr, "Error: Failed to initialize SDL! Program Termainated!!\nSDL_Error: %s\n", SDL_GetError());
+        return 0;
+    }
 
     // get name
     const char *program_name = NULL;
@@ -44,11 +47,11 @@ int main(int argc, char *argv[]){
     setup(program_name, win, renderer, surface, texture, TitleFont, &DM);
     // texture = SDL_CreateTextureFromSurface(renderer, surface);
     // SDL_FreeSurface(surface);
-
+    float last_frame_time = 0.0;
     while(game_is_running){
         game_is_running = process_input();
-        update_screen();
-        render_screen();
+        // update_title_screen(&last_frame_time);
+        render_title_screen();
     }
     // close ttf
     TTF_CloseFont(TitleFont);
