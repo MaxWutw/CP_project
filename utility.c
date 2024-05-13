@@ -48,7 +48,7 @@ int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer
 
     // Font
     *TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 108);
-    if (*TitleFont == NULL) {
+    if(*TitleFont == NULL){
         fprintf(stderr, "Error: Failed to load font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
         DestoryAll_and_Quit(*TitleFont, *texture, *renderer, *win);
         return FALSE;
