@@ -40,21 +40,21 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        // 背包图标
+        // 背包
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
         SDL_Rect backpackRect = { 20, 20, 50, 50 };
         SDL_RenderFillRect(renderer, &backpackRect);
 
-        // 对话框
+        // 對話框
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
         SDL_Rect dialogRect = { 100, 300, 600, 100 };
         SDL_RenderFillRect(renderer, &dialogRect);
         renderText(renderer, getDialogText(state), 120, 320, 560, 60);
 
-        // 选择按钮
+        // 選擇按鈕
         renderChoices(renderer);
 
-        // 幸运条
+        // 幸運條
         renderLuckBar(renderer, getLuckValue(state));
 
         SDL_RenderPresent(renderer);
