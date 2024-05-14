@@ -4,7 +4,7 @@
 #include <curl/curl.h>
 
 // ChatGPT API 访问令牌
-#define API_TOKEN "sk-proj-oYZIokTYINHZpLq84ZVAT3BlbkFJ47SBLYjP0oyAWbTMtNmd"
+#define API_TOKEN "YOUR_API_TOKEN"
 
 // ChatGPT API 端点
 #define API_ENDPOINT "https://api.openai.com/v1/chat/completions"
