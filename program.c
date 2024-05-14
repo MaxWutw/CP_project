@@ -66,11 +66,11 @@ int main(int argc, char *argv[]){
     textRect.y = ((DM.h - textRect.h) / 2) - 250;
     int32_t inc = 1, base_y = textRect.y;
 
-    const char* menu_items[MENU_ITEM_COUNT] = {
-        "Start",
-        "Story",
-        "Author"
-    };
+    // const char* menu_items[MENU_ITEM_COUNT] = {
+    //     "Start",
+    //     "Story",
+    //     "Author"
+    // };
     while(game_is_running){
         game_is_running = process_input();
         if(game_is_running == 0) break;

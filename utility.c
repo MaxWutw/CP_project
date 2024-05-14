@@ -56,26 +56,26 @@ int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer
     return TRUE;
 }
 
-int8_t process_input(int32_t *selected_item, const char **menu_items){
+int8_t process_input(){
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         if(event.type == SDL_QUIT){
             return FALSE;
         }
-        else if(event.type == SDL_KEYDOWN){
-            if(event.key.keysym.sym == SDLK_ESCAPE){
-                return FALSE;
-            }
-            else if(event.key.keysym.sym == SDLK_UP){
-                selected_item = (selected_item - 1 + MENU_ITEM_COUNT) % MENU_ITEM_COUNT;
-            }
-            else if(event.key.keysym.sym == SDLK_DOWN){
-                selected_item = (selected_item + 1) % MENU_ITEM_COUNT;
-            }
-            else if(event.key.keysym.sym == SDLK_RETURN){
-                printf("Selected item: %s\n", menu_items[selected_item]);
-            }
-        }
+        // else if(event.type == SDL_KEYDOWN){
+        //     if(event.key.keysym.sym == SDLK_ESCAPE){
+        //         return FALSE;
+        //     }
+        //     else if(event.key.keysym.sym == SDLK_UP){
+        //         selected_item = (selected_item - 1 + MENU_ITEM_COUNT) % MENU_ITEM_COUNT;
+        //     }
+        //     else if(event.key.keysym.sym == SDLK_DOWN){
+        //         selected_item = (selected_item + 1) % MENU_ITEM_COUNT;
+        //     }
+        //     else if(event.key.keysym.sym == SDLK_RETURN){
+        //         printf("Selected item: %s\n", menu_items[selected_item]);
+        //     }
+        // }
     }
     return TRUE;
 }
