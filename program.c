@@ -18,6 +18,34 @@
 #include <SDL_ttf.h>
 #endif
 
+
+
+
+
+
+// 看這邊！
+
+
+
+
+// 作法：
+// make
+// ./program
+// 你可以把滑鼠游標滑過每個按鍵，會有 hover 的效果
+// 如果按下 Start Game ，我的 title_status 會變成 1 同時 title_is_running 會變成 FALSE ，也就是說我的 while 迴圈會跳出來，
+// 你可以在 while(title_is_running) 後面接上如果 if(title_status == 1) 然後接到遊戲開始，
+// 歐還有我的 title 是全螢幕的
+
+
+
+
+
+
+
+
+
+
+
 int8_t title_is_running = 1;
 int8_t selected_item = 0;
 int main(int argc, char *argv[]){
