@@ -3,7 +3,7 @@
 #include "ui.h"
 
 void renderText(SDL_Renderer* renderer, const char* text, int x, int y, int w, int h) {
-    TTF_Font* font = TTF_OpenFont("assets/Arial.ttf", 24); // 使用字體的路徑
+    TTF_Font* font = TTF_OpenFont("../font_lib/Arial.ttf", 24); // 使用字體的路徑
     if (font == NULL) {
         printf("TTF_OpenFont: %s\n", TTF_GetError());
         return;

@@ -48,9 +48,11 @@ int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer
     return TRUE;
 }
 
-int8_t process_input(int8_t *selected_item){
+int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillRect2, SDL_Rect *fillRect3, SDL_Renderer *renderer, int32_t *title_status){
     SDL_Event event;
     while(SDL_PollEvent(&event)){
+        int mouseX, mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
         if(event.type == SDL_QUIT){
             return FALSE;
         }
@@ -78,7 +80,61 @@ int8_t process_input(int8_t *selected_item){
                 }
             }
         }
+        else if(event.type == SDL_MOUSEBUTTONDOWN){
+            if(mouseX > fillRect1->x && mouseX < fillRect1->x + fillRect1->w && \
+                mouseY > fillRect1->y && mouseY < fillRect1->y + fillRect1->h){
+                *title_status = 1;
+                return FALSE;
+            }
+            if(mouseX > fillRect2->x && mouseX < fillRect2->x + fillRect2->w && \
+                mouseY > fillRect2->y && mouseY < fillRect2->y + fillRect2->h) {
+                *title_status = 2;
+                return FALSE;
+            }
+            if(mouseX > fillRect3->x && mouseX < fillRect3->x + fillRect3->w && \
+                mouseY > fillRect3->y && mouseY < fillRect3->y + fillRect3->h){
+                *title_status = 3;
+                return FALSE;
+            }
+        }
     }
+
+    SDL_Color color_black = {0, 0, 0};
+
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    if(mouseX > fillRect1->x && mouseX < fillRect1->x + fillRect1->w && \
+        mouseY > fillRect1->y && mouseY < fillRect1->y + fillRect1->h){
+        SDL_SetRenderDrawColor(renderer, 154, 154, 154, 0xFF);
+    }
+    else{
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    }
+    SDL_RenderFillRect(renderer, fillRect1);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Start Game", fillRect1->x, fillRect1->y, fillRect1->w, fillRect1->h, 48, &color_black);
+
+
+    if(mouseX > fillRect2->x && mouseX < fillRect2->x + fillRect2->w && \
+        mouseY > fillRect2->y && mouseY < fillRect2->y + fillRect2->h) {
+        SDL_SetRenderDrawColor(renderer, 154, 154, 154, 0xFF);
+    }
+    else{
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    }
+    SDL_RenderFillRect(renderer, fillRect2);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "How To Play", fillRect2->x, fillRect2->y, fillRect2->w, fillRect2->h, 40, &color_black);
+
+    if(mouseX > fillRect3->x && mouseX < fillRect3->x + fillRect3->w && \
+        mouseY > fillRect3->y && mouseY < fillRect3->y + fillRect3->h){
+        SDL_SetRenderDrawColor(renderer, 154, 154, 154, 0xFF);
+    }
+    else{
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    }
+    SDL_RenderFillRect(renderer, fillRect3);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Author", fillRect3->x, fillRect3->y, fillRect3->w, fillRect3->h, 48, &color_black);
+
+
     return TRUE;
 }
 
