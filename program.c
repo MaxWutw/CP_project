@@ -19,6 +19,7 @@
 #endif
 
 int8_t game_is_running = 1;
+int8_t selected_item = 0;
 int main(int argc, char *argv[]){
     FILE *pFile = NULL;
     if(((pFile = fopen("script.toml", "r")) == NULL)){

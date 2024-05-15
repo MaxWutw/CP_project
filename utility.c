@@ -62,20 +62,30 @@ int8_t process_input(){
         if(event.type == SDL_QUIT){
             return FALSE;
         }
-        // else if(event.type == SDL_KEYDOWN){
-        //     if(event.key.keysym.sym == SDLK_ESCAPE){
-        //         return FALSE;
-        //     }
-        //     else if(event.key.keysym.sym == SDLK_UP){
-        //         selected_item = (selected_item - 1 + MENU_ITEM_COUNT) % MENU_ITEM_COUNT;
-        //     }
-        //     else if(event.key.keysym.sym == SDLK_DOWN){
-        //         selected_item = (selected_item + 1) % MENU_ITEM_COUNT;
-        //     }
-        //     else if(event.key.keysym.sym == SDLK_RETURN){
-        //         printf("Selected item: %s\n", menu_items[selected_item]);
-        //     }
-        // }
+        else if(event.type == SDL_KEYDOWN){
+            if(event.key.keysym.sym == SDLK_ESCAPE){
+                return FALSE;
+            }
+            else if(event.key.keysym.sym == SDLK_UP){
+                selected_item = (selected_item - 1 + MENU_ITEM_COUNT) % MENU_ITEM_COUNT;
+            }
+            else if(event.key.keysym.sym == SDLK_DOWN){
+                selected_item = (selected_item + 1) % MENU_ITEM_COUNT;
+            }
+            else if(event.key.keysym.sym == SDLK_RETURN){
+                switch(selected_item) {
+                    case 0:
+                        printf("Start Game\n");
+                        break;
+                    case 1:
+                        printf("Author\n");
+                        break;
+                    case 2:
+                        printf("How to Play\n");
+                        break;
+                }
+            }
+        }
     }
     return TRUE;
 }
@@ -102,6 +112,34 @@ int8_t update_title_screen(uint32_t *last_frame_time, SDL_Rect *textRect, int32_
 int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, \
             SDL_Surface **surface, SDL_Texture **texture, TTF_Font **TitleFont, SDL_DisplayMode *DM, SDL_Rect *textRect){
 
+    // render menu
+    SDL_Color menu_color = {255, 255, 255};
+    TTF_Font *menu_font = TTF_OpenFont("font_lib/Arial.ttf", 36);
+    if(menu_font == NULL) {
+        fprintf(stderr, "Error: Failed to load menu font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
+        DestoryAll_and_Quit(*TitleFont, *texture, *renderer, *win);
+        return FALSE;
+    }
+    const char* menu_items[MENU_ITEM_COUNT] = {
+        "Start Game",
+        "Author",
+        "How to Play"
+    };
+
+    for(int i = 0; i < MENU_ITEM_COUNT; i++) {
+        SDL_Surface *menu_surface = TTF_RenderText_Blended(menu_font, menu_items[i], menu_color);
+        SDL_Texture *menu_texture = SDL_CreateTextureFromSurface(*renderer, menu_surface);
+        SDL_Rect menu_rect;
+        SDL_QueryTexture(menu_texture, NULL, NULL, &menu_rect.w, &menu_rect.h);
+        menu_rect.x = ((DM->w - menu_rect.w) / 2);
+        menu_rect.y = ((DM->h - menu_rect.h) / 2) + i * 50;
+        SDL_RenderCopy(*renderer, menu_texture, NULL, &menu_rect);
+        SDL_FreeSurface(menu_surface);
+        SDL_DestroyTexture(menu_texture);
+    }
+
+    TTF_CloseFont(menu_font);
+    SDL_RenderCopy(*renderer, *texture, NULL, textRect);
     // clears the screen
     SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 0);
     SDL_RenderClear(*renderer);
