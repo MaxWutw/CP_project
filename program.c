@@ -76,7 +76,7 @@ int main(int argc, char *argv[]){
         if(game_is_running == 0) break;
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
         render_title_screen(&win, &renderer, &surface, &texture, &TitleFont, &DM, &textRect);
-        // SDL_Delay(1000 / 60);
+        SDL_Delay(1000 / 60);
     }
     // close ttf
     TTF_CloseFont(TitleFont);
