@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
     SDL_Window *win = NULL;
     SDL_DisplayMode DM;
     SDL_Renderer *renderer = NULL;
-    setup(program_name, &win, &renderer, &TitleFont, &DM);
+    setup(program_name, &win, &renderer, &DM);
     // if(win == NULL){
     //     printf("ERROR: not !!!!!!!\n");
     //     return 0;
@@ -55,35 +55,41 @@ int main(int argc, char *argv[]){
     SDL_Rect textRect;
     SDL_Color color = {255, 255, 255};
     const char *TitleText = "Life Simulator";
-    SDL_Surface *surface = NULL;
-    SDL_Texture *texture = NULL;
-    TTF_Font *TitleFont = NULL;
+    // SDL_Surface *surface = NULL;
+    // SDL_Texture *texture = NULL;
+    // TTF_Font *TitleFont = NULL;
     // Font
-    TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 108);
-    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", );
+    // TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 108);
     // SDL_Rect textRect;
-    SDL_QueryTexture(texture, NULL, NULL, &textRect.w, &textRect.h);
+    // SDL_QueryTexture(texture, NULL, NULL, &textRect.w, &textRect.h);
+    textRect.w = 500;
+    textRect.h = 200;
     textRect.x = ((DM.w - textRect.w) / 2);
     textRect.y = ((DM.h - textRect.h) / 2) - 250;
     int32_t inc = 1, base_y = textRect.y;
-
     // const char* menu_items[MENU_ITEM_COUNT] = {
     //     "Start",
     //     "Story",
     //     "Author"
     // };
     while(game_is_running){
-        game_is_running = process_input();
+        game_is_running = process_input(&selected_item);
         if(game_is_running == 0) break;
+        
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
-        render_title_screen(&win, &renderer, &surface, &texture, &TitleFont, &DM, &textRect);
+        // render_title_screen(&win, &renderer, &DM, &textRect);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_RenderClear(renderer);
+
+        rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w, textRect.h, 108, &color);
+        SDL_RenderPresent(renderer);
         SDL_Delay(1000 / 60);
     }
     // close ttf
-    TTF_CloseFont(TitleFont);
+    // TTF_CloseFont(TitleFont);
 
     // destroy texture
-    SDL_DestroyTexture(texture);
+    // SDL_DestroyTexture(texture);
 
     // destroy renderer
     SDL_DestroyRenderer(renderer);

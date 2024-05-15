@@ -94,7 +94,7 @@ int8_t update_title_screen(uint32_t *last_frame_time, SDL_Rect *textRect, int32_
     // int32_t move = *velocity_y * del_time;
     textRect->y += *inc; 
     // printf("%d\n", textRect->y);
-    if(textRect->y >= *base_y + 50 || textRect->y <= *base_y - 50){
+    if(textRect->y >= *base_y + 20 || textRect->y <= *base_y - 20){
         *inc = -*inc;
     }
     
@@ -104,37 +104,37 @@ int8_t update_title_screen(uint32_t *last_frame_time, SDL_Rect *textRect, int32_
 int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, SDL_DisplayMode *DM, SDL_Rect *textRect){
 
     // render menu
-    SDL_Color menu_color = {255, 255, 255};
-    TTF_Font *menu_font = TTF_OpenFont("font_lib/Arial.ttf", 36);
-    if(menu_font == NULL) {
-        fprintf(stderr, "Error: Failed to load menu font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
-        DestoryAll_and_Quit(*TitleFont, *texture, *renderer, *win);
-        return FALSE;
-    }
-    const char* menu_items[MENU_ITEM_COUNT] = {
-        "Start Game",
-        "Author",
-        "How to Play"
-    };
+    // SDL_Color menu_color = {255, 255, 255};
+    // TTF_Font *menu_font = TTF_OpenFont("font_lib/Arial.ttf", 36);
+    // if(menu_font == NULL) {
+    //     fprintf(stderr, "Error: Failed to load menu font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
+    //     DestoryAll_and_Quit(*renderer, *win);
+    //     return FALSE;
+    // }
+    // const char* menu_items[MENU_ITEM_COUNT] = {
+    //     "Start Game",
+    //     "Author",
+    //     "How to Play"
+    // };
 
-    for(int i = 0; i < MENU_ITEM_COUNT; i++) {
-        SDL_Surface *menu_surface = TTF_RenderText_Blended(menu_font, menu_items[i], menu_color);
-        SDL_Texture *menu_texture = SDL_CreateTextureFromSurface(*renderer, menu_surface);
-        SDL_Rect menu_rect;
-        SDL_QueryTexture(menu_texture, NULL, NULL, &menu_rect.w, &menu_rect.h);
-        menu_rect.x = ((DM->w - menu_rect.w) / 2);
-        menu_rect.y = ((DM->h - menu_rect.h) / 2) + i * 50;
-        SDL_RenderCopy(*renderer, menu_texture, NULL, &menu_rect);
-        SDL_FreeSurface(menu_surface);
-        SDL_DestroyTexture(menu_texture);
-    }
+    // for(int i = 0; i < MENU_ITEM_COUNT; i++){
+    //     SDL_Surface *menu_surface = TTF_RenderText_Blended(menu_font, menu_items[i], menu_color);
+    //     SDL_Texture *menu_texture = SDL_CreateTextureFromSurface(*renderer, menu_surface);
+    //     SDL_Rect menu_rect;
+    //     SDL_QueryTexture(menu_texture, NULL, NULL, &menu_rect.w, &menu_rect.h);
+    //     menu_rect.x = ((DM->w - menu_rect.w) / 2);
+    //     menu_rect.y = ((DM->h - menu_rect.h) / 2) + i * 50;
+    //     SDL_RenderCopy(*renderer, menu_texture, NULL, &menu_rect);
+    //     SDL_FreeSurface(menu_surface);
+    //     SDL_DestroyTexture(menu_texture);
+    // }
 
-    TTF_CloseFont(menu_font);
-    SDL_RenderCopy(*renderer, *texture, NULL, textRect);
+    // TTF_CloseFont(menu_font);
+    // SDL_RenderCopy(*renderer, *texture, NULL, textRect);
     // clears the screen
     SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 0);
     SDL_RenderClear(*renderer);
-    SDL_RenderCopy(*renderer, *texture, NULL, textRect);
+    // SDL_RenderCopy(*renderer, *texture, NULL, textRect);
     SDL_RenderPresent(*renderer);
 
     return TRUE;
@@ -147,18 +147,20 @@ void DestoryAll_and_Quit(SDL_Renderer *renderer, SDL_Window *win){
     SDL_Quit();
 }
 
-int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int x, int y, int w, int h, int fontSize){
-    TTF_Font* font = TTF_OpenFont(font_path, 24); // 使用字體的路徑
-    if (font == NULL) {
+int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int x, int y, int w, int h, int fontSize, SDL_Color *color){
+    TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
+    if(font == NULL){
         printf("TTF_OpenFont: %s\n", TTF_GetError());
-        return;
+        return FALSE;
     }
-    SDL_Color color = {0, 0, 0};
-    SDL_Surface* surface = TTF_RenderText_Blended(font, text, color);
+    // SDL_Color color = {0, 0, 0};
+    SDL_Surface* surface = TTF_RenderText_Blended(font, text, *color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_Rect dstrect = {x, y, w, h};
     SDL_RenderCopy(renderer, texture, NULL, &dstrect);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
     TTF_CloseFont(font);
+
+    return TRUE;
 }
