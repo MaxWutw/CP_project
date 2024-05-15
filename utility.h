@@ -18,14 +18,12 @@
 #endif
 
 int8_t initializeSDL();
-int8_t setup(const char* , SDL_Window **, SDL_Renderer **, \
-            SDL_Surface **, SDL_Texture **, TTF_Font **, SDL_DisplayMode *);
+int8_t setup(const char* , SDL_Window **, SDL_Renderer **, SDL_DisplayMode *);
 int8_t basic_background();
 int8_t process_input(int8_t *);
 int8_t update_title_screen(uint32_t *, SDL_Rect *, int32_t *, int32_t *);
-int8_t render_title_screen(SDL_Window **, SDL_Renderer **, \
-            SDL_Surface **, SDL_Texture **, TTF_Font **, SDL_DisplayMode *, SDL_Rect *);
-void DestoryAll_and_Quit(TTF_Font *, SDL_Texture *, SDL_Renderer *, \
-                        SDL_Window *);
+int8_t render_title_screen(SDL_Window **, SDL_Renderer **, SDL_DisplayMode *, SDL_Rect *);
+void DestoryAll_and_Quit(SDL_Renderer *, SDL_Window *);
+int8_t rendertext(SDL_Renderer* , const char*, const char* , int, int, int, int, int);
 
 #endif

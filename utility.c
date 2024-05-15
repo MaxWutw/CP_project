@@ -28,8 +28,7 @@ int8_t initializeSDL(){
     return TRUE;
 }
 
-int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer, \
-            SDL_Surface **surface, SDL_Texture **texture, TTF_Font **TitleFont, SDL_DisplayMode *DM){
+int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer, SDL_DisplayMode *DM){
     SDL_GetCurrentDisplayMode(0, DM);
     *win = SDL_CreateWindow(program_name , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DM->w, DM->h, SDL_WINDOW_RESIZABLE);
     printf("window width: %d \nwindow height: %d\n", DM->w, DM->h);
@@ -46,13 +45,6 @@ int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer
         return FALSE;
     }
 
-    // Font
-    *TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 108);
-    if (*TitleFont == NULL) {
-        fprintf(stderr, "Error: Failed to load font! Program Terminated!! \nSDL_Error: %s\n", TTF_GetError());
-        DestoryAll_and_Quit(*TitleFont, *texture, *renderer, *win);
-        return FALSE;
-    }
     return TRUE;
 }
 
@@ -109,8 +101,7 @@ int8_t update_title_screen(uint32_t *last_frame_time, SDL_Rect *textRect, int32_
     return TRUE;
 }
 
-int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, \
-            SDL_Surface **surface, SDL_Texture **texture, TTF_Font **TitleFont, SDL_DisplayMode *DM, SDL_Rect *textRect){
+int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, SDL_DisplayMode *DM, SDL_Rect *textRect){
 
     // render menu
     SDL_Color menu_color = {255, 255, 255};
@@ -149,12 +140,25 @@ int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, \
     return TRUE;
 }
 
-void DestoryAll_and_Quit(TTF_Font* font, SDL_Texture *texture, SDL_Renderer *renderer, \
-                        SDL_Window *win){
-    if(font != NULL) TTF_CloseFont(font);
-    if(texture != NULL) SDL_DestroyTexture(texture);
+void DestoryAll_and_Quit(SDL_Renderer *renderer, SDL_Window *win){
     if(renderer != NULL) SDL_DestroyRenderer(renderer);
     if(win != NULL) SDL_DestroyWindow(win);
     TTF_Quit();
     SDL_Quit();
+}
+
+int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int x, int y, int w, int h, int fontSize){
+    TTF_Font* font = TTF_OpenFont(font_path, 24); // 使用字體的路徑
+    if (font == NULL) {
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        return;
+    }
+    SDL_Color color = {0, 0, 0};
+    SDL_Surface* surface = TTF_RenderText_Blended(font, text, color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect dstrect = {x, y, w, h};
+    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+    TTF_CloseFont(font);
 }

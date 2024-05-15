@@ -43,14 +43,11 @@ int main(int argc, char *argv[]){
     SDL_Window *win = NULL;
     SDL_DisplayMode DM;
     SDL_Renderer *renderer = NULL;
-    SDL_Surface *surface = NULL;
-    SDL_Texture *texture = NULL;
-    TTF_Font *TitleFont = NULL;
-    setup(program_name, &win, &renderer, &surface, &texture, &TitleFont, &DM);
-    if(win == NULL){
-        printf("ERROR: not !!!!!!!\n");
-        return 0;
-    }
+    setup(program_name, &win, &renderer, &TitleFont, &DM);
+    // if(win == NULL){
+    //     printf("ERROR: not !!!!!!!\n");
+    //     return 0;
+    // }
     // texture = SDL_CreateTextureFromSurface(renderer, surface);
     // SDL_FreeSurface(surface);
 
@@ -58,9 +55,12 @@ int main(int argc, char *argv[]){
     SDL_Rect textRect;
     SDL_Color color = {255, 255, 255};
     const char *TitleText = "Life Simulator";
-    surface = TTF_RenderText_Blended(TitleFont, TitleText, color);
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);
+    SDL_Surface *surface = NULL;
+    SDL_Texture *texture = NULL;
+    TTF_Font *TitleFont = NULL;
+    // Font
+    TitleFont = TTF_OpenFont("font_lib/Martyric_PersonalUse.ttf", 108);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", );
     // SDL_Rect textRect;
     SDL_QueryTexture(texture, NULL, NULL, &textRect.w, &textRect.h);
     textRect.x = ((DM.w - textRect.w) / 2);
