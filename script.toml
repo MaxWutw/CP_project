@@ -1,16 +1,10 @@
 name = "script"
 start = 6
-1: "bag", 2: "ball" 3: "knife" 4: "backpack" 5: computer
 
-{{1, "bag", "bag.bmp"}, {2, "ball", "ball.jpg"}}
-scanf("{%d, %s, %s}")
 [6]
 title = "出生"
 text = "選擇出生，幫他取個名字"
 option = {7, 8, 9}
-item = {2, 4, -1}
-get_item = {556, 437, 23}
-person_img = 
 background
 
 [7]

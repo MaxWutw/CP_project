@@ -30,6 +30,7 @@ int8_t initializeSDL(){
 
 int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer, SDL_DisplayMode *DM){
     SDL_GetCurrentDisplayMode(0, DM);
+    DM->h -= 100;
     *win = SDL_CreateWindow(program_name , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DM->w, DM->h, SDL_WINDOW_RESIZABLE);
     printf("window width: %d \nwindow height: %d\n", DM->w, DM->h);
     SDL_ShowWindow(*win);
@@ -159,7 +160,6 @@ int8_t update_title_screen(uint32_t *last_frame_time, SDL_Rect *textRect, int32_
 }
 
 int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, SDL_DisplayMode *DM, SDL_Rect *textRect){
-
     // render menu
     // SDL_Color menu_color = {255, 255, 255};
     // TTF_Font *menu_font = TTF_OpenFont("font_lib/Arial.ttf", 36);
@@ -173,18 +173,6 @@ int8_t render_title_screen(SDL_Window **win, SDL_Renderer **renderer, SDL_Displa
     //     "Author",
     //     "How to Play"
     // };
-
-    // for(int i = 0; i < MENU_ITEM_COUNT; i++){
-    //     SDL_Surface *menu_surface = TTF_RenderText_Blended(menu_font, menu_items[i], menu_color);
-    //     SDL_Texture *menu_texture = SDL_CreateTextureFromSurface(*renderer, menu_surface);
-    //     SDL_Rect menu_rect;
-    //     SDL_QueryTexture(menu_texture, NULL, NULL, &menu_rect.w, &menu_rect.h);
-    //     menu_rect.x = ((DM->w - menu_rect.w) / 2);
-    //     menu_rect.y = ((DM->h - menu_rect.h) / 2) + i * 50;
-    //     SDL_RenderCopy(*renderer, menu_texture, NULL, &menu_rect);
-    //     SDL_FreeSurface(menu_surface);
-    //     SDL_DestroyTexture(menu_texture);
-    // }
 
     // TTF_CloseFont(menu_font);
     // SDL_RenderCopy(*renderer, *texture, NULL, textRect);
@@ -211,7 +199,8 @@ int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* tex
         return FALSE;
     }
     // SDL_Color color = {0, 0, 0};
-    SDL_Surface* surface = TTF_RenderText_Blended(font, text, *color);
+    // SDL_Surface* surface = TTF_RenderText_Blended(font, text, *color);
+    SDL_Surface* surface = TTF_RenderUTF8_Solid(font, text, *color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_Rect dstrect = {x, y, w, h};
     SDL_RenderCopy(renderer, texture, NULL, &dstrect);

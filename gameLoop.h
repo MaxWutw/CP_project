@@ -25,9 +25,9 @@ typedef enum {
     STATE_END
 } GameState;
 
-int8_t game_loop(SDL_Renderer *);
-void renderChoices(SDL_Renderer*);
-void renderLuckBar(SDL_Renderer*, int);
+int8_t game_loop(SDL_Renderer *, SDL_DisplayMode *);
+void renderChoices(SDL_Renderer*, const char*, const char*, const char*, SDL_DisplayMode *, int8_t *);
+void renderLuckBar(SDL_Renderer*, int, SDL_DisplayMode *);
 void handleChoice(GameState*, int);
 const char* getDialogText(GameState);
 int getLuckValue(GameState);

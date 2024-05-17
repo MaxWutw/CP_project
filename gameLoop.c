@@ -1,13 +1,20 @@
 #include "gameLoop.h"
 #include "utility.h"
 #include "constants.h"
+#include "toml_parse.h"
 
-int8_t game_loop(SDL_Renderer *renderer){
+int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int quit = 0;
     SDL_Event e;
-
+    FILE *pFile = NULL;
+    if(((pFile = fopen("script.toml", "r")) == NULL)){
+        fprintf(stderr, "Error: Failed to open the script! Program Terminated!!\n");
+        return 0;
+    }
     GameState state = STATE_BIRTH;
-
+    int8_t hover[3] = {0};
+    int32_t option[3], current_key = 6;
+    get_option(pFile, current_key, option);
     while(!quit){
         while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT){
@@ -15,73 +22,116 @@ int8_t game_loop(SDL_Renderer *renderer){
             }
             else if(e.type == SDL_MOUSEBUTTONDOWN){
                 int x, y;
+                // SDL_Rect choiceRect1 = {30, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+                // SDL_Rect choiceRect2 = {80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+                // SDL_Rect choiceRect3 = {120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
                 SDL_GetMouseState(&x, &y);
-                if(x >= 150 && x <= 250 && y >= 450 && y <= 500){
-                    handleChoice(&state, 1);
+                if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
+                    // handleChoice(&state, 1);
+                    current_key = option[0];
                 }
-                else if(x >= 350 && x <= 450 && y >= 450 && y <= 500){
-                    handleChoice(&state, 2);
+                else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
+                    // handleChoice(&state, 2);
+                    current_key = option[1];
                 }
-                else if(x >= 550 && x <= 650 && y >= 450 && y <= 500){
-                    handleChoice(&state, 3);
+                else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
+                    // handleChoice(&state, 3);
+                    current_key = option[2];
                 }
-                // else if(x)
+            }
+            else{
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
+                    *hover = 1;
+                }
+                else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
+                    *(hover + 1) = 1;
+                }
+                else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
+                    *(hover + 2) = 1;
+                }
+                else{
+                    for(int32_t i = 0;i < 3;i++) *(hover + i) = 0;
+                }
             }
         }
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        // 背包
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
-        SDL_Rect backpackRect = { 20, 20, 50, 50 };
-        SDL_RenderFillRect(renderer, &backpackRect);
-
-        // 對話框
-        // SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
-        SDL_Surface *image = IMG_Load("img/dialog_box.png");
-        if(image == NULL){
+        // 背景
+        SDL_Rect img = {0, 0, DM->w, DM->h};
+        SDL_Surface *bg = IMG_Load("img/background.jpg");
+        if(bg == NULL){
             printf("Error Read Image: %s\n", SDL_GetError());
             return 0;
         }
-        SDL_Rect dialogRect = { 100, 300, 600, 100 };
-        // SDL_RenderFillRect(renderer, &dialogRect);
-        SDL_Color color = {0, 0, 0};
-        rendertext(renderer, "font_lib/Arial.ttf", getDialogText(state), 120, 320, 560, 60, 24, &color);
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
-        SDL_RenderCopy(renderer, texture, NULL, &dialogRect);
-        // 選擇按鈕
-        renderChoices(renderer);
 
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, bg);
+        SDL_RenderCopy(renderer, texture, NULL, &img);
+
+        // 背包
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+        SDL_Rect backpackRect = {20, 20, 50, 50};
+        SDL_RenderFillRect(renderer, &backpackRect);
+        // 對話框
+        SDL_SetRenderDrawColor(renderer, 145, 252, 248, 0xFF);
+        // printf("%d %d\n",(DM->w / 5) * 3, DM->h);
+        SDL_Rect dialogRect = {(DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, (DM->w / 5) * 4, (DM->h / 4) - 50};
+        SDL_RenderFillRect(renderer, &dialogRect);
+        SDL_Color color = {0, 0, 0};
+        char *text_name = NULL;
+        get_text(pFile, current_key, &text_name);
+        rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
+        SDL_RenderDrawRect(renderer, &dialogRect);
+        
+        // 選擇按鈕
+        
+        // printf("%d %d %d\n", option[0], option[1], option[2]);
+        get_option(pFile, current_key, option);
+        char *str1 = NULL, *str2 = NULL, *str3 = NULL;
+        get_title(pFile, option[0], &str1);
+        get_title(pFile, option[1], &str2);
+        get_title(pFile, option[2], &str3);
+        renderChoices(renderer, str1, str2, str3, DM, hover);
+        if(str1 != NULL) free(str1);
+        if(str2 != NULL) free(str2);
+        if(str3 != NULL) free(str3);
         // 幸運條
-        renderLuckBar(renderer, getLuckValue(state));
+        renderLuckBar(renderer, getLuckValue(state), DM);
 
         SDL_RenderPresent(renderer);
     }
     return TRUE;
 }
 
-void renderChoices(SDL_Renderer* renderer){
+void renderChoices(SDL_Renderer* renderer, const char* option1, const char* option2, const char* option3, SDL_DisplayMode *DM, int8_t *hover){
     SDL_Color color = {0, 0, 0};
-    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
-    SDL_Rect choiceRect1 = { 150, 450, 100, 50 };
+    if(*hover == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+    else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+    SDL_Rect choiceRect1 = {30, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
     SDL_RenderDrawRect(renderer, &choiceRect1);
-    rendertext(renderer, "font_lib/Arial.ttf", "rich", 170, 460, 60, 30, 24, &color);
+    rendertext(renderer, "font_lib/biakai.ttf", option1, 30, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
 
-    SDL_Rect choiceRect2 = { 350, 450, 100, 50 };
+    if(*(hover + 1) == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+    else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+    SDL_Rect choiceRect2 = {80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
     SDL_RenderDrawRect(renderer, &choiceRect2);
-    rendertext(renderer, "font_lib/Arial.ttf", "poor", 370, 460, 60, 30, 24, &color);
+    rendertext(renderer, "font_lib/biakai.ttf", option2, 80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
 
-    SDL_Rect choiceRect3 = { 550, 450, 100, 50 };
+    if(*(hover + 2) == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+    else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+    SDL_Rect choiceRect3 = {120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
     SDL_RenderDrawRect(renderer, &choiceRect3);
-    rendertext(renderer, "font_lib/Arial.ttf", "orphan", 570, 460, 60, 30, 24, &color);
+    rendertext(renderer, "font_lib/biakai.ttf", option3, 120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
 }
 
-void renderLuckBar(SDL_Renderer* renderer, int luckValue){
+void renderLuckBar(SDL_Renderer* renderer, int luckValue, SDL_DisplayMode *DM){
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xA5, 0x00, 0xFF);
-    SDL_Rect luckBarOutline = { 700, 20, 20, 100 };
+    SDL_Rect luckBarOutline = {DM->w - 100, 20, 50, 400};
     SDL_RenderDrawRect(renderer, &luckBarOutline);
-    SDL_Rect luckBar = { 700, 20 + (100 - luckValue), 20, luckValue };
+    SDL_Rect luckBar = { DM->w - 100, 20 + (400 - luckValue), 50, luckValue };
     SDL_RenderFillRect(renderer, &luckBar);
 }
 
@@ -135,10 +185,10 @@ const char* getDialogText(GameState state) {
 
 int getLuckValue(GameState state) {
     switch (state) {
-        case STATE_BIRTH: return 70;
-        case STATE_CHILDHOOD: return 50;
-        case STATE_ADULTHOOD: return 30;
-        case STATE_OLDAGE: return 10;
+        case STATE_BIRTH: return 370;
+        case STATE_CHILDHOOD: return 250;
+        case STATE_ADULTHOOD: return 130;
+        case STATE_OLDAGE: return 50;
         case STATE_END: return 0;
         default: return 0;
     }

@@ -65,15 +65,9 @@ int main(int argc, char *argv[]){
     textRect.x = ((DM.w - textRect.w) / 2);
     textRect.y = ((DM.h - textRect.h) / 2) - 250;
     int32_t inc = 1, base_y = textRect.y;
-    // const char* menu_items[MENU_ITEM_COUNT] = {
-    //     "Start",
-    //     "Story",
-    //     "Author"
-    // };
     int32_t title_status = 0;
     while(title_is_running){
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
-        // render_title_screen(&win, &renderer, &DM, &textRect);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
 
@@ -83,25 +77,14 @@ int main(int argc, char *argv[]){
         SDL_Rect fillRect3 = {(DM.w - 200) / 2, (DM.h + 450) / 2, 200, 100};
 
         title_is_running = process_input(&selected_item, &fillRect1, &fillRect2, &fillRect3, renderer, &title_status);
-        // draw option
-        // SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        
-        // SDL_RenderFillRect(renderer, &fillRect1);
-        // rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Start Game", (DM.w - 200) / 2, (DM.h - 50) / 2, 200, 100, 48, &color_black);
-        // // SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        
-        // SDL_RenderFillRect(renderer, &fillRect2);
-        // rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "How To Play", (DM.w - 200) / 2, (DM.h + 200) / 2, 200, 100, 40, &color_black);
-        // // SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        
-        // SDL_RenderFillRect(renderer, &fillRect3);
-        // rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Author", (DM.w - 200) / 2, (DM.h + 450) / 2, 200, 100, 48, &color_black);
-
         SDL_RenderPresent(renderer);
         SDL_Delay(1000 / 60);
+
+        // title_status = 1; // dubug
+        // break; //debug
     }
 
-    game_loop(renderer);
+    if(title_status == 1) game_loop(renderer, &DM);
 
     // close ttf
     // TTF_CloseFont(TitleFont);
