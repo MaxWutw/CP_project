@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <wchar.h>
+#include <locale.h>
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
@@ -25,5 +27,6 @@ int8_t update_title_screen(uint32_t *, SDL_Rect *, int32_t *, int32_t *);
 int8_t render_title_screen(SDL_Window **, SDL_Renderer **, SDL_DisplayMode *, SDL_Rect *);
 void DestoryAll_and_Quit(SDL_Renderer *, SDL_Window *);
 int8_t rendertext(SDL_Renderer* , const char*, const char* , int, int, int, int, int, SDL_Color *);
+// int8_t rendertext_per_sec(SDL_Renderer*, const char*, const char*, int , int, int, int, int, SDL_Color *, int8_t *);
 
 #endif

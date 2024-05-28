@@ -14,7 +14,23 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     GameState state = STATE_BIRTH;
     int8_t hover[3] = {0};
     int32_t option[3], current_key = 6;
-    get_option(pFile, current_key, option);
+    int32_t ret = get_option(pFile, current_key, option);
+    if(ret != 0){
+        printf("end of story\n");
+        return 0;
+    }
+    // int8_t finish = 1;
+
+    SDL_Rect img = {0, 0, DM->w, DM->h};
+    SDL_Surface *bg = IMG_Load("img/background.jpg");
+    if(bg == NULL){
+        printf("Error Read Image: %s\n", SDL_GetError());
+        return 0;
+    }
+
+    SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(renderer, bg);
+    SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+    SDL_FreeSurface(bg);
     while(!quit){
         while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT){
@@ -22,9 +38,6 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
             }
             else if(e.type == SDL_MOUSEBUTTONDOWN){
                 int x, y;
-                // SDL_Rect choiceRect1 = {30, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
-                // SDL_Rect choiceRect2 = {80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
-                // SDL_Rect choiceRect3 = {120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
                 SDL_GetMouseState(&x, &y);
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 1);
@@ -61,16 +74,18 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         SDL_RenderClear(renderer);
 
         // 背景
-        SDL_Rect img = {0, 0, DM->w, DM->h};
-        SDL_Surface *bg = IMG_Load("img/background.jpg");
-        if(bg == NULL){
-            printf("Error Read Image: %s\n", SDL_GetError());
-            return 0;
-        }
+        // SDL_Rect img = {0, 0, DM->w, DM->h};
+        // SDL_Surface *bg = IMG_Load("img/background.jpg");
+        // if(bg == NULL){
+        //     printf("Error Read Image: %s\n", SDL_GetError());
+        //     return 0;
+        // }
 
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, bg);
-        SDL_RenderCopy(renderer, texture, NULL, &img);
-
+        // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, bg);
+        // SDL_RenderCopy(renderer, texture, NULL, &img);
+        // SDL_FreeSurface(bg);
+        SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+        
         // 背包
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
         SDL_Rect backpackRect = {20, 20, 50, 50};
@@ -83,8 +98,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         SDL_Color color = {0, 0, 0};
         char *text_name = NULL;
         get_text(pFile, current_key, &text_name);
+        // rendertext_per_sec(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         SDL_RenderDrawRect(renderer, &dialogRect);
+        
         
         // 選擇按鈕
         
@@ -102,7 +119,9 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         renderLuckBar(renderer, getLuckValue(state), DM);
 
         SDL_RenderPresent(renderer);
+        if(text_name != NULL) free(text_name);
     }
+    SDL_DestroyTexture(bg_texture);
     return TRUE;
 }
 

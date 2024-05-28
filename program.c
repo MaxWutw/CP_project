@@ -45,12 +45,12 @@ int main(int argc, char *argv[]){
 
     // get name
     const char *program_name = NULL;
-    if((program_name = get_name(pFile)) == NULL){
+    if((program_name = "test") == NULL){
         fprintf(stderr, "Error: Failed to get the name from get_name function! Program Terminated!!\n");
         return 0;
     }
     printf("%s\n", program_name);
-    // setup
+    // setup 
     SDL_Window *win = NULL;
     SDL_DisplayMode DM;
     SDL_Renderer *renderer = NULL;

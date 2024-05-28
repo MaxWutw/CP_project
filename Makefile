@@ -16,7 +16,7 @@ LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf
 all: main program
 
 program: program.o utility.o toml_parse.o gameLoop.o utility.h gameLoop.h
-	gcc program.o utility.o toml_parse.o gameLoop.o -o program $(LDFLAGS)
+	gcc -g program.o utility.o toml_parse.o gameLoop.o -o program $(LDFLAGS)
 
 main: main.o toml_parse.o
 	gcc main.o toml_parse.o -o main $(LDFLAGS)

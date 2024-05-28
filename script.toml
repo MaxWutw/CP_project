@@ -5,7 +5,6 @@ start = 6
 title = "出生"
 text = "選擇出生，幫他取個名字"
 option = {7, 8, 9}
-background
 
 [7]
 title = "富裕"
