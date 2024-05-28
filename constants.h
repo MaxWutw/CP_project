@@ -1,9 +1,12 @@
+#pragma once
 #define TRUE 1
 #define FALSE 0
 
 #define FPS 30
 #define FRAME_TARGET_TIME (1000 / FPS)
 #define MENU_ITEM_COUNT 3
+
+int8_t finish = 1;
 
 // #define OPTION1 
 // #define OPTION2 

@@ -42,14 +42,17 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 1);
                     current_key = option[0];
+                    finish = 1;
                 }
                 else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 2);
                     current_key = option[1];
+                     finish = 1;
                 }
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 3);
                     current_key = option[2];
+                     finish = 1;
                 }
             }
             else{
@@ -99,6 +102,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         char *text_name = NULL;
         get_text(pFile, current_key, &text_name);
         // rendertext_per_sec(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
+        if(finish == 0)
         rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         SDL_RenderDrawRect(renderer, &dialogRect);
         
@@ -119,8 +123,11 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         renderLuckBar(renderer, getLuckValue(state), DM);
 
         SDL_RenderPresent(renderer);
+        if(finish != 0){
+            rendertext_per_sec(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color); 
+        }
         if(text_name != NULL) free(text_name);
-    }
+    }   
     SDL_DestroyTexture(bg_texture);
     return TRUE;
 }
