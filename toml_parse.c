@@ -86,10 +86,14 @@ int32_t get_title( FILE *p_file , int32_t key , char **title ) {
 
         fgets( buffer , sizeof(buffer) , p_file );
         if( strstr( buffer , "title" ) != NULL ) {
-            strcpy( tmp , strchr( buffer , '\"') );
+            strcpy( tmp , strchr( buffer , '\"') + 1 ); //加1移除第一個雙引號
             __delet_all_enter(tmp);
             //可再更好
             *title = malloc( 500 );
+            //刪除後面雙引號
+            char *p = strchr( tmp , '"');
+            *p = '\0';
+
             strcpy( *title , tmp );
             return 0;
         }
@@ -113,8 +117,11 @@ int32_t get_text( FILE *p_file , int32_t key , char **text ) {
 
         fgets( buffer , sizeof(buffer) , p_file );
         if( strstr( buffer , "text" ) != NULL ) {
-            strcpy( tmp , strchr( buffer , '\"') );
+            strcpy( tmp , strchr( buffer , '\"') + 1 );
             __delet_all_enter(tmp);
+            //刪除後面雙引號
+            char *p = strchr( tmp , '"');
+            *p = '\0';
             //可再更好
             *text = malloc( 1000 );
             strcpy( *text , tmp );
