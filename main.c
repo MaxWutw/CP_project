@@ -34,48 +34,54 @@ void get_choose( int32_t *key , int32_t option[3]) {
 
 int main() {
 
-    system("clear");
+    // system("clear");
 
-    FILE *p_script_file = fopen( "script.toml" , "r" );
+    // FILE *p_script_file = fopen( "script.toml" , "r" );
 
-    if( p_script_file == NULL ) {
-        printf("File open error\n");
-        return 0;
-    }
+    // if( p_script_file == NULL ) {
+    //     printf("File open error\n");
+    //     return 0;
+    // }
 
-    int32_t key = 0;
-    char *text = NULL;
-    int32_t option[3] = {0};
+    // int32_t key = 0;
+    // char *text = NULL;
+    // int32_t option[3] = {0};
 
-    get_text( p_script_file , START , &text );
-    puts(text);
-    get_option( p_script_file , START , option );
-    print_choose( p_script_file , option );
-    get_choose( &key , option );
+    // get_text( p_script_file , START , &text );
+    // puts(text);
+    // get_option( p_script_file , START , option );
+    // print_choose( p_script_file , option );
+    // get_choose( &key , option );
 
-    while(1) {
+    // while(1) {
 
-        free(text);
-        option[0] = 0;
-        option[1] = 0;
-        option[2] = 0;
+    //     free(text);
+    //     option[0] = 0;
+    //     option[1] = 0;
+    //     option[2] = 0;
 
-        system("clear");
-        get_text( p_script_file , key , &text );
-        puts(text);
-        get_option( p_script_file , key , option );
+    //     system("clear");
+    //     get_text( p_script_file , key , &text );
+    //     puts(text);
+    //     get_option( p_script_file , key , option );
 
-        if( option[0] == 0 && 
-            option[1] == 0 &&
-            option[2] == 0    ) 
-        {
-            break;
-        }
+    //     if( option[0] == 0 && 
+    //         option[1] == 0 &&
+    //         option[2] == 0    ) 
+    //     {
+    //         break;
+    //     }
 
-        print_choose( p_script_file , option );
-        get_choose( &key , option );
-    }    
+    //     print_choose( p_script_file , option );
+    //     get_choose( &key , option );
+    // }    
 
+    // char str1[100];
+    // char *str2 = "hello";
+
+    // str1 = "hello";
+    // // str2[0] = 'c';
+    // puts(str1);
 
     return 0;
 }

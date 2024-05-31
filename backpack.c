@@ -1,7 +1,12 @@
 #include "backpack.h"
 #include "utility.h"
+#include "constants.h"
 
 int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM){
-    SDL_Rect backpack_bg = {DM->w / 4, DM->h / 4, DM->w / 2, DM->h / 2};
+    SDL_SetRenderDrawColor(renderer, 91, 245, 173, 0xFF);
+    // SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+    // SDL_Rect rect = {};
+    // SDL_RenderFillRect(renderer, &rect);
 
+    return TRUE;
 }

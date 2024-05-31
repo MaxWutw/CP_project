@@ -15,8 +15,8 @@ LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf
 
 all: main program
 
-program: program.o utility.o toml_parse.o gameLoop.o utility.h gameLoop.h
-	gcc -g program.o utility.o toml_parse.o gameLoop.o -o program $(LDFLAGS)
+program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o utility.h gameLoop.h
+	gcc -g program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o -o program $(LDFLAGS)
 
 main: main.o toml_parse.o
 	gcc main.o toml_parse.o -o main $(LDFLAGS)
@@ -26,6 +26,12 @@ program.o: program.c
 
 gameLoop.o: gameLoop.c
 	gcc -c gameLoop.c $(CFLAGS)
+
+freshNewScreen.o: freshNewScreen.c
+	gcc -c freshNewScreen.c $(CFLAGS)
+
+backpack.o: backpack.c
+	gcc -c backpack.c $(CFLAGS)
 
 main.o: main.c
 	gcc -c main.c $(CFLAGS)

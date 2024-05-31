@@ -30,7 +30,7 @@ int8_t initializeSDL(){
 
 int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer, SDL_DisplayMode *DM){
     SDL_GetCurrentDisplayMode(0, DM);
-    DM->h -= 100;
+    // DM->h -= 100;
     *win = SDL_CreateWindow(program_name , SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DM->w, DM->h, SDL_WINDOW_RESIZABLE);
     printf("window width: %d \nwindow height: %d\n", DM->w, DM->h);
     SDL_ShowWindow(*win);
@@ -192,16 +192,33 @@ void DestoryAll_and_Quit(SDL_Renderer *renderer, SDL_Window *win){
     SDL_Quit();
 }
 
-int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int x, int y, int w, int h, int fontSize, SDL_Color *color){
+int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
     TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
     if(font == NULL){
         printf("TTF_OpenFont: %s\n", TTF_GetError());
         return FALSE;
     }
     SDL_Surface* surface = TTF_RenderUTF8_Solid(font, text, *color);
+    if(surface == NULL){
+        printf("TTF_RenderUTF8_Solid: %s\n", SDL_GetError());
+        TTF_CloseFont(font);
+        return FALSE;
+    }
+
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_Rect dstrect = {x, y, w, h};
-    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+    if(texture == NULL){
+        printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+        SDL_FreeSurface(surface);
+        TTF_CloseFont(font);
+        return FALSE;
+    }
+    SDL_Rect dstrect = {x, y, surface->w, surface->h};
+    if(SDL_RenderCopy(renderer, texture, NULL, &dstrect) != 0){
+        printf("SDL_RenderCopy: %s\n", SDL_GetError());
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(texture);
+        TTF_CloseFont(font);
+    }
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
     TTF_CloseFont(font);

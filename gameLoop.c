@@ -2,6 +2,7 @@
 #include "utility.h"
 #include "constants.h"
 #include "toml_parse.h"
+#include "freshNewScreen.h"
 
 int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int quit = 0;
@@ -85,7 +86,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         // SDL_RenderCopy(renderer, texture, NULL, &img);
         // SDL_FreeSurface(bg);
         SDL_RenderCopy(renderer, bg_texture, NULL, &img);
-        
+        renderCharacter(renderer, DM, "img/street_fighter.png");
+        // renderAvatar(renderer, DM, "img/street_fighter_avatar.jpg");
         // 背包
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
         SDL_Rect backpackRect = {20, 20, 50, 50};
@@ -97,7 +99,9 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         SDL_RenderFillRect(renderer, &dialogRect);
         SDL_Color color = {0, 0, 0};
         char *text_name = NULL;
-        get_text(pFile, current_key, &text_name);
+        if( get_text(pFile, current_key, &text_name) == 1 ){
+            return FALSE;
+        }
         // rendertext_per_sec(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         SDL_RenderDrawRect(renderer, &dialogRect);
@@ -106,11 +110,19 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         // 選擇按鈕
         
         // printf("%d %d %d\n", option[0], option[1], option[2]);
-        get_option(pFile, current_key, option);
+        if( get_option(pFile, current_key, option) == 1 ){
+            return FALSE;
+        }
         char *str1 = NULL, *str2 = NULL, *str3 = NULL;
-        get_title(pFile, option[0], &str1);
-        get_title(pFile, option[1], &str2);
-        get_title(pFile, option[2], &str3);
+        if( get_title(pFile, option[0], &str1) == 1 ){
+            return FALSE;
+        }
+        if( get_title(pFile, option[1], &str2) == 1 ){
+            return FALSE;
+        }
+        if( get_title(pFile, option[2], &str3) == 1 ){
+            return FALSE;
+        }
         renderChoices(renderer, str1, str2, str3, DM, hover);
         if(str1 != NULL) free(str1);
         if(str2 != NULL) free(str2);
@@ -188,17 +200,6 @@ void handleChoice(GameState* state, int choice) {
             break;
         case STATE_END:
             break;
-    }
-}
-
-const char* getDialogText(GameState state) {
-    switch (state) {
-        case STATE_BIRTH: return "Please select birth family ~";
-        case STATE_CHILDHOOD: return "childhood ~";
-        case STATE_ADULTHOOD: return "adulthood ~";
-        case STATE_OLDAGE: return "oldage ~";
-        case STATE_END: return "end ~";
-        default: return "";
     }
 }
 
