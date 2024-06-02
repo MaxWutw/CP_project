@@ -17,6 +17,8 @@
 #include <SDL_ttf.h>
 #endif
 
-
+int8_t backpack_interface(SDL_Renderer *, SDL_DisplayMode *);
+int32_t calPersonDeposit();
+char* PersonCurStatus();
 
 #endif

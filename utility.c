@@ -228,61 +228,78 @@ int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* tex
 
 
 // render text per sec
-// int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const char* text, int x, int y, int w, int h, int fontSize, SDL_Color *color, int8_t *finish){
-//     setlocale(LC_ALL, "");
-//     TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
-//     if(font == NULL){
-//         printf("TTF_OpenFont: %s\n", TTF_GetError());
-//         return FALSE;
-//     }
-//     // SDL_Color color = {0, 0, 0};
-//     // SDL_Surface* surface = TTF_RenderText_Blended(font, text, *color);
-//     SDL_Surface *surface;
-//     SDL_Texture* texture;
-//     int32_t cur_x = x;
-//     const char *it = text;
-//     while(*it && *finish){
-//         wchar_t wc;
-//         int32_t leng = mbtowc(&wc, it, MB_CUR_MAX);
-//         if(leng < 0){
-//             perror("mbtwoc");
-//             SDL_DestroyTexture(texture);
-//             TTF_CloseFont(font);
-//             return FALSE;
-//         }
-//         char utf8_char[MB_CUR_MAX + 1];
-//         memcpy(utf8_char, it, leng);
-//         utf8_char[leng] = '\0';
+int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const char* text, int x, int y, int w, int h, int fontSize, SDL_Color *color){
+    setlocale(LC_ALL, "");
+    TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
+    if(font == NULL){
+        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        return FALSE;
+    }
+    // SDL_Color color = {0, 0, 0};
+    // SDL_Surface* surface = TTF_RenderText_Blended(font, text, *color);
+    SDL_Surface *surface;
+    SDL_Texture* texture;
+    int32_t cur_x = x;
+    const char *it = text;
+    // extern int8_t finish;
+    while(*it && finish){
+        SDL_Event event;
+        while(SDL_PollEvent(&event)){
+            if(event.type == SDL_KEYDOWN){
+                if(event.key.keysym.sym == SDLK_SPACE){
+                    finish = 0;
+                    break;
+                }
+                // Enter pressed
+                // else if(event.key.keysym.sym == SDLK_RETURN){
 
-//         surface = TTF_RenderUTF8_Solid(font, utf8_char, *color);
-//         if(surface == NULL){
-//             fprintf(stderr, "TTF_RenderUTF8_Solid Error: %s\n", TTF_GetError());
-//             SDL_DestroyTexture(texture);
-//             TTF_CloseFont(font);
-//             return FALSE;
-//         }
-//         texture = SDL_CreateTextureFromSurface(renderer, surface);
-//         int32_t tmp_increase = surface->w;
-//         SDL_FreeSurface(surface);
-//         if(texture == NULL){
-//             fprintf(stderr, "TTF_RenderUTF8_Solid Error: %s\n", TTF_GetError());
-//             SDL_DestroyTexture(texture);
-//             TTF_CloseFont(font);
-//             return FALSE;
-//         }
+                // }
+            }
+            else if(event.type == SDL_QUIT){
+                return FALSE;
+            }
+        }
+        wchar_t wc;
+        int32_t leng = mbtowc(&wc, it, MB_CUR_MAX);
+        if(leng < 0){
+            perror("mbtwoc");
+            SDL_DestroyTexture(texture);
+            TTF_CloseFont(font);
+            return FALSE;
+        }
+        char utf8_char[MB_CUR_MAX + 1];
+        memcpy(utf8_char, it, leng);
+        utf8_char[leng] = '\0';
 
-//         SDL_Rect dstrect = {cur_x, y, tmp_increase, h};
-//         cur_x += tmp_increase;
-//         SDL_RenderCopy(renderer, texture, NULL, &dstrect);
-//         SDL_RenderPresent(renderer);
-//         SDL_Delay(400);
-//         SDL_DestroyTexture(texture);
-//         it += leng;
-//     }
-//     *finish = 0;
-//     rendertext(renderer, "font_lib/biakai.ttf", text, x, y, w, h, fontSize, color);
-//     SDL_RenderPresent(renderer);
-//     TTF_CloseFont(font);
+        surface = TTF_RenderUTF8_Solid(font, utf8_char, *color);
+        if(surface == NULL){
+            fprintf(stderr, "TTF_RenderUTF8_Solid Error: %s\n", TTF_GetError());
+            SDL_DestroyTexture(texture);
+            TTF_CloseFont(font);
+            return FALSE;
+        }
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        int32_t tmp_increase = surface->w;
+        if(texture == NULL){
+            fprintf(stderr, "TTF_RenderUTF8_Solid Error: %s\n", TTF_GetError());
+            SDL_DestroyTexture(texture);
+            TTF_CloseFont(font);
+            return FALSE;
+        }
 
-//     return TRUE;
-// }
+        SDL_Rect dstrect = {cur_x, y, tmp_increase, surface->h};
+        SDL_FreeSurface(surface);
+        cur_x += tmp_increase;
+        SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+        SDL_RenderPresent(renderer);
+        SDL_Delay(100);
+        SDL_DestroyTexture(texture);
+        it += leng;
+    }
+    finish = 0;
+    rendertext(renderer, "font_lib/biakai.ttf", text, x, y, w, h, fontSize, color);
+    // SDL_RenderPresent(renderer);
+    TTF_CloseFont(font);
+
+    return TRUE;
+}

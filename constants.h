@@ -1,3 +1,8 @@
+#ifndef _CONSTANTS_H_
+#define _CONSTANTS_H_
+
+#include <stdio.h>
+#include <stdlib.h>
 #define TRUE 1
 #define FALSE 0
 
@@ -8,3 +13,8 @@
 // #define OPTION1 
 // #define OPTION2 
 // #define OPTION3 
+
+extern int8_t finish;
+extern int8_t openBackPack;
+
+#endif

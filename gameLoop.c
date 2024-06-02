@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "toml_parse.h"
 #include "freshNewScreen.h"
+#include "backpack.h"
 
 int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int quit = 0;
@@ -21,7 +22,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         return 0;
     }
     // int8_t finish = 1;
-
+    // extern int8_t finish;
     SDL_Rect img = {0, 0, DM->w, DM->h};
     SDL_Surface *bg = IMG_Load("img/background.jpg");
     if(bg == NULL){
@@ -43,14 +44,20 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 1);
                     current_key = option[0];
+                    finish = 1;
                 }
                 else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 2);
                     current_key = option[1];
+                    finish = 1;
                 }
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 3);
                     current_key = option[2];
+                    finish = 1;
+                }
+                else if(x > 20 && x < 70 && y > 20 && y < 70){
+                    openBackPack = 1;
                 }
             }
             else{
@@ -88,7 +95,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         SDL_RenderCopy(renderer, bg_texture, NULL, &img);
         renderCharacter(renderer, DM, "img/street_fighter.png");
         // renderAvatar(renderer, DM, "img/street_fighter_avatar.jpg");
-        // 背包
+        // 背包 button
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
         SDL_Rect backpackRect = {20, 20, 50, 50};
         SDL_RenderFillRect(renderer, &backpackRect);
@@ -102,8 +109,12 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         if( get_text(pFile, current_key, &text_name) == 1 ){
             return FALSE;
         }
-        // rendertext_per_sec(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
-        rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
+        if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
+            text_name, (DM->w - (DM->w / 5) * 4) / 2, \
+            DM->h - (DM->h / 4) - 150, 750, 60, 24, &color) == FALSE){
+            return 0;
+        }
+        // rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         SDL_RenderDrawRect(renderer, &dialogRect);
         
         
@@ -113,6 +124,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         if( get_option(pFile, current_key, option) == 1 ){
             return FALSE;
         }
+        if(option[0] == 0 || option[1] == 0 || option[2] == 0) return FALSE;
         char *str1 = NULL, *str2 = NULL, *str3 = NULL;
         if( get_title(pFile, option[0], &str1) == 1 ){
             return FALSE;
@@ -129,6 +141,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         if(str3 != NULL) free(str3);
         // 幸運條
         renderLuckBar(renderer, getLuckValue(state), DM);
+
+        if(openBackPack) backpack_interface(renderer, DM);
 
         SDL_RenderPresent(renderer);
         if(text_name != NULL) free(text_name);
