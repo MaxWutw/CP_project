@@ -11,12 +11,12 @@
 
 
 CFLAGS := `sdl2-config --cflags` -ggdb3 -O0 --std=gnu99 -Wall
-LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf
+LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 all: main program
 
-program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o constants.o utility.h gameLoop.h constants.h
-	gcc -g -fsanitize=address program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o constants.o -o program $(LDFLAGS)
+program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o constants.o musicUtil.o utility.h gameLoop.h constants.h musicUtil.h
+	gcc -g -fsanitize=address program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o constants.o musicUtil.o -o program $(LDFLAGS)
 
 main: main.o toml_parse.o
 	gcc main.o toml_parse.o -o main $(LDFLAGS)
@@ -44,6 +44,9 @@ constants.o: constants.c constants.h
 
 toml_parse.o: toml_parse.c
 	gcc -c toml_parse.c $(CFLAGS)
+
+musicUtil.o: musicUtil.c musicUtil.h
+	gcc -c musicUtil.c $(CFLAGS)
 
 clean:
 	rm -f test main game_frontend program *.o 

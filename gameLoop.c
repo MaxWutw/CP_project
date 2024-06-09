@@ -11,6 +11,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int32_t dialogY = DM->h - (DM->h / 4) - 200;
     int32_t dialogW = (DM->w / 5) * 4;
     int32_t dialogH = (DM->h / 4) - 50;
+    Mix_Music *music = NULL;
+    PlayMusic("music/cowboy.mp3", music, 24);
     SDL_Event e;
     FILE *pFile = NULL;
     if(((pFile = fopen("script.toml", "r")) == NULL)){
@@ -156,6 +158,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         if(text_name != NULL) free(text_name);
     }
     SDL_DestroyTexture(bg_texture);
+    Mix_FreeMusic(music);
     return TRUE;
 }
 

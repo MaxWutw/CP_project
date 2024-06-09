@@ -48,7 +48,7 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
             return 0;
         }
     }
-    // free(s_key);
+    free(s_key);
     return -1;
 }
 

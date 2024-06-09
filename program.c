@@ -7,16 +7,19 @@
 #include "utility.h"
 #include "constants.h"
 #include "gameLoop.h"
+#include "musicUtil.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
 #include <SDL2/SDL_timer.h>
 #include <SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #elif __APPLE__
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_timer.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #endif
 
 // 看這邊！
@@ -68,7 +71,10 @@ int main(int argc, char *argv[]){
     textRect.y = ((DM.h - textRect.h) / 2) - 250;
     int32_t inc = 1, base_y = textRect.y;
     int32_t title_status = 0;
+    Mix_Music *music = NULL;
+    PlayMusic("music/music_theme.mp3", music, 64);
     while(title_is_running){
+        
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
@@ -85,6 +91,11 @@ int main(int argc, char *argv[]){
         // title_status = 1; // dubug
         // break; //debug
     }
+    while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
+        // wait for any fades to complete
+        SDL_Delay(100);
+    }
+    if(music != NULL) Mix_FreeMusic(music);
 
     // if(title_status == 1) game_loop(renderer, &DM);
     if(title_status == 1){
@@ -113,6 +124,10 @@ int main(int argc, char *argv[]){
     // SDL_DestroyTexture(texture);
 
     // destroy renderer
+    // Mix_FreeMusic(music);
+    Mix_CloseAudio();
+    Mix_Quit();
+
     IMG_Quit();
 
     SDL_DestroyRenderer(renderer);

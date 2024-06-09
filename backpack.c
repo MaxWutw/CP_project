@@ -115,3 +115,7 @@ int32_t calPersonDeposit(){
 char* PersonCurStatus(){
     return "可憐書生";
 }
+
+int8_t AddItemToBackpack(){
+    return TRUE;
+}

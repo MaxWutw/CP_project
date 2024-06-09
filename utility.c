@@ -25,6 +25,20 @@ int8_t initializeSDL(){
         printf("Error initializing Image: %s\n", SDL_GetError());
         return FALSE;
     }
+
+    int32_t flags = MIX_INIT_OGG | MIX_INIT_MP3;
+    int32_t initted = Mix_Init(flags);
+    if((initted & flags) != flags){
+        printf("Mix_Init: Failed to init required ogg, mod and mp3 support!\n");
+        printf("Mix_Init: %s\n", Mix_GetError());
+        // handle error
+        return FALSE;
+    }
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
+        printf("Error initializing Mixer: %s\n", Mix_GetError());
+        return FALSE;
+    }
+
     return TRUE;
 }
 
@@ -306,6 +320,10 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
     int32_t cur_x = x;
     const char *it = text;
     // extern int8_t finish;
+    // if(finish){
+    Mix_Chunk *sound = NULL;
+    PlayChunk("music/keyboard_typing.mp3", sound, -1, 128);
+    // }
     while(*it && finish){
         SDL_Event event;
         while(SDL_PollEvent(&event)){
@@ -365,6 +383,9 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             y += surface->h;
         }
     }
+    // Mix_Pause(-1);
+    Mix_HaltChannel(-1);
+    if(sound != NULL) Mix_FreeChunk(sound);
     finish = 0;
     rendertext(renderer, "font_lib/biakai.ttf", text, x, y, w, h, fontSize, color);
     // SDL_RenderPresent(renderer);
