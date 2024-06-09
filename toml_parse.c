@@ -45,10 +45,11 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
 
         fgets( buffer , sizeof(buffer) , p_file );
         if( strstr( buffer , s_key ) != NULL ) {
+            if(s_key != NULL) free(s_key);
             return 0;
         }
     }
-    free(s_key);
+    if(s_key != NULL) free(s_key);
     return -1;
 }
 

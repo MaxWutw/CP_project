@@ -320,16 +320,18 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
     int32_t cur_x = x;
     const char *it = text;
     // extern int8_t finish;
-    // if(finish){
     Mix_Chunk *sound = NULL;
-    PlayChunk("music/keyboard_typing.mp3", sound, -1, 128);
-    // }
+    if(finish){
+        PlayChunk("music/keyboard_typing.mp3", sound, -1, 128);
+    }
     while(*it && finish){
         SDL_Event event;
         while(SDL_PollEvent(&event)){
             if(event.type == SDL_KEYDOWN){
                 if(event.key.keysym.sym == SDLK_SPACE){
                     finish = 0;
+                    Mix_HaltChannel(-1);
+                    if(sound != NULL) Mix_FreeChunk(sound);
                     break;
                 }
                 // Enter pressed
@@ -338,6 +340,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
                 // }
             }
             else if(event.type == SDL_QUIT){
+                Mix_HaltChannel(-1);
+                if(sound != NULL) Mix_FreeChunk(sound);
                 return FALSE;
             }
         }
@@ -347,6 +351,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             perror("mbtwoc");
             SDL_DestroyTexture(texture);
             TTF_CloseFont(font);
+            Mix_HaltChannel(-1);
+            if(sound != NULL) Mix_FreeChunk(sound);
             return FALSE;
         }
         char utf8_char[MB_CUR_MAX + 1];
@@ -358,6 +364,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             fprintf(stderr, "TTF_RenderUTF8_Solid Error: %s\n", TTF_GetError());
             SDL_DestroyTexture(texture);
             TTF_CloseFont(font);
+            Mix_HaltChannel(-1);
+            if(sound != NULL) Mix_FreeChunk(sound);
             return FALSE;
         }
         texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -366,6 +374,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             fprintf(stderr, "TTF_RenderUTF8_Solid Error: %s\n", TTF_GetError());
             SDL_DestroyTexture(texture);
             TTF_CloseFont(font);
+            Mix_HaltChannel(-1);
+            if(sound != NULL) Mix_FreeChunk(sound);
             return FALSE;
         }
 
@@ -384,7 +394,9 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
         }
     }
     // Mix_Pause(-1);
-    Mix_HaltChannel(-1);
+    if(finish){
+        Mix_HaltChannel(-1);
+    }
     if(sound != NULL) Mix_FreeChunk(sound);
     finish = 0;
     rendertext(renderer, "font_lib/biakai.ttf", text, x, y, w, h, fontSize, color);

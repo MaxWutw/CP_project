@@ -90,6 +90,7 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM){
             if(event.type == SDL_QUIT){
                 quit = 1;
                 // return FALSE;
+                break;
             }
             else if(event.type == SDL_MOUSEBUTTONDOWN){
                 if(mouseX > closeX && mouseX < closeX + closeSize && \
@@ -113,9 +114,90 @@ int32_t calPersonDeposit(){
 }
 
 char* PersonCurStatus(){
+    // pass
     return "可憐書生";
 }
 
-int8_t AddItemToBackpack(){
+int8_t AddItemToBackpack(sBackPack *backpack, void *inpData){
+    if(backpack == NULL){
+        printf( "%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__ );
+        return FALSE;
+    }
+    sListNode *pNewNode = malloc(sizeof(sListNode));
+    pNewNode->pData = inpData;
+    pNewNode->pNext = NULL;
+    if(backpack->pParam->size == 0){
+        backpack->pHead = pNewNode;
+        backpack->pTail = pNewNode;
+    }
+    else{
+        backpack->pTail->pNext = pNewNode;
+        backpack->pTail = pNewNode;
+    }
+    backpack->pParam->size += 1;
+
     return TRUE;
 }
+
+int8_t RemoveItemFromBackpack(sBackPack *backpack, void *inpData){
+    if(backpack == NULL){
+        printf( "%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__ );
+        return FALSE;
+    }
+    if(backpack->pParam->cmp == NULL){
+        printf( "%s(%d) %s: Not registered cmp yet!\n", __FILE__, __LINE__, __FUNCTION__ );
+        return FALSE;
+    }
+    if(backpack->pParam->size == 0){
+        return FALSE;
+    }
+    sListNode *pNode = backpack->pHead, *pPreNode = NULL;
+    int8_t found = 0;
+    while(backpack != NULL){
+        if(backpack->pParam->cmp(inpData, pNode->pData) == 0){
+            found = 1;
+            sListNode *pTmp = pNode;
+            if(pPreNode == NULL){ // head
+                backpack->pHead = pNode->pNext;
+                if(backpack->pHead == NULL){
+                    backpack->pTail = NULL;
+                }
+            }
+            else{
+                pPreNode->pNext = pNode->pNext;
+                if(backpack->pTail == pNode){
+                    backpack->pTail = pPreNode;
+                }
+            }
+            pNode = pNode->pNext;
+            backpack->pParam->myfree(pTmp->pData);
+            free(pTmp);
+            backpack->pParam->size -= 1;
+        }
+        else{
+            pPreNode = pNode;
+            pNode = pNode->pNext;
+        }
+    }
+
+    return found ? TRUE : FALSE;
+}
+
+void regCmpCallBack(sBackPack *backpack, int8_t (*cmp)(const void *, const void *)){
+    if(backpack == NULL){
+        printf( "%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__ );
+        return;
+    }
+    backpack->pParam->cmp = cmp;
+    return;
+}
+
+void regFreeCallBack(sBackPack *backpack, void (*myfree)(void *)){
+    if(backpack == NULL){
+        printf( "%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__ );
+        return;
+    }
+    backpack->pParam->myfree = myfree;
+    return;
+}
+
