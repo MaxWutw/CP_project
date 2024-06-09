@@ -60,6 +60,8 @@ int main(int argc, char *argv[]){
     SDL_Color color_white = {255, 255, 255};
     // SDL_Color color_black = {0, 0, 0};
     const char *TitleText = "Life Simulator";
+    // some intiaize
+    
     textRect.w = 500;
     textRect.h = 200;
     textRect.x = ((DM.w - textRect.w) / 2);
@@ -71,7 +73,7 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
 
-        rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w, textRect.h, 108, &color_white);
+        rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w + 200, textRect.h, 108, &color_white);
         SDL_Rect fillRect1 = {(DM.w - 200) / 2, (DM.h - 50) / 2, 200, 100};
         SDL_Rect fillRect2 = {(DM.w - 200) / 2, (DM.h + 200) / 2, 200, 100};
         SDL_Rect fillRect3 = {(DM.w - 200) / 2, (DM.h + 450) / 2, 200, 100};
@@ -86,7 +88,6 @@ int main(int argc, char *argv[]){
 
     // if(title_status == 1) game_loop(renderer, &DM);
     if(title_status == 1){
-        // Transition effect: Fade out
         int alpha = 255;
         while(alpha > 0){
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);

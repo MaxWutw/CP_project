@@ -16,5 +16,11 @@
 
 extern int8_t finish;
 extern int8_t openBackPack;
+// extern int32_t dialogX;
+// extern int32_t dialogY;
+// extern int32_t dialogW;
+// extern int32_t dialogH;
+// extern int32_t window_width;
+// extern int32_t window_height;
 
 #endif

@@ -48,6 +48,7 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
             return 0;
         }
     }
+    // free(s_key);
     return -1;
 }
 
@@ -108,8 +109,8 @@ int32_t get_text( FILE *p_file , int32_t key , char **text ) {
 
     if( !p_file || !text ) return -1;
 
-    char buffer[256];
-    char tmp[256];
+    char buffer[1024];
+    char tmp[1024];
 
     if( __find_key( p_file , key ) == -1 ) return 1;
 

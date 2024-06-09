@@ -6,7 +6,11 @@
 #include "backpack.h"
 
 int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
-    int quit = 0;
+    int8_t quit = 0;
+    int32_t dialogX = (DM->w - (DM->w / 5) * 4) / 2;
+    int32_t dialogY = DM->h - (DM->h / 4) - 200;
+    int32_t dialogW = (DM->w / 5) * 4;
+    int32_t dialogH = (DM->h / 4) - 50;
     SDL_Event e;
     FILE *pFile = NULL;
     if(((pFile = fopen("script.toml", "r")) == NULL)){
@@ -41,21 +45,25 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
             else if(e.type == SDL_MOUSEBUTTONDOWN){
                 int x, y;
                 SDL_GetMouseState(&x, &y);
+                // option1 button
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 1);
                     current_key = option[0];
                     finish = 1;
                 }
+                // option2 button
                 else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 2);
                     current_key = option[1];
                     finish = 1;
                 }
+                // option3 button
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 3);
                     current_key = option[2];
                     finish = 1;
                 }
+                // backpack button
                 else if(x > 20 && x < 70 && y > 20 && y < 70){
                     openBackPack = 1;
                 }
@@ -102,7 +110,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         // 對話框
         SDL_SetRenderDrawColor(renderer, 145, 252, 248, 0xFF);
         // printf("%d %d\n",(DM->w / 5) * 3, DM->h);
-        SDL_Rect dialogRect = {(DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, (DM->w / 5) * 4, (DM->h / 4) - 50};
+        SDL_Rect dialogRect = {dialogX, dialogY, dialogW, dialogH};
         SDL_RenderFillRect(renderer, &dialogRect);
         SDL_Color color = {0, 0, 0};
         char *text_name = NULL;
@@ -110,8 +118,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
             return FALSE;
         }
         if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
-            text_name, (DM->w - (DM->w / 5) * 4) / 2, \
-            DM->h - (DM->h / 4) - 150, 750, 60, 24, &color) == FALSE){
+            text_name, dialogX, \
+            dialogY, dialogW, 0, 24, &color) == FALSE){
             return 0;
         }
         // rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
