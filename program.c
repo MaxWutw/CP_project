@@ -88,32 +88,32 @@ int main(int argc, char *argv[]){
         SDL_RenderPresent(renderer);
         SDL_Delay(1000 / 60);
 
-        title_status = 1; // dubug
-        break; //debug
+        // title_status = 1; // dubug
+        // break; //debug
     }
-    // while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
-    //     // wait for any fades to complete
-    //     SDL_Delay(100);
-    // }
+    while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
+        // wait for any fades to complete
+        SDL_Delay(100);
+    }
     if(music != NULL) Mix_FreeMusic(music);
 
     // if(title_status == 1) game_loop(renderer, &DM);
     if(title_status == 1){
-        // int32_t alpha = 255;
-        // while(alpha > 0){
-        //     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-        //     SDL_RenderClear(renderer);
+        int32_t alpha = 255;
+        while(alpha > 0){
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+            SDL_RenderClear(renderer);
 
-        //     rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w, textRect.h, 108, &color_white);
+            rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w, textRect.h, 108, &color_white);
 
-        //     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        //     SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);
-        //     SDL_RenderFillRect(renderer, NULL);
-        //     SDL_RenderPresent(renderer);
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);
+            SDL_RenderFillRect(renderer, NULL);
+            SDL_RenderPresent(renderer);
 
-        //     SDL_Delay(1000 / 60);
-        //     alpha -= 5;
-        // }
+            SDL_Delay(1000 / 60);
+            alpha -= 5;
+        }
         game_loop(renderer, &DM);
     }
 
