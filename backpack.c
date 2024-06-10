@@ -58,7 +58,8 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
         SDL_DestroyTexture(close_texture);
 
         // name
-        rendertext(renderer, "font_lib/biakai.ttf", "韋小寶", backpackX + backpackWidth / 20 + portraitSize / 2 - 40, portraitRect.y + portraitRect.h + 10, 0, 0, 24, &textColor);
+        set_player_name("韋小寶");
+        rendertext(renderer, "font_lib/biakai.ttf", get_player_name(), backpackX + backpackWidth / 20 + portraitSize / 2 - 40, portraitRect.y + portraitRect.h + 10, 0, 0, 24, &textColor);
 
         int32_t gridCols = 5;
         int32_t gridRows = 4;
