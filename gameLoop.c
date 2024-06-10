@@ -11,6 +11,17 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int32_t dialogY = DM->h - (DM->h / 4) - 200;
     int32_t dialogW = (DM->w / 5) * 4;
     int32_t dialogH = (DM->h / 4) - 50;
+    sBackPack *backpackObj = SetupBackpack(); // store the item
+    regPrintCallBack(backpackObj, printBackpack);
+    regCmpCallBack(backpackObj, cmp);
+    regFreeCallBack(backpackObj, myFreeFunc);
+    // if(debugButton){
+        // debugButton = 0;
+    Item item = {.id=10, .name="sword", .picture_file_name="img/sword.png"};
+    AddItemToBackpack(backpackObj, &item);
+    // }
+    printBackpackItem(backpackObj);
+
     Mix_Music *music = NULL;
     PlayMusic("music/party.mp3", music, 24);
     SDL_Event e;
@@ -40,6 +51,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     SDL_RenderCopy(renderer, bg_texture, NULL, &img);
     SDL_FreeSurface(bg);
     while(!quit){
+        // printBackpackItem(backpackObj);
         while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT){
                 quit = 1;
@@ -82,15 +94,14 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     *(hover + 2) = 1;
                 }
-                else{
+                 else{
                     for(int32_t i = 0;i < 3;i++) *(hover + i) = 0;
                 }
             }
         }
-
+        // printBackpackItem(backpack);
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
-
         // 背景
         // SDL_Rect img = {0, 0, DM->w, DM->h};
         // SDL_Surface *bg = IMG_Load("img/background.jpg");
@@ -151,12 +162,13 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         if(str3 != NULL) free(str3);
         // 幸運條
         renderLuckBar(renderer, getLuckValue(state), DM);
-
-        if(openBackPack) backpack_interface(renderer, DM);
+        // printBackpackItem(backpack);
+        if(openBackPack) backpack_interface(renderer, DM, backpackObj);
 
         SDL_RenderPresent(renderer);
         if(text_name != NULL) free(text_name);
     }
+    // cleanBackpack(backpackObj);
     SDL_DestroyTexture(bg_texture);
     Mix_FreeMusic(music);
     return TRUE;

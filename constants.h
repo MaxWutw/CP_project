@@ -16,6 +16,7 @@
 
 extern int8_t finish;
 extern int8_t openBackPack;
+extern int8_t debugButton;
 // extern int32_t dialogX;
 // extern int32_t dialogY;
 // extern int32_t dialogW;

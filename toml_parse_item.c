@@ -30,6 +30,8 @@ int32_t get_items(FILE *pFile, Item *items, int32_t *items_count){
 			}
 		}
 	}
+
+	return 1; // you forgot to add the return value --max
 }
 
 /* test code
