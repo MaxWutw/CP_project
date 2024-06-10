@@ -7,10 +7,14 @@
 #include <math.h>
 
 #define MAX_INVENTORY_SIZE 256
+#define MAX_NAME_SIZE 512
 
 //this is a player structure
 typedef struct {
 	int32_t status_val;
+	char *player_name;
+	int32_t (*set_player_name)(char *name);
+	char *(*get_player_name)();
 	int32_t (*set_player_status)(int32_t val);
 	int32_t (*get_player_status)();
 
@@ -25,6 +29,16 @@ typedef struct {
 //setup a new player
 Player init_player();
 
+//set player's name
+//return 0 : success
+//return 1 : failed
+int32_t set_player_name(char *name);
+
+
+//get player's name
+//return the player's name
+//return NULL if name is NULL
+char *get_player_name();
 
 //set status to val
 //return 0 : success

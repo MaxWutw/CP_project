@@ -2,12 +2,29 @@
 
 static int32_t player_status = 0;
 static int32_t player_inventory[MAX_INVENTORY_SIZE] = {0};
+static char player_name[MAX_NAME_SIZE] = {0};
 
 Player init_player(){
 	player_status = 0;
 	memset(player_inventory,-1,sizeof(int32_t)*MAX_INVENTORY_SIZE);
-	Player player = {player_status,set_player_status,get_player_status,player_inventory,obtain_item,check_item,delete_item};
+	memset(player_name,0,sizeof(char)*MAX_NAME_SIZE);
+	Player player = {player_status,player_name,set_player_name,get_player_name,set_player_status,get_player_status,player_inventory,obtain_item,check_item,delete_item};
 	return player;
+}
+
+//set player's name
+//return 0 : success
+//return 1 : failed
+int32_t set_player_name(char *name){
+	strncpy(player_name,name,strlen(name));
+	return 0;
+}
+
+//get player's name
+//return the player's name
+//return NULL if name is NULL
+char *get_player_name(){
+	return player_name;
 }
 
 int32_t set_player_status(int32_t val){
