@@ -4,7 +4,7 @@ LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf
 all: game
 
 game: main.o game.o ui.o
-	gcc main.o game.o ui.o -o game $(LDFLAGS)
+	gcc -g -fsanitize=address main.o game.o ui.o -o game $(LDFLAGS)
 
 main.o: main.c game.h ui.h
 	gcc -c main.c $(CFLAGS)

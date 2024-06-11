@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
 
-        rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w + 200, textRect.h, 108, &color_white);
+        rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w + DM.w, textRect.h, 108, &color_white);
         SDL_Rect fillRect1 = {(DM.w - 200) / 2, (DM.h - 50) / 2, 200, 100};
         SDL_Rect fillRect2 = {(DM.w - 200) / 2, (DM.h + 200) / 2, 200, 100};
         SDL_Rect fillRect3 = {(DM.w - 200) / 2, (DM.h + 450) / 2, 200, 100};

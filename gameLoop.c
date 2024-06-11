@@ -20,7 +20,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     Item item = {.id=10, .name="sword", .picture_file_name="img/sword.png"};
     AddItemToBackpack(backpackObj, &item);
     // }
-    printBackpackItem(backpackObj);
+    // printBackpackItem(backpackObj);
 
     Mix_Music *music = NULL;
     PlayMusic("music/party.mp3", music, 24);
@@ -32,7 +32,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     }
     GameState state = STATE_BIRTH;
     int8_t hover[3] = {0};
-    int32_t option[3], current_key = 6;
+    int32_t option[3], current_key = START;
     int32_t ret = get_option(pFile, current_key, option);
     if(ret != 0){
         printf("end of story\n");
@@ -40,16 +40,18 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     }
     // int8_t finish = 1;
     // extern int8_t finish;
-    SDL_Rect img = {0, 0, DM->w, DM->h};
+    // SDL_Rect img = {0, 0, DM->w, DM->h};
     SDL_Surface *bg = IMG_Load("img/background.jpg");
     if(bg == NULL){
         printf("Error Read Image: %s\n", SDL_GetError());
-        return 0;
+        return FALSE;
     }
 
     SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(renderer, bg);
-    SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+    // SDL_RenderCopy(renderer, bg_texture, NULL, &img);
     SDL_FreeSurface(bg);
+    inEffect = 1;
+    outEffect = 0;
     while(!quit){
         // printBackpackItem(backpackObj);
         while(SDL_PollEvent(&e) != 0){
@@ -64,18 +66,33 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                     // handleChoice(&state, 1);
                     current_key = option[0];
                     finish = 1;
+                    outEffect = 1;
+                    renderBackground(renderer, DM, "img/background.jpg");
+                    inEffect = 1;
+                    outEffect = 0;
+                    SDL_Delay(250);
                 }
                 // option2 button
                 else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 2);
                     current_key = option[1];
                     finish = 1;
+                    outEffect = 1;
+                    renderBackground(renderer, DM, "img/background.jpg");
+                    inEffect = 1;
+                    outEffect = 0;
+                    SDL_Delay(250);
                 }
                 // option3 button
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 3);
                     current_key = option[2];
                     finish = 1;
+                    outEffect = 1;
+                    renderBackground(renderer, DM, "img/background.jpg");
+                    inEffect = 1;
+                    outEffect = 0;
+                    SDL_Delay(250);
                 }
                 // backpack button
                 else if(x > 20 && x < 70 && y > 20 && y < 70){
@@ -113,7 +130,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, bg);
         // SDL_RenderCopy(renderer, texture, NULL, &img);
         // SDL_FreeSurface(bg);
-        SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+        // SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+        renderBackground(renderer, DM, "img/background.jpg");
         renderCharacter(renderer, DM, "img/street_fighter.png");
         // renderAvatar(renderer, DM, "img/street_fighter_avatar.jpg");
         // 背包 button

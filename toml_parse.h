@@ -6,7 +6,7 @@
 #include <string.h>
 #include <math.h>
 
-#define START 6
+#define START 1
 
 /* 
  *    範例：

@@ -206,69 +206,113 @@ void DestoryAll_and_Quit(SDL_Renderer *renderer, SDL_Window *win){
     SDL_Quit();
 }
 
-// int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
+
+// int8_t rendertext(SDL_Renderer *renderer, const char *font_path, const char* text, int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color) {
+//     if(TTF_Init() == -1){
+//         printf("TTF_Init: %s\n", TTF_GetError());
+//         return -1;
+//     }
+
 //     TTF_Font* font = TTF_OpenFont(font_path, fontSize);
 //     if(font == NULL){
 //         printf("TTF_OpenFont: %s\n", TTF_GetError());
-//         return FALSE;
+//         return -1;
 //     }
 
 //     char* text_copy = strdup(text);
+//     if(text_copy == NULL){
+//         printf("strdup: failed to allocate memory\n");
+//         TTF_CloseFont(font);
+//         return -1;
+//     }
+    
 //     char* line_start = text_copy;
 //     int32_t y_offset = 0;
 
 //     while(*line_start){
 //         int32_t line_width = 0;
 //         char* ptr = line_start;
+//         char* last_fit = NULL;
+
 //         while(*ptr){
-//             int char_width;
-//             TTF_SizeUTF8(font, ptr, &char_width, NULL);
-//             line_width += char_width;
-//             if(line_width > w){
+//             int32_t char_width;
+//             char next_char[5] = {0}; // UTF-8 characters can be up to 4 bytes long
+//             int32_t len = 1;
+
+//             // Determine the length of the next UTF-8 character
+//             while (ptr[len-1] & 0x80 && !(ptr[len-1] & 0x40)) {
+//                 len++;
+//             }
+//             strncpy(next_char, ptr, len);
+//             if (TTF_SizeUTF8(font, next_char, &char_width, NULL) != 0) {
+//                 printf("TTF_SizeUTF8: %s\n", TTF_GetError());
+//                 free(text_copy);
+//                 TTF_CloseFont(font);
+//                 return -1;
+//             }
+//             // printf("%d %d\n", fontSize, w);
+//             printf("%d\n", line_width);
+//             if(line_width + fontSize >= w){
+//                 line_width += fontSize;
+//                 last_fit = ptr + len;
+//                 ptr += len;
 //                 break;
 //             }
-//             ptr++;
-//         }
-//         char saved_char = *ptr;
-//         printf("%c\n", saved_char);
-//         *ptr = '\0';
 
-//         SDL_Surface* surface = TTF_RenderUTF8_Solid(font, text, *color);
-//         if(surface == NULL){
-//             printf("TTF_RenderUTF8_Solid: %s\n", SDL_GetError());
+//             line_width += fontSize;
+//             last_fit = ptr + len;
+//             ptr += len;
+//         }
+
+//         if(last_fit == NULL){
+//             last_fit = ptr;
+//         }
+
+//         char saved_char = *last_fit;
+//         *last_fit = '\0';
+
+//         SDL_Surface* surface = TTF_RenderUTF8_Solid(font, line_start, *color);
+//         if (surface == NULL) {
+//             printf("TTF_RenderUTF8_Solid: %s\n", TTF_GetError());
+//             free(text_copy);
 //             TTF_CloseFont(font);
-//             return FALSE;
+//             return -1;
 //         }
 
 //         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-//         if(texture == NULL){
+//         if (texture == NULL) {
 //             printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
 //             SDL_FreeSurface(surface);
+//             free(text_copy);
 //             TTF_CloseFont(font);
-//             return FALSE;
+//             return -1;
 //         }
+
 //         SDL_Rect dstrect = {x, y + y_offset, surface->w, surface->h};
-//         if(SDL_RenderCopy(renderer, texture, NULL, &dstrect) != 0){
+//         if (SDL_RenderCopy(renderer, texture, NULL, &dstrect) != 0) {
 //             printf("SDL_RenderCopy: %s\n", SDL_GetError());
 //             SDL_FreeSurface(surface);
 //             SDL_DestroyTexture(texture);
+//             free(text_copy);
 //             TTF_CloseFont(font);
+//             return -1;
 //         }
+
 //         y_offset += surface->h;
 //         SDL_FreeSurface(surface);
 //         SDL_DestroyTexture(texture);
 
-//         if(saved_char == '\0'){
+//         if (saved_char == '\0') {
 //             break;
 //         }
-//         *ptr = saved_char;
-//         line_start = ptr + 1;
+//         *last_fit = saved_char;
+//         line_start = last_fit;
 //     }
 
 //     TTF_CloseFont(font);
 //     free(text_copy);
 
-//     return TRUE;
+//     return 0;
 // }
 
 int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
@@ -316,7 +360,7 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
     // SDL_Color color = {0, 0, 0};
     // SDL_Surface* surface = TTF_RenderText_Blended(font, text, *color);
     SDL_Surface *surface;
-    SDL_Texture* texture;
+    SDL_Texture *texture;
     int32_t cur_x = x;
     const char *it = text;
     // extern int8_t finish;
@@ -378,7 +422,7 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             if(sound != NULL) Mix_FreeChunk(sound);
             return FALSE;
         }
-
+        // printf("%d %d\n", tmp_increase, w);
         SDL_Rect dstrect = {cur_x, y, tmp_increase, surface->h};
         SDL_FreeSurface(surface);
         cur_x += tmp_increase;

@@ -19,7 +19,15 @@
 #include <SDL_ttf.h>
 #endif
 
+int8_t renderBackground(SDL_Renderer *, SDL_DisplayMode *, const char *);
 int8_t renderCharacter(SDL_Renderer *, SDL_DisplayMode *, const char *);
 int8_t renderAvatar(SDL_Renderer *, SDL_DisplayMode *, const char *);
+void fadeEffect(SDL_Renderer *, SDL_Texture *, SDL_Rect *, int32_t, int32_t);
+void slideEffect(SDL_Renderer *, SDL_Texture *, SDL_Rect *, int32_t, int32_t);
+void zoomEffect(SDL_Renderer *, SDL_Texture *, SDL_Rect *, int32_t, int32_t);
+void rotateEffect(SDL_Renderer *, SDL_Texture *, SDL_Rect *, int32_t, int32_t);
+
+extern int8_t inEffect;
+extern int8_t outEffect;
 
 #endif

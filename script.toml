@@ -1,244 +1,413 @@
-name = "script"
-start = 6
-1: "bag", 2: "ball" 3: "knife" 4: "backpack" 5: computer
+script="成為皇帝" 
+start=1 // 定義劇本的開始節點 
 
-{{1, "bag", "bag.bmp"}, {2, "ball", "ball.jpg"}}
-scanf("{%d, %s, %s}")
+[item] 
+{1,"龍紋玉佩","pic1.bmp"} 
+{2,"智者之書","pic2.bmp"} 
+{3,"寶劍","pic3.bmp"} 
+
+[player]
+stat.name="luck"
+stat=5
+state=50 // 初始狀態
+
+[npc]
+{1,"智者","pic1.bmp","NULL",0}
+{2,"俠客","pic2.bmp",NULL,0}
+{3,"宮女間諜","pic3.bmp",NULL,0}
+{4,"陰險宦官","pic4.bmp",NULL,0}
+
+[1]
+title="出生"
+background="皇宮" 
+text="請選擇出生的條件 並幫他取個名字請選擇出生的條件 並幫他取個名字請選擇出生的條件 並幫他取個名字請選擇出生的條件 並幫他取個名字請選擇出生的條件 並幫他取個名字"
+option={2,3,4} 
+
+[2]
+title="皇子"
+text="你出生在皇宮，是皇上最小的兒子，你接下來的選擇"
+option={5,6,7} 
+player.state=50
+
+[3]
+title="書生"
+background="書院" 
+text="你出生在書香門第，憑藉自己的努力成為了書生，你接下來的選擇"
+option={8,9,10} 
+player.state=50
+
+[4]
+title="賤民"
+background="茅舍" 
+text="你出生於賤民之家，生活窮困，你接下來的選擇"
+option={11,12,13} 
+player.state=50
+
+// 共同劇情節點：發現陰謀
+[5]
+title="宮廷生活"
+background="宮廷"
+text="你在宮廷中發現了一個驚天陰謀。"
+option={14,15,16}
+player.state=50
+
 [6]
-title = "出生"
-text = "選擇出生，幫他取個名字，你出生於一個農家，家裡透過微薄的收入免強過活，你到了適合上學的年紀了，請選擇：你出生於一個農家，家裡透過微薄的收入免強過活，你到了適合上學的年紀了，請選擇："
-option = {7, 8, 9}
-item = {2, 4, -1}
-get_item = {556, 437, 23}
-person_img = 
-background
+title="皇子的冒險"
+background="宮廷"
+text="你決定展開一場冒險，了解更多宮廷中的秘密。"
+option={17,18,19}
+player.state=50
 
 [7]
-title = "富裕"
-text = "一歲抓周，想抓什麼"
-option = {10, 11, 12}
+title="皇子的學習"
+background="書房"
+text="你在書房中學習，了解了更多關於朝政的知識。"
+option={14,15,16}
+player.state=50
 
 [8]
-title = "清寒"
-text = "你出生於一個農家，家裡透過微薄的收入免強過活，你到了適合上學的年紀了，請選擇："
-option = {28, 29, 30}
+title="進士之路"
+background="書院"
+text="你在朝廷中發現了一個驚天陰謀。"
+option={14,15,16}
+player.state=50
 
 [9]
-title = "孤兒"
-text = "自有印象以來，你在孤兒院長大。今天有個人來認養你，你選擇："
-option = {34, 35, 36}
+title="書生的冒險"
+background="書院"
+text="你決定展開一場冒險，了解更多朝廷中的秘密。"
+option={17,18,19}
+player.state=50
 
 [10]
-title = "21st century c language"
-text = "爸爸看了很高興，覺得你一定是位很有才華的孩子，決定送你去普通小學讀書，希望你能在普通的環境中達到卓越的成績，但當你進到普通小學讀書後被 +9 同學揍，你會怎麼做？"
-option = {13, 14, 15}
+title="書生的學習"
+background="書房"
+text="你在書房中學習，了解了更多關於朝政的知識。"
+option={14,15,16}
+player.state=50
 
 [11]
-title = "清明上河圖"
-text = "爸爸看到你選這東西感覺你沒什麼用，不想浪費時間栽培你，所以把你送到少林寺裡面練武功，看看能不能練出個東西，在少林寺裡你看到師父把武功密集藏在床底下，你的選擇是？"
-option = {16, 17, 18}
+title="市井生涯"
+background="市井"
+text="你在市井中聽聞了一個驚天陰謀。"
+option={14,15,16}
+player.state=50
 
 [12]
-title = "一千萬存摺"
-text = "爸爸看了很高興，覺得這個兒子很有品味，所以決定送兒子去讀貴族學校，在貴族學校你被校霸霸凌，請選擇以下方式反擊"
-option = {19, 20, 21}
+title="賤民的冒險"
+background="市井"
+text="你決定展開一場冒險，了解更多宮廷中的秘密。"
+option={17,18,19}
+player.state=50
 
 [13]
-title = "抄起球棒跟它輸贏"
-text = "你成功打贏，你成為學校裡的大哥，身旁有許多小弟，你加入了幫派，懶覺硬梆幫，上了國中你發現這樣下去會辜負父親對自己的期望，因此決定？"
-option = {22, 23, 24}
+title="賤民的學習"
+background="茅舍"
+text="你在茅舍中學習，了解了更多關於宮廷的知識。"
+option={14,15,16}
+player.state=50
 
 [14]
-title = "給它錢求它不要欺負你"
-text = "你真是一個慫包，你父親看你這個樣子覺得你太沒出息了，為了證明給你父親看，證明自己，你決定？"
-option = {22, 23, 24}
+title="尋求智者的建議"
+background="宮廷"
+text="智者提供了你一些有用的建議。"
+option={20,21,22}
+player.state=60
+npc=1
 
 [15]
-title = "直接秀一個閃電五連鞭嚇走它"
-text = "校霸被你的絕招嚇到了，所以馬上離開，你也在學校打響名號，人稱馬國寶，你父親知道這件事之後覺得你是小丑，你為了讓父親不要對你感到失望，你決定？"
-option = {22, 24, 25}
+title="尋求俠客的保護"
+background="宮廷"
+text="俠客承諾保護你並幫助你收集情報。"
+option={20,21,22}
+player.state=60
+npc=2
 
 [16]
-title = "偷偷把密集拿走，躲起來偷偷練"
-text = "你找個地方好好修行，經過 1 年之後你決定？"
-option = {24, 25, 26}
+title="尋找宮女間諜的情報"
+background="宮廷"
+text="宮女間諜告訴你一些關鍵的情報。"
+option={20,21,22}
+player.state=60
+npc=3
 
 [17]
-title = "裝作沒看到，繼續在少林寺當打雜"
-text = "你爸看到你進了少林寺還這麼沒出息，一定一輩子撿角，在家人面前數落你，見狀你憤而？"
-option = {22, 23, 24}
+title="宮廷中的隱秘通道"
+background="宮廷"
+text="你發現了一條宮廷中的隱秘通道，這裡藏著一些秘密。"
+option={14,15,16}
+player.state=55
 
 [18]
-title = " 將這件事告訴師兄，和師兄一起另起爐灶"
-text = "小小年紀的你，所向無敵，神秘超能力，你和師兄練了一年後發現練功沒辦法當飯吃，你為了讓你父親看的起你，你就？"
-option = {22, 23, 24}
+title="朝廷中的密謀"
+background="朝堂"
+text="你聽到了一些朝廷中的密謀，這些信息對你很重要。"
+option={14,15,16}
+player.state=55
 
 [19]
-title = " 用超派鐵拳打爆校霸的頭"
-text = "爸爸看到你這麼派，覺得你超勇的，非常喜歡你，你為了讓父親對你更刮目相看，你決定？"
-option = {22, 23, 24}
+title="宮廷花園的秘密"
+background="花園"
+text="你在宮廷花園中發現了一些秘密。"
+option={14,15,16}
+player.state=55
 
 [20]
-title = " 拿起月旦簡明六法跟校霸講道理"
-text = "爸爸看了覺得你很理性，覺得投資在你身上有價值，你為了讓父親對你更刮目相看，你決定？"
-option = {22, 24, 27}
+title="面臨挑戰"
+background="宮廷"
+text="你在揭露陰謀時遭遇了陰險宦官的反擊。"
+option={23,24,25}
+player.state=50
+npc=4
 
 [21]
-title = " 去找老師求助"
-text = "爸爸覺得你很懦弱，什麼事情都要老師處理，你為了讓你父親看的起你，你就？"
-option = {22, 23, 24}
+title="智者的進一步建議"
+background="宮廷"
+text="智者給了你一些進一步的建議。"
+option={23,24,25}
+player.state=70
+npc=1
 
 [22]
-title = "認真讀書，目標考上師大附中"
-text = "end."
-option = {0,0,0}
+title="俠客的進一步幫助"
+background="宮廷"
+text="俠客給了你一些進一步的幫助。"
+option={23,24,25}
+player.state=70
+npc=2
 
 [23]
-title = "決定變成流氓，成立該地區最大的幫派"
-text = "end."
-option = {0,0,0}
+title="成功獲得龍紋玉佩"
+background="宮廷"
+text="你成功面對挑戰，獲得了龍紋玉佩。"
+option={26,27,28}
+player.state=80
+player.inventory.add=1
 
 [24]
-title = "決定拿父親的錢去創業"
-text = "end."
-option = {0,0,0}
+title="成功獲得智者之書"
+background="宮廷"
+text="你成功面對挑戰，獲得了智者之書。"
+option={26,27,28}
+player.state=80
+player.inventory.add=2
 
 [25]
-title = "決定成立自己的門派，發明自己的拳法，成為當地超強的武功師父"
-text = "end."
-option = {0,0,0}
+title="成功獲得寶劍"
+background="宮廷"
+text="你成功面對挑戰，獲得了寶劍。"
+option={26,27,28}
+player.state=80
+player.inventory.add=3
 
 [26]
-title = "放棄繼續修行，決定重學校，帶著帥氣的武功，迷倒全校同學，同時目標考上師大附中。"
-text = "end."
-option = {0,0,0}
+title="最後的決戰"
+background="皇宮"
+text="你面臨最後的決戰，成敗在此一舉。"
+to={1:35, -1:30} // 如果擁有龍紋玉佩跳到35，否則跳到30
+player.state=90
 
 [27]
-title = "決定競選學生會會長"
-text = "end."
-option = {0,0,0}
+title="最後的策略"
+background="皇宮"
+text="你使用了最後的策略，準備迎接挑戰。"
+to={2:36, -1:30} // 如果擁有智者之書跳到36，否則跳到30
+player.state=90
 
 [28]
-title = "去上學"
-text = "你決定去學了，但由於你家裡窮，用的東西都比較舊，許多同學都霸凌你，嘲笑你，你選擇？"
-option = {31,32,33}
+title="最後的對決"
+background="皇宮"
+text="你與敵人展開了最後的對決，結果即將揭曉。"
+to={3:37, -1:30} // 如果擁有寶劍跳到37，否則跳到30
+player.state=90
 
 [29]
-title = "幫家裡種田"
-text = "本來一切順利，你們雖然貧困但著簡單快樂的生活，可惜一場颱風改變了這一切，你家田裡的東西全部被吹毀了，你該怎麼辦？"
-option = {28,40,41}
+title="成功當上皇帝"
+background="皇宮"
+text="你最終成功揭發了陰謀，登上了皇位。"
+option={0,0,0}
+player.state=100
 
 [30]
-title = "去少林寺練功"
-text = "你到了少林寺，在那裡你過得很順利，但某次你打掃師傅的房間時，你看到了師傅的武功秘笈就藏在床底下，你決定？"
-option = {47,48,49}
+title="失敗"
+background="皇宮"
+text="你未能成功揭發陰謀，失去了繼承權。"
+option={0,0,0}
+player.state=0
 
 [31]
-title = "忍氣吞聲，讀自己的書"
-text = "你的認真校花都看在眼裡，他喜歡上了認真的你，跟你告白，你選擇？"
-option = {42,43,44}
+title="另類成功"
+background="皇宮"
+text="雖然你未能成為皇帝，但你找到了自己的道路，成為了一位有名的俠士。"
+option={0,0,0}
+player.state=50
 
 [32]
-title = "該死的混蛋，揍他們一頓"
-text = "結果對方人多，你被打的很淒慘，你決定？"
-option = {30,31,33}
+title="策略與決策"
+background="皇宮"
+text="你決定如何應對最終的挑戰，選擇了第一個策略。"
+option={38,39,40}
+player.state=95
 
 [33]
-title = "跟學校老師告狀"
-text = "遊戲結束，老師只覺得是你的錯，把你退學了。"
-option = {0,0,0}
+title="決戰計劃"
+background="皇宮"
+text="你決定如何應對最終的挑戰，選擇了第二個計劃。"
+option={41,42,43}
+player.state=95
 
 [34]
-title = "接受認養"
-text = "你接受了他的認養，他自稱是一個貴族，能讓你吃好睡好。你從此不愁吃穿，也開始有自己的想法，你想要："
-option = {37,38,39}
+title="臨場應變"
+background="皇宮"
+text="你決定如何應對最終的挑戰，選擇了臨場應變。"
+option={44,45,46}
+player.state=95
 
 [35]
-title = "假意接受，逃離孤兒院"
-text = "之後要去哪?"
-option = {38,52,0}
+title="使用龍紋玉佩"
+background="皇宮"
+text="你使用了龍紋玉佩，成功應對了挑戰，登上了皇位。"
+option={0,0,0}
+player.state=100
 
 [36]
-title = "拒絕，繼續待在孤兒院"
-text = "你到了該去學校上課的年紀了，在學校你被霸凌，你選擇"
-option = {31,32,33}
+title="使用智者之書"
+background="皇宮"
+text="你使用了智者之書，成功制定了一個巧妙的策略，擊敗了敵人。"
+option={0,0,0}
+player.state=100
 
 [37]
-title = "去上學"
-text = "在學校，你被校霸霸凌，你選擇"
-option = {19,20,21}
+title="使用寶劍"
+background="皇宮"
+text="你使用了寶劍，勇敢地面對敵人並最終取得勝利。"
+option={0,0,0}
+player.state=100
+
+// 中間劇情和物品分發場景
 
 [38]
-title = "尋找自己親生父母"
-text = "你踏上尋找親生父母的旅程"
-option = {0,0,0}
+title="智者的策略"
+background="皇宮"
+text="你使用了智者提供的策略，準備迎接最終的挑戰。"
+option={47,48,49}
+player.state=95
 
 [39]
-title = "出去闖天下"
-text = "要去哪?"
-option = {38,53,0}
+title="智者的預言"
+background="皇宮"
+text="你根據智者的預言，做出了相應的準備。"
+option={47,48,49}
+player.state=95
 
 [40]
-title = "捲土重來，重整家園"
-text = "遊戲結束，你發現你家土下其實埋有大量寶藏，你成功翻轉人生。"
-option = {0,0,0}
+title="智者的支持"
+background="皇宮"
+text="智者提供了強有力的支持，讓你更加自信。"
+option={47,48,49}
+player.state=95
 
 [41]
-title = "不知道該怎麼辦，在家耍廢"
-text = "你突然覺得自己有點太廢，你決定？"
-option = {28,45,46}
+title="俠客的幫助"
+background="皇宮"
+text="俠客給予了你強大的支持，讓你能夠應對挑戰。"
+option={50,51,52}
+player.state=95
 
 [42]
-title = "仍不理會，繼續苦讀"
-text = "遊戲結束，恭喜你有著堅強的意志力，你考上了頂大，賺了大錢，翻轉了人生。"
-option = {0,0,0}
+title="俠客的戰略"
+background="皇宮"
+text="你使用了俠客提供的戰略，準備迎接挑戰。"
+option={50,51,52}
+player.state=95
 
 [43]
-title = "答應告白，跟校花出去玩"
-text = "遊戲結束，你跟校花交往，但你太窮了，買不起禮物送他，你被拋棄了，課業也荒廢了，哭哭。"
-option = {0,0,0}
+title="俠客的保護"
+background="皇宮"
+text="俠客親自保護你，讓你能夠專注於挑戰。"
+option={50,51,52}
+player.state=95
 
 [44]
-title = "你其實喜歡男生"
-text = "遊戲結束，你是甲"
-option = {0,0,0}
+title="臨場應變策略"
+background="皇宮"
+text="你根據臨場情況，靈活應變，準備迎接挑戰。"
+option={53,54,55}
+player.state=95
 
 [45]
-title = "借錢去買加密貨幣"
-text = "遊戲結束，你時機看得很準，幣值翻了好幾萬倍，恭喜你成功翻轉人生"
-option = {0,0,0}
+title="臨場決策"
+background="皇宮"
+text="你在挑戰中做出了迅速而果斷的決策。"
+option={53,54,55}
+player.state=95
 
 [46]
-title = "去夜店打工"
-text = "在那裡，你雖然賺很多，但有一次，男同事邀請你一起吸毒，你要回他？"
-option = {50,51,44}
+title="臨場變數"
+background="皇宮"
+text="你根據臨場變數，靈活應對，準備迎接挑戰。"
+option={53,54,55}
+player.state=95
 
 [47]
-title = "假裝沒看到，繼續練功"
-text = "遊戲結束，可惜你天份不夠，師傅把你逐出了少林寺。"
-option = {0,0,0}
+title="策略成功"
+background="皇宮"
+text="你成功運用智者的策略，擊敗了敵人，登上了皇位。"
+option={0,0,0}
+player.state=100
 
 [48]
-title = "偷走秘籍，練取神功"
-text = "遊戲結束，你成功練到成了神功，雖然師傅發現了，但他根本打不過你，你也把之前的恩怨都了結了"
-option = {0,0,0}
+title="預言成真"
+background="皇宮"
+text="智者的預言成真，你成功應對了挑戰，成為了皇帝。"
+option={0,0,0}
+player.state=100
 
 [49]
-title = "告訴師兄們"
-text = "遊戲結束，你的師兄們跟師父告狀，你被師傅逐出少林寺..."
-option = {0,0,0}
+title="支持的力量"
+background="皇宮"
+text="在智者的支持下，你最終取得了勝利，成為了皇帝。"
+option={0,0,0}
+player.state=100
 
 [50]
-title = "當然一起抽啊"
-text = "遊戲結束，你抽了之後發現毒品超噁心，你就離職了，把賺到的錢拿回去孝敬父母，你真棒"
-option = {0,0,0}
+title="俠客的勝利"
+background="皇宮"
+text="俠客的幫助讓你成功擊敗了敵人，登上了皇位。"
+option={0,0,0}
+player.state=100
 
 [51]
-title = "吸毒不好"
-text = "遊戲結束，你同事覺得你是國小屁孩，不爽揍你一頓，你被打到鼻青臉腫，送醫不治..."
-option = {0,0,0}
+title="戰略成功"
+background="皇宮"
+text="你成功運用了俠客的戰略，成為了皇帝。"
+option={0,0,0}
+player.state=100
 
 [52]
-title = "在街頭流浪"
-text = "你從此露宿街頭..."
-option = {0,0,0}
+title="保護的力量"
+background="皇宮"
+text="在俠客的保護下，你最終取得了勝利，成為了皇帝。"
+option={0,0,0}
+player.state=100
+
+[53]
+title="應變成功"
+background="皇宮"
+text="你成功應變，擊敗了敵人，成為了皇帝。"
+option={0,0,0}
+player.state=100
+
+[54]
+title="決策勝利"
+background="皇宮"
+text="你的臨場決策讓你成功成為了皇帝。"
+option={0,0,0}
+player.state=100
+
+[55]
+title="變數掌控"
+background="皇宮"
+text="你成功掌控了變數，最終成為了皇帝。"
+option={0,0,0}
+player.state=100
