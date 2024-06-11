@@ -4,8 +4,12 @@
 #include "toml_parse.h"
 #include "freshNewScreen.h"
 #include "backpack.h"
+#include "userInput.h"
 
 int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
+    char *username = NULL;
+    userInpStr(renderer, DM, &username, "font_lib/Arial.ttf",\
+     "挑戰者你好，讓我認識你一下吧，請輸入你的姓名：");
     int8_t quit = 0;
     int32_t dialogX = (DM->w - (DM->w / 5) * 4) / 2;
     int32_t dialogY = DM->h - (DM->h / 4) - 200;

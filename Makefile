@@ -15,8 +15,10 @@ LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 all: main program
 
-program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o constants.o musicUtil.o toml_parse_item.o player_stats.o utility.h gameLoop.h constants.h musicUtil.h toml_parse_item.h player_stats.h
-	gcc -g -fsanitize=address program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o constants.o musicUtil.o toml_parse_item.o player_stats.o -o program $(LDFLAGS)
+program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o \
+constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o utility.h gameLoop.h constants.h musicUtil.h toml_parse_item.h player_stats.h userInput.h
+	gcc -g -fsanitize=address program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o \
+	 backpack.o constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o -o program $(LDFLAGS)
 
 main: main.o toml_parse.o
 	gcc main.o toml_parse.o -o main $(LDFLAGS)
@@ -53,6 +55,9 @@ toml_parse_item.o: toml_parse_item.c toml_parse_item.h
 
 player_stats.o: player_stats.c player_stats.h
 	gcc -c player_stats.c $(CFLAGS)
+
+userInput.o: userInput.c userInput.h
+	gcc -c userInput.c $(CFLAGS)
 
 clean:
 	rm -f test main game_frontend program *.o 

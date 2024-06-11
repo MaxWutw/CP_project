@@ -315,7 +315,8 @@ void DestoryAll_and_Quit(SDL_Renderer *renderer, SDL_Window *win){
 //     return 0;
 // }
 
-int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
+int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text,\
+ int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
     TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
     if(font == NULL){
         printf("TTF_OpenFont: %s\n", TTF_GetError());
