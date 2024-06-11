@@ -8,7 +8,7 @@
 
 int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     char *username = NULL;
-    userInpStr(renderer, DM, &username, "font_lib/Arial.ttf",\
+    userInpName(renderer, DM, &username, "font_lib/Arial.ttf",\
      "挑戰者你好，讓我認識你一下吧，請輸入你的姓名：");
     int8_t quit = 0;
     int32_t dialogX = (DM->w - (DM->w / 5) * 4) / 2;
@@ -190,7 +190,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         SDL_RenderPresent(renderer);
         if(text_name != NULL) free(text_name);
     }
-    // cleanBackpack(backpackObj);
+    cleanBackpack(backpackObj);
     SDL_DestroyTexture(bg_texture);
     Mix_FreeMusic(music);
     return TRUE;

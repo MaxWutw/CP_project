@@ -1,6 +1,6 @@
 #include "userInput.h"
 
-int8_t userInpStr(SDL_Renderer *renderer, SDL_DisplayMode *DM, char **text, const char* font_path, const char *str2user){
+int8_t userInpName(SDL_Renderer *renderer, SDL_DisplayMode *DM, char **text, const char* font_path, const char *str2user){
     int32_t fontSize = 24;
     TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
     if(font == NULL){
@@ -54,5 +54,6 @@ int8_t userInpStr(SDL_Renderer *renderer, SDL_DisplayMode *DM, char **text, cons
     SDL_StopTextInput();
     TTF_CloseFont(font);
     printf("You entered: %s\n", inputText);
+    set_player_name(inputText);
     return TRUE;
 }
