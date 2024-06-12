@@ -13,7 +13,7 @@
 CFLAGS := `sdl2-config --cflags` -ggdb3 -O0 --std=gnu99 -Wall
 LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
-all: main program
+all: program
 
 program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o \
 constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o loadSaving.o utility.h \
@@ -22,8 +22,8 @@ gameLoop.h constants.h musicUtil.h toml_parse_item.h player_stats.h userInput.h 
 	 backpack.o constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o \
 	 loadSaving.o -o program $(LDFLAGS)
 
-main: main.o toml_parse.o
-	gcc main.o toml_parse.o -o main $(LDFLAGS)
+# main: main.o toml_parse.o
+# 	gcc main.o toml_parse.o -o main $(LDFLAGS)
 
 program.o: program.c
 	gcc -c program.c $(CFLAGS)
@@ -34,9 +34,6 @@ gameLoop.o: gameLoop.c
 freshNewScreen.o: freshNewScreen.c
 	gcc -c freshNewScreen.c $(CFLAGS)
 
-backpack.o: backpack.c
-	gcc -c backpack.c $(CFLAGS)
-
 main.o: main.c
 	gcc -c main.c $(CFLAGS)
 
@@ -46,7 +43,7 @@ utility.o: utility.c
 constants.o: constants.c constants.h
 	gcc -c constants.c $(CFLAGS)
 
-toml_parse.o: toml_parse.c
+toml_parse.o: toml_parse.c toml_parse.h
 	gcc -c toml_parse.c $(CFLAGS)
 
 musicUtil.o: musicUtil.c musicUtil.h
@@ -54,6 +51,9 @@ musicUtil.o: musicUtil.c musicUtil.h
 
 toml_parse_item.o: toml_parse_item.c toml_parse_item.h
 	gcc -c toml_parse_item.c $(CFLAGS)
+
+backpack.o: backpack.c backpack.h
+	gcc -c backpack.c $(CFLAGS)
 
 player_stats.o: player_stats.c player_stats.h
 	gcc -c player_stats.c $(CFLAGS)

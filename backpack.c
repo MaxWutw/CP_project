@@ -60,7 +60,7 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
         // name
         // set_player_name("韋小寶");
         rendertext(renderer, "font_lib/biakai.ttf", get_player_name(), backpackX + backpackWidth / 20 + portraitSize / 2 - 40, portraitRect.y + portraitRect.h + 10, windowWidth, windowHeight, 24, &textColor);
-
+        // printBackpackItem(backpack);
         int32_t gridCols = 5;
         int32_t gridRows = 4;
         int32_t gridCellSize = (backpackWidth - 40) / gridCols - 50; 
@@ -93,9 +93,10 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
             int32_t mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);
             if(event.type == SDL_QUIT){
+                openBackPack = 0;
                 quit = 1;
-                // return FALSE;
-                break;
+                return FALSE;
+                // break;
             }
             else if(event.type == SDL_MOUSEBUTTONDOWN){
                 if(mouseX > closeX && mouseX < closeX + closeSize && \
@@ -110,7 +111,7 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
         SDL_RenderPresent(renderer);
     }
 
-    return 0;
+    return TRUE;
 }
 
 int32_t calPersonDeposit(){
@@ -142,7 +143,7 @@ sBackPack* SetupBackpack(void){
 
 int8_t AddItemToBackpack(sBackPack *backpack, Item *inpData){
     if(backpack == NULL){
-        printf( "%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__ );
+        printf("%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__);
         return FALSE;
     }
     sListNode *pNewNode = malloc(sizeof(sListNode));
@@ -244,7 +245,8 @@ static int8_t __updateBackpack(SDL_Renderer *renderer, sBackPack *backpack, int3
     sListNode *pNode = backpack->pHead;
     int32_t counting = 1;
     while(pNode != NULL){
-        if(counting != cnt){
+        // printf("%d %d\n", counting, cnt);
+        if(counting < cnt){
             pNode = pNode->pNext;
             counting++;
             continue;
@@ -264,6 +266,7 @@ static int8_t __updateBackpack(SDL_Renderer *renderer, sBackPack *backpack, int3
         SDL_DestroyTexture(itemTex);
 
         pNode = pNode->pNext;
+        counting++;
     }
 
     return TRUE;

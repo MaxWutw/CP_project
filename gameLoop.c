@@ -8,6 +8,7 @@
 #include "userInput.h"
 #include "loadSaving.h"
 
+static int32_t add_item_flag = 0;
 int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     char *username = NULL;
     if( userInpName(renderer, DM, &username, "font_lib/Arial.ttf",\
@@ -25,8 +26,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     regFreeCallBack(backpackObj, myFreeFunc);
     // if(debugButton){
         // debugButton = 0;
-    Item item = {.id=10, .name="sword", .picture_file_name="img/sword.png"};
-    AddItemToBackpack(backpackObj, &item);
+    // Item item = {.id=10, .name="sword", .picture_file_name="img/sword.png"};
+    // AddItemToBackpack(backpackObj, &item);
     // }
     // printBackpackItem(backpackObj);
 
@@ -86,6 +87,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                     renderBackground(renderer, DM, "img/background.jpg");
                     inEffect = 1;
                     outEffect = 0;
+                    add_item_flag = 0;
                     SDL_Delay(250);
                 }
                 // option2 button
@@ -97,6 +99,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                     renderBackground(renderer, DM, "img/background.jpg");
                     inEffect = 1;
                     outEffect = 0;
+                    add_item_flag = 0;
                     SDL_Delay(250);
                 }
                 // option3 button
@@ -108,6 +111,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                     renderBackground(renderer, DM, "img/background.jpg");
                     inEffect = 1;
                     outEffect = 0;
+                    add_item_flag = 0;
                     SDL_Delay(250);
                 }
                 // backpack button
@@ -177,7 +181,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         if( get_text(pFile, current_key, &text_name) == 1 ){
             return FALSE;
         }
-        static int32_t add_item_flag = 0;
+        // static int32_t add_item_flag = 0;
+        // printf("%d\n", current_key);
         if(add_item_flag==0 && get_add_inventory(pFile, current_key, backpackObj, items) == 0){
             printf("an item added\n");
             add_item_flag = 1;
@@ -215,7 +220,11 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         // 幸運條
         renderLuckBar(renderer, getLuckValue(state), DM);
         // printBackpackItem(backpack);
-        if(openBackPack) backpack_interface(renderer, DM, backpackObj);
+        if(openBackPack){
+            if( backpack_interface(renderer, DM, backpackObj) == FALSE){
+                return FALSE;
+            }
+        }
 
         SDL_RenderPresent(renderer);
         if(text_name != NULL) free(text_name);

@@ -2,9 +2,9 @@ script="成為皇帝"
 start=1 // 定義劇本的開始節點 
 
 [item] 
-{1,"龍紋玉佩","pic1.bmp"} 
-{2,"智者之書","pic2.bmp"} 
-{3,"寶劍","pic3.bmp"} 
+{1,"龍紋玉佩","img/dragon.png"} 
+{2,"智者之書","img/book.png"} 
+{3,"寶劍","img/sword.png"} 
 
 [player]
 stat.name="luck"

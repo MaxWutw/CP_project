@@ -177,6 +177,7 @@ int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , It
             int32_t item_id=0;
             sscanf( tmp , "=%d", &item_id);
             printf("obtain item %d, name: %s\n", item_id, items[item_id-1].name);
+            AddItemToBackpack(backpack, &items[item_id-1]);
             return 0;
         }
         if( strchr( buffer , '[' ) != NULL ) {

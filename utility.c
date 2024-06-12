@@ -88,7 +88,7 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
                         printf("Start Game\n");
                         break;
                     case 1:
-                        printf("Author\n");
+                        printf("Load\n");
                         break;
                     case 2:
                         printf("How to Play\n");
@@ -148,7 +148,7 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     }
     SDL_RenderFillRect(renderer, fillRect3);
-    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Author", fillRect3->x, fillRect3->y, fillRect3->w, fillRect3->h, 48, &color_black);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Load", fillRect3->x, fillRect3->y, fillRect3->w, fillRect3->h, 48, &color_black);
 
 
     return TRUE;
