@@ -160,5 +160,29 @@ int32_t get_option( FILE *p_file , int32_t key , int32_t option[3] ) {
     return 3;
 }
 
+int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , Item *items){
 
+    if( !p_file ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return 1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "player.inventory.add" ) != NULL ) {
+            strcpy( tmp , strchr( buffer , '=') );
+            int32_t item_id=0;
+            sscanf( tmp , "=%d", &item_id);
+            printf("obtain item %d, name: %s\n", item_id, items[item_id-1].name);
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
+        }
+    }
+    return 3;
+}
 

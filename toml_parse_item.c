@@ -1,37 +1,37 @@
+#include <stdio.h>
 #include "toml_parse_item.h"
 
 int32_t get_items(FILE *pFile, Item *items, int32_t *items_count){
-    if(pFile==NULL)return -1;
-
+    if(pFile == NULL) return -1;
+	fseek(pFile, 0, SEEK_SET);
     char line[256];
-	int in_items_section = 0;
-	*items_count = 0;
+    int in_items_section = 0;
+    *items_count = 0;
+    while (fgets(line, sizeof(line), pFile) != NULL) {
+        if (strstr(line, "[item]")) {
+            in_items_section = 1;
+            continue;
+        }
 
-	while (fgets(line, sizeof(line), pFile)) {
-		if (strstr(line, "[item]")) {
-			in_items_section = 1;
-			continue;
-		}
+        if (in_items_section) {
+            if (line[0] == '[') {
+                break; // End of [item] section
+            }
 
-		if (in_items_section) {
-			if (line[0] == '[') {
-				break; // End of [item] section
-			}
+            int id;
+            char name[50];
+            char picture_file_name[50];
 
-			int id;
-			char name[50];
-			char picture_file_name[50];
+            if (sscanf(line, " {%d , \"%[^\"]\", \"%[^\"]\"},", &id, name, picture_file_name) == 3) {
+                items[*items_count].id = id;
+                strcpy(items[*items_count].name, name);
+                strcpy(items[*items_count].picture_file_name, picture_file_name);
+                (*items_count)++;
+            }
+        }
+    }
 
-			if (sscanf(line, " {%d , \"%[^\"]\", \"%[^\"]\"},", &id, name, picture_file_name) == 3) {
-				items[*items_count].id = id;
-				strcpy(items[*items_count].name, name);
-				strcpy(items[*items_count].picture_file_name, picture_file_name);
-				(*items_count)++;
-			}
-		}
-	}
-
-	return 1; // you forgot to add the return value --max
+    return 1; 
 }
 
 /* test code

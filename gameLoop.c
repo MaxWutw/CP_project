@@ -2,6 +2,7 @@
 #include "utility.h"
 #include "constants.h"
 #include "toml_parse.h"
+#include "toml_parse_item.h"
 #include "freshNewScreen.h"
 #include "backpack.h"
 #include "userInput.h"
@@ -37,10 +38,19 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     GameState state = STATE_BIRTH;
     int8_t hover[3] = {0};
     int32_t option[3], current_key = START;
+    Item items[100];
+    int32_t total_num_items;
     int32_t ret = get_option(pFile, current_key, option);
     if(ret != 0){
         printf("end of story\n");
         return 0;
+    }
+    if (get_items(pFile, items, &total_num_items) == 1) {
+        for (int i = 0; i < total_num_items; i++) {
+            printf("ID: %d, Name: %s, Picture: %s\n", items[i].id, items[i].name, items[i].picture_file_name);
+        }
+    } else {
+        printf("Failed to read items.\n");
     }
     // int8_t finish = 1;
     // extern int8_t finish;
@@ -50,7 +60,6 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         printf("Error Read Image: %s\n", SDL_GetError());
         return FALSE;
     }
-
     SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(renderer, bg);
     // SDL_RenderCopy(renderer, bg_texture, NULL, &img);
     SDL_FreeSurface(bg);
@@ -151,6 +160,11 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         char *text_name = NULL;
         if( get_text(pFile, current_key, &text_name) == 1 ){
             return FALSE;
+        }
+        static int32_t add_item_flag = 0;
+        if(add_item_flag==0 && get_add_inventory(pFile, current_key, backpackObj, items) == 0){
+            printf("an item added\n");
+            add_item_flag = 1;
         }
         if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
             text_name, dialogX, \
