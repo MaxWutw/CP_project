@@ -315,38 +315,104 @@ void DestoryAll_and_Quit(SDL_Renderer *renderer, SDL_Window *win){
 //     return 0;
 // }
 
-int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text,\
- int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
-    TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
-    if(font == NULL){
+// int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text,
+//  int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color){
+//     TTF_Font* font = TTF_OpenFont(font_path, fontSize); // 使用字體的路徑
+//     if(font == NULL){
+//         printf("TTF_OpenFont: %s\n", TTF_GetError());
+//         return FALSE;
+//     }
+//     SDL_Surface* surface = TTF_RenderUTF8_Solid(font, text, *color);
+//     if(surface == NULL){
+//         printf("TTF_RenderUTF8_Solid: %s\n", SDL_GetError());
+//         TTF_CloseFont(font);
+//         return FALSE;
+//     }
+
+//     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+//     if(texture == NULL){
+//         printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+//         SDL_FreeSurface(surface);
+//         TTF_CloseFont(font);
+//         return FALSE;
+//     }
+//     SDL_Rect dstrect = {x, y, surface->w, surface->h};
+//     if(SDL_RenderCopy(renderer, texture, NULL, &dstrect) != 0){
+//         printf("SDL_RenderCopy: %s\n", SDL_GetError());
+//         SDL_FreeSurface(surface);
+//         SDL_DestroyTexture(texture);
+//         TTF_CloseFont(font);
+//     }
+//     SDL_FreeSurface(surface);
+//     SDL_DestroyTexture(texture);
+//     TTF_CloseFont(font);
+
+//     return TRUE;
+// }
+
+int8_t rendertext(SDL_Renderer* renderer, const char* font_path, const char* text, 
+                  int32_t x, int32_t y, int32_t w, int32_t h, int32_t fontSize, SDL_Color *color) {
+    TTF_Font* font = TTF_OpenFont(font_path, fontSize);
+    if (font == NULL) {
         printf("TTF_OpenFont: %s\n", TTF_GetError());
         return FALSE;
     }
-    SDL_Surface* surface = TTF_RenderUTF8_Solid(font, text, *color);
-    if(surface == NULL){
-        printf("TTF_RenderUTF8_Solid: %s\n", SDL_GetError());
-        TTF_CloseFont(font);
-        return FALSE;
-    }
+    setlocale(LC_ALL, ""); // localize
+    //const char *line_start = text;
+    const char *it = text;
+    int32_t cur_x = x;
+    int32_t cur_y = y;
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    if(texture == NULL){
-        printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+    while (*it) {
+        wchar_t wc;
+        int32_t leng = mbtowc(&wc, it, MB_CUR_MAX);
+        if (leng < 0) {
+            perror("mbtowc");
+            TTF_CloseFont(font);
+            return FALSE;
+        }
+
+        char utf8_char[MB_CUR_MAX + 1];
+        memcpy(utf8_char, it, leng);
+        utf8_char[leng] = '\0';
+
+        SDL_Surface *surface = TTF_RenderUTF8_Solid(font, utf8_char, *color);
+        if (surface == NULL) {
+            printf("TTF_RenderUTF8_Solid: %s\n", SDL_GetError());
+            TTF_CloseFont(font);
+            return FALSE;
+        }
+
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+        if (texture == NULL) {
+            printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+            SDL_FreeSurface(surface);
+            TTF_CloseFont(font);
+            return FALSE;
+        }
+
+        int32_t tmp_increase = surface->w;
         SDL_FreeSurface(surface);
-        TTF_CloseFont(font);
-        return FALSE;
-    }
-    SDL_Rect dstrect = {x, y, surface->w, surface->h};
-    if(SDL_RenderCopy(renderer, texture, NULL, &dstrect) != 0){
-        printf("SDL_RenderCopy: %s\n", SDL_GetError());
-        SDL_FreeSurface(surface);
+
+        if (cur_x + tmp_increase > x + w) { //change line
+            cur_x = x;
+            cur_y += TTF_FontLineSkip(font);
+        }
+
+        SDL_Rect dstrect = {cur_x, cur_y, tmp_increase, surface->h};
+        if (SDL_RenderCopy(renderer, texture, NULL, &dstrect) != 0) {
+            printf("SDL_RenderCopy: %s\n", SDL_GetError());
+            SDL_DestroyTexture(texture);
+            TTF_CloseFont(font);
+            return FALSE;
+        }
+
         SDL_DestroyTexture(texture);
-        TTF_CloseFont(font);
+        cur_x += tmp_increase;
+        it += leng;
     }
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
-    TTF_CloseFont(font);
 
+    TTF_CloseFont(font);
     return TRUE;
 }
 

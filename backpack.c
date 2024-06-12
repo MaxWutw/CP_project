@@ -38,10 +38,10 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
 
         char deposit_output[100];
         snprintf(deposit_output, sizeof(deposit_output), "銀子： %d 兩銀子", calPersonDeposit());
-        rendertext(renderer, "font_lib/biakai.ttf", deposit_output, InfoStartX + 25, InfoStartY + 10, 0, 0, 24, &textColor);
+        rendertext(renderer, "font_lib/biakai.ttf", deposit_output, InfoStartX + 25, InfoStartY + 10, windowWidth, windowHeight, 24, &textColor);
         char curStatus[100];
         snprintf(curStatus, sizeof(curStatus), "位階： %s", PersonCurStatus());
-        rendertext(renderer, "font_lib/biakai.ttf", curStatus, InfoStartX + 25, InfoStartY + 46, 0, 0, 24, &textColor);
+        rendertext(renderer, "font_lib/biakai.ttf", curStatus, InfoStartX + 25, InfoStartY + 46, windowWidth, windowHeight, 24, &textColor);
         
         // close
         int32_t closeX = backpackX + backpackWidth - 40, closeY = backpackY - 10, closeSize = 30;
@@ -59,7 +59,7 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
 
         // name
         // set_player_name("韋小寶");
-        rendertext(renderer, "font_lib/biakai.ttf", get_player_name(), backpackX + backpackWidth / 20 + portraitSize / 2 - 40, portraitRect.y + portraitRect.h + 10, 0, 0, 24, &textColor);
+        rendertext(renderer, "font_lib/biakai.ttf", get_player_name(), backpackX + backpackWidth / 20 + portraitSize / 2 - 40, portraitRect.y + portraitRect.h + 10, windowWidth, windowHeight, 24, &textColor);
 
         int32_t gridCols = 5;
         int32_t gridRows = 4;

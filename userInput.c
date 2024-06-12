@@ -47,7 +47,7 @@ int8_t userInpName(SDL_Renderer *renderer, SDL_DisplayMode *DM, char **text, con
         }
         
         if(strcmp(inputText, "") != 0) rendertext(renderer, "font_lib/Arial.ttf", inputText, \
-        (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 200 + 25, 0, 0, fontSize, &color);
+        (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 200 + 25, DM->w , DM->h, fontSize, &color);
         SDL_RenderPresent(renderer);
     }
 
