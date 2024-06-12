@@ -9,6 +9,7 @@
 #include <locale.h>
 #include "constants.h"
 #include "utility.h"
+#include "userInput.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
@@ -21,7 +22,9 @@
 #include <SDL_ttf.h>
 #endif
 
-int8_t save(SDL_Renderer *, SDL_DisplayMode *, int32_t rrent_key);
+int8_t save(SDL_Renderer *, SDL_DisplayMode *, int32_t);
 int8_t load(SDL_Renderer *, SDL_DisplayMode *);
+int8_t saveData(SDL_Renderer *, SDL_DisplayMode *, int32_t);
+int8_t loadData(int32_t);
 
 #endif

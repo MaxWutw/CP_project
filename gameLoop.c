@@ -75,7 +75,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                 quit = 1;
             }
             else if(e.type == SDL_MOUSEBUTTONDOWN){
-                int x, y;
+                int32_t x, y;
                 SDL_GetMouseState(&x, &y);
                 // option1 button
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
@@ -114,9 +114,16 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                 else if(x > 20 && x < 70 && y > 20 && y < 70){
                     openBackPack = 1;
                 }
+                // saving button
+                else if(x > DM->w - 170 && x < DM->w - 120 && y > 20 && y < 70){
+                    // printf("dsafsdafdsf\n");
+                    if( save(renderer, DM, current_key) == FALSE){
+                        return FALSE;
+                    }
+                }
             }
             else{
-                int x, y;
+                int32_t x, y;
                 SDL_GetMouseState(&x, &y);
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     *hover = 1;
@@ -159,7 +166,6 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
         SDL_Rect SavingRect = {DM->w - 170, 20, 50, 50};
         SDL_RenderFillRect(renderer, &SavingRect);
-        save(renderer, DM, current_key);
 
         // 對話框
         SDL_SetRenderDrawColor(renderer, 145, 252, 248, 0xFF);

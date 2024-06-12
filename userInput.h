@@ -18,6 +18,7 @@
 #include <SDL_ttf.h>
 #endif
 
-int8_t  userInpName(SDL_Renderer *, SDL_DisplayMode *, char **text, const char*, const char *);
+int8_t userInpName(SDL_Renderer *, SDL_DisplayMode *, char **, const char*, const char *);
+int8_t userInpStr(SDL_Renderer *, SDL_DisplayMode *, char **, const char* , const char *, int32_t, int32_t, int32_t, int32_t);
 
 #endif
