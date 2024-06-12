@@ -16,7 +16,8 @@ int8_t userInpName(SDL_Renderer *renderer, SDL_DisplayMode *DM, char **text, con
     while(!quit){
         while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT){
-                quit = 1;
+                // quit = 1;
+                return FALSE;
             }
             else if(e.type == SDL_TEXTINPUT){
                 if(strlen(inputText) + strlen(e.text.text) < sizeof(inputText) - 1){
@@ -42,8 +43,8 @@ int8_t userInpName(SDL_Renderer *renderer, SDL_DisplayMode *DM, char **text, con
         SDL_RenderFillRect(renderer, &dialogRect);
         if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
             str2user, (DM->w - (DM->w / 5) * 4) / 2, \
-            DM->h - (DM->h / 4) - 200, (DM->w / 5) * 4, 0, 24, &color) == FALSE){
-            return 0;
+            DM->h - (DM->h / 4) - 200, (DM->w / 5) * 4, 0, 24, &color) == FALSE ){
+            return FALSE;
         }
         
         if(strcmp(inputText, "") != 0) rendertext(renderer, "font_lib/Arial.ttf", inputText, \
