@@ -242,6 +242,9 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
 
         SDL_RenderPresent(renderer);
         if(text_name != NULL) free(text_name);
+
+        //讓程式不要卡死
+        SDL_Delay(500);
     }
     cleanBackpack(backpackObj);
     SDL_DestroyTexture(bg_texture);
