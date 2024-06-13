@@ -57,7 +57,7 @@ background="background.bmp"
 text="你每天沒日沒夜地認真苦讀，希望讓所有人大吃一驚，但有一天你在讀書喘息之時，走在路上，看到了一個老人倒在路上，你選擇："  
 option={8,9,10} 
 player.stat=60 
-npc = 1
+npc=1
 mood = { pic.bmp , 40 }
 
 [6]
@@ -66,7 +66,7 @@ background="background.bmp"
 text="你每天沒日沒夜地認真練武，希望讓所有人大吃一驚，但有一天你在練武喘息之時，走在路上，看到了一個老人倒在路上，你選擇："  
 option={8,9,10} 
 player.stat=60 
-npc = 1
+npc=1
 mood = { pic.bmp , 40 }
 
 [7]
@@ -75,7 +75,7 @@ background="background.bmp"
 text="你每天沒日沒夜地認真學習經商，希望讓所有人大吃一驚，但有一天你在學習經商喘息之時，走在路上，看到了一個老人倒在路上，你選擇："  
 option={8,9,10} 
 player.stat=60 
-npc = 1
+npc=1
 mood = { pic.bmp , 40 }
 
 [8]
@@ -84,7 +84,7 @@ background="background.bmp"
 text="這位老人其實是一位聰明的智者，他很感謝你的幫助，他決定送你神聖寶劍或是智者之書，你選擇哪一個："  
 option={11,12,13} 
 player.stat=60 
-npc = 1
+npc=1
 mood = { pic.bmp , 40 }
 
 [9]
@@ -93,7 +93,7 @@ background="background.bmp"
 text="你真狠心... 你確定不幫助他嗎？但或許這世界就是這麼殘酷吧！你走後，看到一個美女，他看起來心事重重，你選擇："  
 option={15,16,8} 
 player.stat=60 
-npc = 2
+npc=2
 mood = { pic.bmp , 40 }
 
 [10]
@@ -102,7 +102,7 @@ background="background.bmp"
 text="你太無情了吧！但你踹完他之後，你發現他身上掉出一把神聖寶劍和一個智者之書，你決定偷走嗎，你的選擇："  
 option={11,12,14} 
 player.stat=60 
-npc = 1
+npc=1
 mood = { pic.bmp , 40 }
 
 [11]
@@ -111,7 +111,7 @@ background="background.bmp"
 text="恭喜你獲得神聖寶劍，此時你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=60 
-npc = 2
+npc=2
 player.inventory.add=2
 mood = { pic.bmp , 40 }
 
@@ -121,7 +121,7 @@ background="background.bmp"
 text="恭喜你獲得智者之書，此時你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=60 
-npc = 2
+npc=2
 player.inventory.add=1 
 mood = { pic.bmp , 40 }
 
@@ -131,7 +131,7 @@ background="background.bmp"
 text="老人覺得你太貪心了，所以決定就都不給你了，你只好摸摸鼻子走人，但此時，你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,18} 
 player.stat=60 
-npc = 2
+npc=2
 mood = { pic.bmp , 40 }
 
 [14]
@@ -140,7 +140,7 @@ background="background.bmp"
 text="恩...挺不錯的決定呢，但此時，你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=60 
-npc = 2
+npc=2
 mood = { pic.bmp , 40 }
 
 [15]
@@ -181,7 +181,7 @@ background="background.bmp"
 text="很棒！恭喜你獲得了神聖寶劍和智者之書，但此時，你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=60 
-npc = 2
+npc=2
 player.inventory.add=1 
 player.inventory.add=2
 mood = { pic.bmp , 40 }
@@ -228,7 +228,7 @@ background="background.bmp"
 text="恩...這家麵不錯吃，但你在吃麵的同時，無意間發現，你隔壁的人是一個宦官，他正在籌備一起叛亂，你的選擇："  
 option={28,29,30} 
 player.stat=60 
-npc = 3
+npc=3
 mood = { pic.bmp , 40 }
 
 [26]
@@ -237,7 +237,7 @@ background="background.bmp"
 text="恩...真是把漂亮的寶劍，但你在賣劍的同時，無意間發現，買你劍的人是一個宦官，他正在籌備一起叛亂，你的選擇："  
 option={28,29,30} 
 player.stat=60 
-npc = 3
+npc=3
 mood = { pic.bmp , 40 }
 
 [27]
@@ -246,7 +246,7 @@ background="background.bmp"
 text="恩...這美女歌唱得不錯，但你在欣賞的同時，無意間發現，你隔壁的人是一個宦官，他正在籌備一起叛亂，你的選擇："  
 option={28,29,30} 
 player.stat=60 
-npc = 3
+npc=3
 mood = { pic.bmp , 40 }
 
 [28]
