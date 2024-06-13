@@ -203,6 +203,7 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs){
             strcpy( tmp , strchr( buffer , '=') );
             int32_t npc_id=0;
             sscanf( tmp , "=%d", &npc_id);
+            // renderCharacter(renderer, DM, "img/street_fighter.png");
             //printf("NPC %d show up, name: %s\n", npc_id, npcs[npc_id-1].name);
             return 0;
         }

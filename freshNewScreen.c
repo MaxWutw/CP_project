@@ -31,6 +31,7 @@ int8_t renderBackground(SDL_Renderer *renderer, SDL_DisplayMode *DM, const char 
     }
 
     SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+    SDL_DestroyTexture(bg_texture);
     SDL_FreeSurface(bg);
 
     return TRUE;
