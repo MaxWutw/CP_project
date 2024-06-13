@@ -8,6 +8,8 @@
 #include "constants.h"
 #include "gameLoop.h"
 #include "musicUtil.h"
+#include "loadSaving.h"
+#include "backpack.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
@@ -70,6 +72,12 @@ int main(int argc, char *argv[]){
     textRect.x = ((DM.w - textRect.w) / 2) - 300;
     textRect.y = ((DM.h - textRect.h) / 2) - 250;
     int32_t inc = 1, base_y = textRect.y;
+
+    sBackPack *backpackObj = SetupBackpack(); // store the item
+    regPrintCallBack(backpackObj, printBackpack);
+    regCmpCallBack(backpackObj, cmp);
+    regFreeCallBack(backpackObj, myFreeFunc);
+
     int32_t title_status = 0;
     Mix_Music *music = NULL;
     PlayMusic("music/music_theme.mp3", music, 64);
@@ -114,7 +122,12 @@ int main(int argc, char *argv[]){
             SDL_Delay(1000 / 60);
             alpha -= 5;
         }
-        game_loop(renderer, &DM);
+        game_loop(renderer, &DM, backpackObj);
+    }
+    else if(title_status == 3){
+        if( load(renderer, &DM) == FALSE ){
+            return FALSE;
+        }
     }
 
     // close ttf

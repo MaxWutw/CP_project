@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include "backpack.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
@@ -25,7 +26,7 @@ typedef enum {
     STATE_END
 } GameState;
 
-int8_t game_loop(SDL_Renderer *, SDL_DisplayMode *);
+int8_t game_loop(SDL_Renderer *, SDL_DisplayMode *, sBackPack *);
 void renderChoices(SDL_Renderer*, const char*, const char*, const char*, SDL_DisplayMode *, int8_t *);
 void renderLuckBar(SDL_Renderer*, int, SDL_DisplayMode *);
 void handleChoice(GameState*, int);
