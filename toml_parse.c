@@ -213,3 +213,52 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs){
     }
     return 3;
 }
+
+int32_t check_key_format( FILE *p_file , int32_t key ) {
+    
+    if( !p_file ) return -1;
+
+    char buffer[256];
+
+    if( __find_key( p_file , key ) == -1 ) return -2;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "option" ) != NULL ) {
+            return 1;
+        }
+        if( strstr( buffer , "to" ) != NULL ) {
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return -3;
+        }
+    }
+    return -3;
+
+}
+
+int32_t get_to( FILE *p_file , int32_t key , int32_t to[3] ) {
+
+    if( !p_file ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return 1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "to" ) != NULL ) {
+            strcpy( tmp , strchr( buffer , '{') );
+            sscanf( tmp , "{ %d:%d , -1:%d }", &to[0] , &to[1] , &to[2] );
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
+        }
+    }
+    return 3;
+}

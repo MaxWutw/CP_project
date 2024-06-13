@@ -145,3 +145,47 @@ int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , It
  *      3 : 其他
  */ 
 int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs);
+
+//------------------------------------------------------------------
+/* check_key_format( FILE *p_file , int32_t key )
+ *
+ *  介紹: 
+ *      告訴你給定key的格式 to 或 option 的
+ * 
+ *  輸入:
+ *      1 . file 的 pointer
+ *      2 . 要判斷格式的key
+ *
+ *
+ *  回傳:
+ *      0 : 是 to 的格式
+ *      1 : 是 option 的格式
+ *     -1 : 輸入空指摽
+ *     -2 : 找不到[key]
+ *     -3 : 其他
+ */ 
+int32_t check_key_format( FILE *p_file , int32_t key );
+
+//------------------------------------------------------------------
+/* get_to( FILE *p_file , int32_t key , int32_t to[3] )
+ *
+ *  介紹: 
+ *      拿 指定 key 裡的 to , 存在to[3]裡
+ *      to[0] 存放需要物品的id
+ *      to[1] 存放有物品會跳到劇情的key
+ *      to[2] 存放沒有物品會跳到劇情的key
+ * 
+ *  輸入:
+ *      1 . file 的 pointer
+ *      2 . 要找的option所在的key
+ *      3 . 一個大小為3的int32_t陣列 (用來存to)
+ *
+ *
+ *  回傳:
+ *      0 : 拿到to
+ *     -1 : 輸入空指標
+ *      1 : 找不到[key]
+ *      2 : 在[key]裡找不到to
+ *      3 : 其他
+ */ 
+int32_t get_to( FILE *p_file , int32_t key , int32_t to[3] );
