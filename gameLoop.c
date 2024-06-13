@@ -4,12 +4,12 @@
 #include "toml_parse.h"
 #include "toml_parse_item.h"
 #include "freshNewScreen.h"
-#include "backpack.h"
+// #include "backpack.h"
 #include "userInput.h"
 #include "loadSaving.h"
 
 static int32_t add_item_flag = 0;
-int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
+int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpackObj){
     char *username = NULL;
     if( userInpName(renderer, DM, &username, "font_lib/Arial.ttf",\
      "挑戰者你好，讓我認識你一下吧，請輸入你的姓名：") == FALSE ){
@@ -20,10 +20,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int32_t dialogY = DM->h - (DM->h / 4) - 200;
     int32_t dialogW = (DM->w / 5) * 4;
     int32_t dialogH = (DM->h / 4) - 50;
-    sBackPack *backpackObj = SetupBackpack(); // store the item
-    regPrintCallBack(backpackObj, printBackpack);
-    regCmpCallBack(backpackObj, cmp);
-    regFreeCallBack(backpackObj, myFreeFunc);
+    // sBackPack *backpackObj = SetupBackpack(); // store the item
+    // regPrintCallBack(backpackObj, printBackpack);
+    // regCmpCallBack(backpackObj, cmp);
+    // regFreeCallBack(backpackObj, myFreeFunc);
     // if(debugButton){
         // debugButton = 0;
     // Item item = {.id=10, .name="sword", .picture_file_name="img/sword.png"};
@@ -135,7 +135,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
                 // saving button
                 else if(x > DM->w - 170 && x < DM->w - 120 && y > 20 && y < 70){
                     // printf("dsafsdafdsf\n");
-                    if( save(renderer, DM, current_key) == FALSE){
+                    if( save(renderer, DM, current_key, backpackObj) == FALSE){
                         return FALSE;
                     }
                 }
