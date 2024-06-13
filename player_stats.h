@@ -71,33 +71,34 @@ int32_t delete_item(int32_t id);
 
 //-----------------------------------------------------------------
 
-//this is a npc structure
-typedef struct Npc Npc;
-struct Npc{
-	int32_t status_val;
-	int32_t (*set_npc_status)(Npc *npc, int32_t val);
-	int32_t (*add_npc_status)(Npc *npc, int32_t val);
-	int32_t (*get_npc_status)(Npc *npc);
-};
+// //this is a npc structure
+// typedef struct Npc Npc;
+// struct Npc{
+// 	int32_t id;
+// 	int32_t status_val;
+// 	int32_t (*set_npc_status)(Npc *npc, int32_t val);
+// 	int32_t (*add_npc_status)(Npc *npc, int32_t val);
+// 	int32_t (*get_npc_status)(Npc *npc);
+// };
 
 
-//setup a new npc
-Npc init_npc();
+// //setup a new npc
+// Npc init_npc();
 
 
-//given npc, val
-//set npc's status to val
-//return 0 : success
-int32_t set_npc_status(Npc *npc, int32_t val);
+// //given npc, val
+// //set npc's status to val
+// //return 0 : success
+// int32_t set_npc_status(Npc *npc, int32_t val);
 
 
 
-//given npc, val
-//add npc's status with val
-//return 0: success
-int32_t add_npc_status(Npc *npc, int32_t val);
+// //given npc, val
+// //add npc's status with val
+// //return 0: success
+// int32_t add_npc_status(Npc *npc, int32_t val);
 
 
-//given npc
-//return the npc's status val
-int32_t get_npc_status(Npc *npc);
+// //given npc
+// //return the npc's status val
+// int32_t get_npc_status(Npc *npc);

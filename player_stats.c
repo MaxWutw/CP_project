@@ -63,24 +63,24 @@ int32_t delete_item(int32_t id){
 	return 1;
 }
 
-Npc init_npc(){
-	Npc npc = {0, set_npc_status, add_npc_status, get_npc_status};
-	return npc;
-}
+// Npc init_npc(){
+// 	Npc npc = {0, set_npc_status, add_npc_status, get_npc_status};
+// 	return npc;
+// }
 
 
-int32_t set_npc_status(Npc *npc, int32_t val){
-	npc->status_val = val;
-	return 0;
-}
+// int32_t set_npc_status(Npc *npc, int32_t val){
+// 	npc->status_val = val;
+// 	return 0;
+// }
 
 
-int32_t add_npc_status(Npc *npc, int32_t val){
-	npc->status_val += val;
-	return 0;
-}
+// int32_t add_npc_status(Npc *npc, int32_t val){
+// 	npc->status_val += val;
+// 	return 0;
+// }
 
 
-int32_t get_npc_status(Npc *npc){
-	return npc->status_val;
-}
+// int32_t get_npc_status(Npc *npc){
+// 	return npc->status_val;
+// }

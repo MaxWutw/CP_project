@@ -44,6 +44,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
     int32_t option[3], current_key = START;
     Item items[100];
     int32_t total_num_items;
+    Npc npcs[100];
+    int32_t total_num_npcs;
     int32_t ret = get_option(pFile, current_key, option);
     if(ret != 0){
         printf("end of story\n");
@@ -55,6 +57,18 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM){
         }
     } else {
         printf("Failed to read items.\n");
+    }
+    if (get_npcs(pFile, npcs, &total_num_npcs) == 1) {
+        for (int i = 0; i < total_num_npcs; i++) {
+            printf("ID: %d, Name: %s, Picture: %s, Status: %s, Status Value: %d\n", 
+                npcs[i].id, 
+                npcs[i].name, 
+                npcs[i].picture_file_name, 
+                npcs[i].status_name[0] == '\0' ? "NULL" : npcs[i].status_name, 
+                npcs[i].status_val);
+        }
+    } else {
+        printf("Failed to read NPCs.\n");
     }
     // int8_t finish = 1;
     // extern int8_t finish;

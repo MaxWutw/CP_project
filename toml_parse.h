@@ -108,7 +108,7 @@ int32_t get_option( FILE *p_file , int32_t key , int32_t option[3] );
 /* get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , Item *items)
  *
  *  介紹: 
- *      拿 指定 key 裡的 option , 存在option[3]裡
+ *      拿 指定 key 裡的 player.inventory.add , 存在*backpack裡
  * 
  *  輸入:
  *      1 . file 的 pointer
@@ -125,3 +125,23 @@ int32_t get_option( FILE *p_file , int32_t key , int32_t option[3] );
  *      3 : 其他
  */ 
 int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , Item *items);
+
+/* get_npc_showup( FILE *p_file , int32_t key , Npc *npcs)
+ *
+ *  介紹: 
+ *      拿 指定 key 裡的 npc , 更改圖片
+ * 
+ *  輸入:
+ *      1 . file 的 pointer
+ *      2 . 要找的option所在的key
+ *      3 . 劇本中的npcs[MAX_NPCS] 
+ *
+ *
+ *  回傳:
+ *      0 : 找到指定NPC
+ *     -1 : 輸入空指標
+ *      1 : 找不到[key]
+ *      2 : 在[key]裡找不到NPC
+ *      3 : 其他
+ */ 
+int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs);

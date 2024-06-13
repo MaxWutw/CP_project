@@ -158,7 +158,7 @@ int8_t saveData(SDL_Renderer *renderer, SDL_DisplayMode *DM, int32_t current_key
 }
 
 
-int8_t loadData(int32_t){
-    // pass
-    return TRUE;
-}
+// int8_t loadData(int32_t){
+//     // pass
+//     return TRUE;
+// }

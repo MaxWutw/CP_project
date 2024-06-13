@@ -34,9 +34,50 @@ int32_t get_items(FILE *pFile, Item *items, int32_t *items_count){
     return 1; 
 }
 
+int32_t get_npcs(FILE *pFile, Npc *npcs, int32_t *npcs_count){
+    if(pFile == NULL) return -1;
+	fseek(pFile, 0, SEEK_SET);
+    char line[256];
+    int in_npcs_section = 0;
+    *npcs_count = 0;
+    while (fgets(line, sizeof(line), pFile)) {
+        if (strstr(line, "[npc]")) {
+            in_npcs_section = 1;
+            continue;
+        }
+
+        if (in_npcs_section) {
+            if (line[0] == '[') {
+                break; // End of [npc] section
+            }
+
+            int id;
+            char name[50];
+            char picture_file_name[50];
+            char status_name_placeholder[50];
+            int32_t status_val;
+            
+            if (sscanf(line, " {%d , \"%[^\"]\", \"%[^\"]\", %49[^,], %d}", &id, name, picture_file_name, status_name_placeholder, &status_val) == 5) {
+                npcs[*npcs_count].id = id;
+                strcpy(npcs[*npcs_count].name, name);
+                strcpy(npcs[*npcs_count].picture_file_name, picture_file_name);
+                if (strcmp(status_name_placeholder, "NULL") == 0) {
+                    npcs[*npcs_count].status_name[0] = '\0'; // 空字串表示NULL
+                } else {
+                    strcpy(npcs[*npcs_count].status_name, status_name_placeholder);
+                }
+                npcs[*npcs_count].status_val = status_val;
+                (*npcs_count)++;
+            }
+        }
+    }
+
+    return 1; 
+}
+
 /* test code
 
-int main() {
+int main() { //for items
 	Item items[MAX_ITEMS];
 	int num_items = 0;
 	FILE *file = fopen("debug.toml", "r");
@@ -51,4 +92,30 @@ int main() {
 	return 0;
 }
 
+int main() { //for npcs
+    FILE *file = fopen("npcs.txt", "r");
+    if (!file) {
+        perror("Failed to open file");
+        return 1;
+    }
+
+    Npc npcs[100];
+    int32_t npcs_count;
+
+    if (get_npcs(file, npcs, &npcs_count) == 1) {
+        for (int i = 0; i < npcs_count; i++) {
+            printf("ID: %d, Name: %s, Picture: %s, Status: %s, Status Value: %d\n", 
+                npcs[i].id, 
+                npcs[i].name, 
+                npcs[i].picture_file_name, 
+                npcs[i].status_name[0] == '\0' ? "NULL" : npcs[i].status_name, 
+                npcs[i].status_val);
+        }
+    } else {
+        printf("Failed to read NPCs.\n");
+    }
+
+    fclose(file);
+    return 0;
+}
 */
