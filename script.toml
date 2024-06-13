@@ -2,9 +2,9 @@ script="成為皇帝"
 start=1 
 
 [item]
-{1,"智慧之書","pic.bmp"}
-{2,"神聖寶劍","pic.bmp"}
-{3,"龍紋玉佩 ","pic.bmp"}
+{1,"智慧之書","img/book.png"}
+{2,"神聖寶劍","img/sword.png"}
+{3,"龍紋玉佩 ","dragon.png"}
 
 
 [player]
