@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
     
     textRect.w = 500;
     textRect.h = 200;
-    textRect.x = ((DM.w - textRect.w) / 2);
+    textRect.x = ((DM.w - textRect.w) / 2) - 300;
     textRect.y = ((DM.h - textRect.h) / 2) - 250;
     int32_t inc = 1, base_y = textRect.y;
     int32_t title_status = 0;
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
 
-            rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w, textRect.h, 108, &color_white);
+            rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", TitleText, textRect.x, textRect.y, textRect.w + DM.w, textRect.h, 108, &color_white);
 
             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);

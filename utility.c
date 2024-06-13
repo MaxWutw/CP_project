@@ -127,7 +127,7 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     }
     SDL_RenderFillRect(renderer, fillRect1);
-    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Start Game", fillRect1->x, fillRect1->y, fillRect1->w, fillRect1->h, 48, &color_black);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Start Game", fillRect1->x, fillRect1->y, fillRect1->w, fillRect1->h, 35, &color_black);
 
 
     if(mouseX > fillRect2->x && mouseX < fillRect2->x + fillRect2->w && \
@@ -138,7 +138,7 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     }
     SDL_RenderFillRect(renderer, fillRect2);
-    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "How To Play", fillRect2->x, fillRect2->y, fillRect2->w, fillRect2->h, 40, &color_black);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "How To \n Play", fillRect2->x, fillRect2->y, fillRect2->w, fillRect2->h, 34, &color_black);
 
     if(mouseX > fillRect3->x && mouseX < fillRect3->x + fillRect3->w && \
         mouseY > fillRect3->y && mouseY < fillRect3->y + fillRect3->h){
@@ -148,7 +148,7 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     }
     SDL_RenderFillRect(renderer, fillRect3);
-    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Load", fillRect3->x, fillRect3->y, fillRect3->w, fillRect3->h, 48, &color_black);
+    rendertext(renderer, "font_lib/Martyric_PersonalUse.ttf", "Load", fillRect3->x, fillRect3->y, fillRect3->w, fillRect3->h, 54, &color_black);
 
 
     return TRUE;
