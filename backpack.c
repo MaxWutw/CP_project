@@ -238,6 +238,8 @@ void regPrintCallBack(sBackPack *backpack, void (*myprint)(const void *)){
 }
 
 static int8_t __updateBackpack(SDL_Renderer *renderer, sBackPack *backpack, int32_t x, int32_t y, int32_t CellSize, int32_t cnt){
+    // printBackpackItem(backpack);
+    
     if(backpack == NULL){
         printf( "%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__ );
         return FALSE;
@@ -266,7 +268,8 @@ static int8_t __updateBackpack(SDL_Renderer *renderer, sBackPack *backpack, int3
         SDL_DestroyTexture(itemTex);
 
         pNode = pNode->pNext;
-        counting++;
+        return TRUE;
+
     }
 
     return TRUE;
