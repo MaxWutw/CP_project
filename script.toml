@@ -19,7 +19,7 @@ stat=50
 [1]
 title="出生"
 background="background.bmp" 
-text="請選擇出生，並幫玩家取個名字吧！"  
+text="你好！請選擇你想要出生的家庭吧！你的選擇："  
 option={2,3,4} 
 player.stat=50 
 mood = { pic.bmp , 50 }
