@@ -384,6 +384,7 @@ static int8_t __getPlayerName(const char *file_path, char **Playername){
             }
         }
     }
+    fclose(pFile);
     return (isFind ? TRUE : FALSE);
 }
 
@@ -406,6 +407,7 @@ static int8_t __getKeyValue(const char *file_path, int32_t *keyValue){
             }
         }
     }
+    fclose(pFile);
     return (isFind ? TRUE : FALSE);
 }
 
@@ -436,6 +438,7 @@ static int8_t __getInventory(const char *file_path, char **invent){
             }
         }
     }
+    fclose(pFile);
     return (isFind ? TRUE : FALSE);
 }
 
