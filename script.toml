@@ -8,8 +8,7 @@ start=1 // 定義劇本的開始節點
 
 [player]
 stat.name="luck"
-stat=5
-state=50 // 初始狀態
+stat=50
 
 [npc]
 {1,"智者","pic1.bmp","NULL",0}

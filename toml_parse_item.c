@@ -75,6 +75,41 @@ int32_t get_npcs(FILE *pFile, Npc *npcs, int32_t *npcs_count){
     return 1; 
 }
 
+int32_t get_player_attribute(FILE *pFile, char* stat_name, int32_t *stat_val) {
+    if (pFile == NULL) return -1;
+
+    char line[256];
+    int in_player_section = 0;
+
+    while (fgets(line, sizeof(line), pFile)) {
+        if (strstr(line, "[player]")) {
+            in_player_section = 1;
+            continue;
+        }
+
+        if (in_player_section) {
+            if (line[0] == '[') {
+                break; // End of [player] section
+            }
+
+            char name[50];
+            int val;
+
+            // Check for stat.name
+            if (sscanf(line, " stat.name=\"%[^\"]\"", name) == 1) {
+                strcpy(stat_name, name);
+            }
+
+            // Check for stat value
+            if (sscanf(line, " stat=%d", &val) == 1) {
+                *stat_val = val;
+            }
+        }
+    }
+
+    return 1; 
+}
+
 /* test code
 
 int main() { //for items
