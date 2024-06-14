@@ -279,7 +279,7 @@ void renderLuckBar(SDL_Renderer* renderer, int luckValue, SDL_DisplayMode *DM){
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xA5, 0x00, 0xFF);
     SDL_Rect luckBarOutline = {DM->w - 100, 20, 50, 400};
     SDL_RenderDrawRect(renderer, &luckBarOutline);
-    SDL_Rect luckBar = { DM->w - 100, 20 + (400 - luckValue), 50, luckValue };
+    SDL_Rect luckBar = { DM->w - 100, 20 + (400 - luckValue*4), 50, luckValue*4 };
     SDL_RenderFillRect(renderer, &luckBar);
 }
 
