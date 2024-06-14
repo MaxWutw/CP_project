@@ -165,3 +165,24 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs);
  *      3 : 其他
  */ 
 int32_t get_player_stat( FILE *p_file , int32_t key , int32_t *return_val);
+
+/* get_player_mood( FILE *p_file , int32_t key , char *picture_name , int32_t *return_val)
+ *
+ *  介紹: 
+ *      拿 指定 key 裡的 mood , 回傳到picture_name和return_val中
+ * 
+ *  輸入:
+ *      1 . file 的 pointer
+ *      2 . 要找的option所在的key
+ * 		3 . picture_name
+ *      4 . return_val
+ *
+ *
+ *  回傳:
+ *      0 : 回傳成功
+ *     -1 : 輸入空指標
+ *      1 : 找不到[key]
+ *      2 : 在[key]裡找不到mood
+ *      3 : 其他
+ */ 
+int32_t get_player_mood( FILE *p_file , int32_t key , char *picture_name , int32_t *return_val);

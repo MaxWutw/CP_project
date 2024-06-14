@@ -239,3 +239,27 @@ int32_t get_player_stat( FILE *p_file , int32_t key , int32_t *return_val){
     }
     return 3;
 }
+
+int32_t get_player_mood( FILE *p_file , int32_t key , char *picture_name , int32_t *return_val){
+
+    if( !p_file ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return 1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "mood" ) != NULL ) {
+            if (sscanf(buffer, " mood = { \"%[^\"]\" , %d }", picture_name, return_val) == 2) {
+                return 0;
+            }
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
+        }
+    }
+    return 3;
+}
