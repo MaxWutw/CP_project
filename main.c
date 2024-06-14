@@ -36,7 +36,12 @@ int main() {
 
     // system("clear");
 
-    // FILE *p_script_file = fopen( "script.toml" , "r" );
+    FILE *p_script_file = fopen( "script.toml" , "r" );
+    int32_t to[3];
+    get_to( p_script_file , 20 , to );
+    printf("%d\n",to[0]);
+    printf("%d\n",to[1]);
+    printf("%d\n",to[2]);
 
     // if( p_script_file == NULL ) {
     //     printf("File open error\n");
