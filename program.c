@@ -10,6 +10,8 @@
 #include "musicUtil.h"
 #include "loadSaving.h"
 #include "backpack.h"
+#include "player_stats.h"
+#include "toml_parse_item.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
@@ -42,6 +44,7 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Error: Failed to open the script! Program Terminated!!\n");
         return 0;
     }
+    fclose(pFile);
     // atexit(DestoryAll);
     if( (title_is_running = initializeSDL()) == 0){
         fprintf(stderr, "Error: Failed to initialize SDL! Program Termainated!!\nSDL_Error: %s\n", SDL_GetError());
@@ -81,6 +84,45 @@ int main(int argc, char *argv[]){
     int32_t title_status = 0;
     Mix_Music *music = NULL;
     PlayMusic("music/music_theme.mp3", music, 64);
+    // game setup
+
+    if(((pFile = fopen("script.toml", "r")) == NULL)){
+        fprintf(stderr, "Error: Failed to open the script! Program Terminated!!\n");
+        return 0;
+    }
+    int32_t current_key = START;
+    Item items[100];
+    int32_t total_num_items;
+    Npc npcs[100];
+    int32_t total_num_npcs;
+    char stat_name[100];
+    int32_t luck_val = 0;
+    if (get_items(pFile, items, &total_num_items) == 1) {
+        for (int i = 0; i < total_num_items; i++) {
+            printf("ID: %d, Name: %s, Picture: %s\n", items[i].id, items[i].name, items[i].picture_file_name);
+        }
+    } else {
+        printf("Failed to read items.\n");
+    }
+    if (get_npcs(pFile, npcs, &total_num_npcs) == 1) {
+        for (int i = 0; i < total_num_npcs; i++) {
+            printf("ID: %d, Name: %s, Picture: %s, Status: %s, Status Value: %d\n", 
+                npcs[i].id, 
+                npcs[i].name, 
+                npcs[i].picture_file_name, 
+                npcs[i].status_name[0] == '\0' ? "NULL" : npcs[i].status_name, 
+                npcs[i].status_val);
+        }
+    } else {
+        printf("Failed to read NPCs.\n");
+    }
+    if (get_player_attribute(pFile, stat_name, &luck_val) == 1) {
+        printf("Stat Name: %s, Stat Value: %d\n", stat_name, luck_val);
+    } else {
+        printf("Failed to read player attribute.\n");
+    }
+
+    // game setup end
     while(title_is_running){
         
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
@@ -122,12 +164,13 @@ int main(int argc, char *argv[]){
             SDL_Delay(1000 / 60);
             alpha -= 5;
         }
-        game_loop(renderer, &DM, backpackObj);
+        game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 0);
     }
     else if(title_status == 3){
-        if( load(renderer, &DM) == FALSE ){
+        if( load(renderer, &DM, &current_key, &luck_val, items, npcs, backpackObj) == FALSE ){
             return FALSE;
         }
+        game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 1);
     }
 
     // close ttf

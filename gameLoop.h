@@ -26,7 +26,7 @@ typedef enum {
     STATE_END
 } GameState;
 
-int8_t game_loop(SDL_Renderer *, SDL_DisplayMode *, sBackPack *);
+int8_t game_loop(SDL_Renderer *, SDL_DisplayMode *, sBackPack *, int32_t, int32_t, Item [100], Npc [100], int8_t);
 void renderChoices(SDL_Renderer*, const char*, const char*, const char*, SDL_DisplayMode *, int8_t *);
 void renderLuckBar(SDL_Renderer*, int, SDL_DisplayMode *);
 void handleChoice(GameState*, int);

@@ -9,11 +9,14 @@
 #include "loadSaving.h"
 
 static int32_t add_item_flag = 0;
-int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpackObj){
-    char *username = NULL;
-    if( userInpName(renderer, DM, &username, "font_lib/Arial.ttf",\
-     "挑戰者你好，讓我認識你一下吧，請輸入你的姓名：") == FALSE ){
-        return FALSE;
+int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpackObj, \
+                 int32_t current_key, int32_t luck_val, Item items[100], Npc npcs[100], int8_t loadSuccess){
+    if(!loadSuccess){
+        char *username = NULL;
+        if( userInpName(renderer, DM, &username, "font_lib/Arial.ttf",\
+        "挑戰者你好，讓我認識你一下吧，請輸入你的姓名：") == FALSE ){
+            return FALSE;
+        }
     }
     int8_t quit = 0;
     int32_t dialogX = (DM->w - (DM->w / 5) * 4) / 2;
@@ -41,42 +44,42 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
     }
     // GameState state = STATE_BIRTH;
     int8_t hover[3] = {0};
-    int32_t option[3], current_key = START;
-    Item items[100];
-    int32_t total_num_items;
-    Npc npcs[100];
-    int32_t total_num_npcs;
-    char stat_name[100];
-    int32_t luck_val = 0;
+    int32_t option[3];
+    // Item items[100];
+    // int32_t total_num_items;
+    // Npc npcs[100];
+    // int32_t total_num_npcs;
+    // char stat_name[100];
+    // int32_t luck_val = 0;
     int32_t ret = get_option(pFile, current_key, option);
     if(ret != 0){
         printf("end of story\n");
         return 0;
     }
-    if (get_items(pFile, items, &total_num_items) == 1) {
-        for (int i = 0; i < total_num_items; i++) {
-            printf("ID: %d, Name: %s, Picture: %s\n", items[i].id, items[i].name, items[i].picture_file_name);
-        }
-    } else {
-        printf("Failed to read items.\n");
-    }
-    if (get_npcs(pFile, npcs, &total_num_npcs) == 1) {
-        for (int i = 0; i < total_num_npcs; i++) {
-            printf("ID: %d, Name: %s, Picture: %s, Status: %s, Status Value: %d\n", 
-                npcs[i].id, 
-                npcs[i].name, 
-                npcs[i].picture_file_name, 
-                npcs[i].status_name[0] == '\0' ? "NULL" : npcs[i].status_name, 
-                npcs[i].status_val);
-        }
-    } else {
-        printf("Failed to read NPCs.\n");
-    }
-    if (get_player_attribute(pFile, stat_name, &luck_val) == 1) {
-        printf("Stat Name: %s, Stat Value: %d\n", stat_name, luck_val);
-    } else {
-        printf("Failed to read player attribute.\n");
-    }
+    // if (get_items(pFile, items, &total_num_items) == 1) {
+    //     for (int i = 0; i < total_num_items; i++) {
+    //         printf("ID: %d, Name: %s, Picture: %s\n", items[i].id, items[i].name, items[i].picture_file_name);
+    //     }
+    // } else {
+    //     printf("Failed to read items.\n");
+    // }
+    // if (get_npcs(pFile, npcs, &total_num_npcs) == 1) {
+    //     for (int i = 0; i < total_num_npcs; i++) {
+    //         printf("ID: %d, Name: %s, Picture: %s, Status: %s, Status Value: %d\n", 
+    //             npcs[i].id, 
+    //             npcs[i].name, 
+    //             npcs[i].picture_file_name, 
+    //             npcs[i].status_name[0] == '\0' ? "NULL" : npcs[i].status_name, 
+    //             npcs[i].status_val);
+    //     }
+    // } else {
+    //     printf("Failed to read NPCs.\n");
+    // }
+    // if (get_player_attribute(pFile, stat_name, &luck_val) == 1) {
+    //     printf("Stat Name: %s, Stat Value: %d\n", stat_name, luck_val);
+    // } else {
+    //     printf("Failed to read player attribute.\n");
+    // }
     // int8_t finish = 1;
     // extern int8_t finish;
     // SDL_Rect img = {0, 0, DM->w, DM->h};
@@ -142,7 +145,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                 // saving button
                 else if(x > DM->w - 170 && x < DM->w - 120 && y > 20 && y < 70){
                     // printf("dsafsdafdsf\n");
-                    if( save(renderer, DM, current_key, backpackObj) == FALSE){
+                    if( save(renderer, DM, current_key, backpackObj, luck_val) == FALSE){
                         return FALSE;
                     }
                 }
@@ -152,14 +155,20 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                 SDL_GetMouseState(&x, &y);
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     *hover = 1;
+                    *(hover + 1) = 0;
+                    *(hover + 2) = 0;
                 }
                 else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     *(hover + 1) = 1;
+                    *hover = 0;
+                    *(hover + 2) = 0;
                 }
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     *(hover + 2) = 1;
+                    *hover = 0;
+                    *(hover + 1) = 0;
                 }
-                 else{
+                else{
                     for(int32_t i = 0;i < 3;i++) *(hover + i) = 0;
                 }
             }
@@ -194,8 +203,9 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         // SDL_RenderCopy(renderer, texture, NULL, &img);
         // SDL_FreeSurface(bg);
         // SDL_RenderCopy(renderer, bg_texture, NULL, &img);
+        get_npc_showup(pFile, current_key, npcs, renderer, DM);
         renderBackground(renderer, DM, "img/background.jpg");
-        renderCharacter(renderer, DM, "img/street_fighter.png");
+        // renderCharacter(renderer, DM, "img/street_fighter.png");
         // renderAvatar(renderer, DM, "img/street_fighter_avatar.jpg");
         // 背包 button
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
@@ -267,6 +277,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         if(text_name != NULL) free(text_name);
 
     }
+    fclose(pFile);
     cleanBackpack(backpackObj);
     SDL_DestroyTexture(bg_texture);
     Mix_FreeMusic(music);

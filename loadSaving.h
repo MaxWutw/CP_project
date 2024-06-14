@@ -9,6 +9,7 @@
 #include <locale.h>
 #include <dirent.h>
 #include <string.h>
+#include <ctype.h>
 #include "constants.h"
 #include "utility.h"
 #include "userInput.h"
@@ -26,10 +27,11 @@
 #include <SDL_ttf.h>
 #endif
 
-int8_t save(SDL_Renderer *, SDL_DisplayMode *, int32_t, sBackPack *);
-int8_t load(SDL_Renderer *, SDL_DisplayMode *);
-int8_t saveData(SDL_Renderer *, SDL_DisplayMode *, int32_t, sBackPack *);
-int8_t save2json(sBackPack *, int32_t, char *);
+int8_t save(SDL_Renderer *, SDL_DisplayMode *, int32_t, sBackPack *, int32_t);
+int8_t load(SDL_Renderer *, SDL_DisplayMode *, \
+            int32_t *, int32_t *, Item [100], Npc [100], sBackPack *);
+int8_t saveData(SDL_Renderer *, SDL_DisplayMode *, int32_t, sBackPack *, int32_t);
+int8_t save2json(sBackPack *, int32_t, char *, int32_t);
 int8_t loadFromJson(char [512][512]);
 int8_t process_file(const char *, char [512][512]);
 

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <math.h>
 #include "backpack.h"
+#include "freshNewScreen.h"
 
 #define START 1
 
@@ -144,7 +145,7 @@ int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , It
  *      2 : 在[key]裡找不到NPC
  *      3 : 其他
  */ 
-int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs);
+int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs, SDL_Renderer *renderer, SDL_DisplayMode *DM);
 
 /* get_player_stat( FILE *p_file , int32_t key , int32_t *return_val)
  *

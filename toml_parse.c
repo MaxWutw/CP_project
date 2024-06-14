@@ -187,7 +187,7 @@ int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , It
     return 3;
 }
 
-int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs){
+int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs, SDL_Renderer *renderer, SDL_DisplayMode *DM){
 
     if( !p_file ) return -1;
 
@@ -203,7 +203,7 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs){
             strcpy( tmp , strchr( buffer , '=') );
             int32_t npc_id=0;
             sscanf( tmp , "=%d", &npc_id);
-            // renderCharacter(renderer, DM, "img/street_fighter.png");
+            renderCharacter(renderer, DM, "img/street_fighter.png");
             //printf("NPC %d show up, name: %s\n", npc_id, npcs[npc_id-1].name);
             return 0;
         }
@@ -245,7 +245,7 @@ int32_t get_player_mood( FILE *p_file , int32_t key , char *picture_name , int32
     if( !p_file ) return -1;
 
     char buffer[256];
-    char tmp[256];
+    // char tmp[256];
 
     if( __find_key( p_file , key ) == -1 ) return 1;
 
