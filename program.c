@@ -170,6 +170,7 @@ int main(int argc, char *argv[]){
         if( load(renderer, &DM, &current_key, &luck_val, items, npcs, backpackObj) == FALSE ){
             return FALSE;
         }
+        finish = 1;
         game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 1);
     }
 

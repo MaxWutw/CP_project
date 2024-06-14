@@ -25,6 +25,7 @@ int8_t save(SDL_Renderer *renderer, SDL_DisplayMode *DM, int32_t current_key, sB
     
     const int32_t option2X = option1X + optionW + savingW / 3;
     const int32_t option2Y = DM->h - (DM->h / 4) - 400 + savingH + 50;
+    
 
     SDL_Color color = {0, 0, 0};
     SDL_Event e;
@@ -133,6 +134,11 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
 
     char *Playername = NULL, *invent = NULL;
     int32_t keyValue = 0, LuckyValue = 0;
+    
+    int32_t dialogX = (DM->w - (DM->w / 5) * 4) / 2;
+    int32_t dialogY = DM->h - (DM->h / 4) - 200;
+    int32_t dialogW = (DM->w / 5) * 4;
+    int32_t dialogH = (DM->h / 4) - 50;
 
     char filenameArr[512][512];
     loadFromJson(filenameArr);
@@ -157,8 +163,22 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
                 else if(x >= selectX && x <= selectX + controlW && y >= selectY && y <= selectY + controlH){
                     __applyCurState(Playername, invent, &keyValue, &LuckyValue, \
                     current_key, luck_val, items, npcs, backpack);
+                    finish = 1;
+                    char toPlayer[1024];
+                    snprintf(toPlayer, sizeof(toPlayer), "成功讀取 %s 之資料！", filenameArr[current_select]);
                     // printBackpackItem(backpack);
                     // printf("%d %d\n", *current_key, *luck_val);
+                    SDL_SetRenderDrawColor(renderer, 145, 252, 248, 0xFF);
+                    // printf("%d %d\n",(DM->w / 5) * 3, DM->h);
+                    SDL_Rect dialogRect = {dialogX, dialogY, dialogW, dialogH};
+                    SDL_RenderFillRect(renderer, &dialogRect);
+                    if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
+                        toPlayer, dialogX, \
+                        dialogY, dialogW, 0, 38, &color) == FALSE){
+                        return 0;
+                    }
+                    SDL_RenderPresent(renderer);
+                    SDL_Delay(3000);
                     return TRUE;
                 }
                 else if(x >= backX && x <= backX + controlW && y >= backY && y <= backY + controlH){
