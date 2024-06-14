@@ -31,3 +31,8 @@ int32_t get_items(FILE *pFile, Item *items, int32_t *items_count);
 //no need to free/malloc anything
 //see toml_parse_item.c for test code
 int32_t get_npcs(FILE *pFile, Npc *npcs, int32_t *npcs_count);
+
+//get player in toml, put them into stat_name and stat_val
+//please remember to open array for stat_name
+//no need to free/malloc anything
+int32_t get_player_attribute(FILE *pFile, char* stat_name, int32_t *stat_val);

@@ -46,6 +46,8 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
     int32_t total_num_items;
     Npc npcs[100];
     int32_t total_num_npcs;
+    char stat_name[100];
+    int32_t luck_val = 0;
     int32_t ret = get_option(pFile, current_key, option);
     if(ret != 0){
         printf("end of story\n");
@@ -69,6 +71,11 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         }
     } else {
         printf("Failed to read NPCs.\n");
+    }
+    if (get_player_attribute(pFile, stat_name, &luck_val) == 1) {
+        printf("Stat Name: %s, Stat Value: %d\n", stat_name, luck_val);
+    } else {
+        printf("Failed to read player attribute.\n");
     }
     // int8_t finish = 1;
     // extern int8_t finish;
@@ -232,7 +239,6 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         if(str2 != NULL) free(str2);
         if(str3 != NULL) free(str3);
         // 幸運條
-        int32_t luck_val = 0;
         get_player_stat(pFile, current_key, &luck_val);
         renderLuckBar(renderer, luck_val, DM);
         // printBackpackItem(backpack);

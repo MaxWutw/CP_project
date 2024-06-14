@@ -228,7 +228,6 @@ int32_t get_player_stat( FILE *p_file , int32_t key , int32_t *return_val){
         fgets( buffer , sizeof(buffer) , p_file );
         if( strstr( buffer , "player.stat" ) != NULL ) {
             strcpy( tmp , strchr( buffer , '=') );
-            *return_val=0;
             sscanf( tmp , "=%d", return_val);
             // renderCharacter(renderer, DM, "img/street_fighter.png");
             //printf("NPC %d show up, name: %s\n", npc_id, npcs[npc_id-1].name);
