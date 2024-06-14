@@ -53,5 +53,6 @@ int8_t cmp(const void *, const void *);
 void myFreeFunc(void *);
 void printBackpack(const void *);
 int8_t cleanBackpack(sBackPack *);
+int8_t findItemInBackpack(int32_t, sBackPack *);
 
 #endif

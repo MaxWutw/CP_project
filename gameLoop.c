@@ -39,7 +39,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         fprintf(stderr, "Error: Failed to open the script! Program Terminated!!\n");
         return 0;
     }
-    GameState state = STATE_BIRTH;
+    // GameState state = STATE_BIRTH;
     int8_t hover[3] = {0};
     int32_t option[3], current_key = START;
     Item items[100];
@@ -164,6 +164,21 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                 }
             }
         }
+
+        if( (check_key_format(pFile, current_key) == 0) ){
+            int32_t to[3];
+            if( get_to(pFile, current_key, to) != 0 ){
+                printf("Failed to get the info\n");
+                return FALSE;
+            }
+            if(findItemInBackpack(to[0], backpackObj) == TRUE){
+                current_key = to[1];
+            }
+            else{
+                current_key = to[2];
+            }
+        }
+
         // printBackpackItem(backpack);
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
@@ -251,8 +266,6 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         SDL_RenderPresent(renderer);
         if(text_name != NULL) free(text_name);
 
-        //讓程式不要卡死
-        // SDL_Delay(500);
     }
     cleanBackpack(backpackObj);
     SDL_DestroyTexture(bg_texture);

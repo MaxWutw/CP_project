@@ -305,8 +305,9 @@ void printBackpack(const void *ptr){
 }
 
 int8_t cmp(const void *a, const void *b){
-    Item *item1 = (Item *)a, *item2 = (Item *)b;
-    return (item1->id == item2->id ? 0 : -1);
+    int32_t *item1 = (int32_t *)a;
+    Item *item2 = (Item *)b;
+    return (*item1 == item2->id ? 0 : -1);
 }
 
 void myFreeFunc(void *ptr){
@@ -333,4 +334,15 @@ int8_t cleanBackpack(sBackPack *backpack){
     backpack->pParam->size = 0;
 
     return TRUE;
+}
+
+int8_t findItemInBackpack(int32_t id, sBackPack *backpack){
+    sListNode *pNode = backpack->pHead;
+    while(pNode != NULL){
+        if( backpack->pParam->cmp(&id, pNode->pData) == 0 ){
+            return TRUE;
+        }
+        pNode = pNode->pNext;
+    }
+    return FALSE;
 }
