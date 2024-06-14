@@ -232,7 +232,9 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         if(str2 != NULL) free(str2);
         if(str3 != NULL) free(str3);
         // 幸運條
-        renderLuckBar(renderer, getLuckValue(state), DM);
+        int32_t luck_val = 0;
+        get_player_stat(pFile, current_key, &luck_val);
+        renderLuckBar(renderer, luck_val, DM);
         // printBackpackItem(backpack);
         if(openBackPack){
             if( backpack_interface(renderer, DM, backpackObj) == FALSE){

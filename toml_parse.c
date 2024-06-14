@@ -213,3 +213,30 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs){
     }
     return 3;
 }
+
+int32_t get_player_stat( FILE *p_file , int32_t key , int32_t *return_val){
+
+    if( !p_file ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return 1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "player.stat" ) != NULL ) {
+            strcpy( tmp , strchr( buffer , '=') );
+            *return_val=0;
+            sscanf( tmp , "=%d", return_val);
+            // renderCharacter(renderer, DM, "img/street_fighter.png");
+            //printf("NPC %d show up, name: %s\n", npc_id, npcs[npc_id-1].name);
+            return 0;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return 2;
+        }
+    }
+    return 3;
+}
