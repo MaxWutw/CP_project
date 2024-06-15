@@ -21,6 +21,7 @@
 
 int8_t renderBackground(SDL_Renderer *, SDL_DisplayMode *, const char *);
 int8_t renderCharacter(SDL_Renderer *, SDL_DisplayMode *, const char *);
+int8_t renderCharacter2(SDL_Renderer *renderer, SDL_DisplayMode *DM, const char *charPath, int x, int y, int width, int height);
 int8_t renderAvatar(SDL_Renderer *, SDL_DisplayMode *, const char *);
 void fadeEffect(SDL_Renderer *, SDL_Texture *, SDL_Rect *, int32_t, int32_t);
 void slideEffect(SDL_Renderer *, SDL_Texture *, SDL_Rect *, int32_t, int32_t);

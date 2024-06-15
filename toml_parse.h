@@ -236,3 +236,5 @@ int32_t get_to( FILE *p_file , int32_t key , int32_t to[3] );
 
 
 int8_t getBackground(FILE *, int32_t, char *);
+
+int32_t get_npc( FILE *p_file , int32_t key );

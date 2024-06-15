@@ -56,6 +56,33 @@ int8_t renderCharacter(SDL_Renderer *renderer, SDL_DisplayMode *DM, const char *
     return TRUE;
 }
 
+int8_t renderCharacter2(SDL_Renderer *renderer, SDL_DisplayMode *DM, const char *charPath, int x, int y, int width, int height) {
+    SDL_Surface *character = IMG_Load(charPath);
+    if (character == NULL) {
+        printf("Error Read Image: %s\n", IMG_GetError());
+        return FALSE;
+    }
+
+    int img_width = (width == 0) ? character->w : width;
+    int img_height = (height == 0) ? character->h : height;
+
+    SDL_Rect img = {x, y, img_width, img_height};
+    SDL_Texture *character_tex = SDL_CreateTextureFromSurface(renderer, character);
+
+    if (character_tex == NULL) {
+        printf("Error Create Texture: %s\n", SDL_GetError());
+        SDL_FreeSurface(character);
+        return FALSE;
+    }
+
+    SDL_RenderCopy(renderer, character_tex, NULL, &img);
+
+    SDL_FreeSurface(character);
+    SDL_DestroyTexture(character_tex);
+    return TRUE;
+}
+
+
 int8_t renderAvatar(SDL_Renderer *renderer, SDL_DisplayMode *DM, const char *charPath){
     SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
     // SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);

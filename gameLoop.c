@@ -227,13 +227,21 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         // SDL_RenderCopy(renderer, texture, NULL, &img);
         // SDL_FreeSurface(bg);
         // SDL_RenderCopy(renderer, bg_texture, NULL, &img);
-        get_npc_showup(pFile, current_key, npcs, renderer, DM);
+
+        //whyer
+        // get_npc_showup(pFile, current_key, npcs, renderer, DM);
+
         // renderBackground(renderer, DM, "img/background.jpg");
         char backgroundPath[256];
         if( getBackground(pFile, current_key, backgroundPath) == TRUE ){
             renderBackground(renderer, DM, backgroundPath);
         }
-        // renderCharacter(renderer, DM, "img/street_fighter.png");
+        //whyer
+        int32_t pic = get_npc( pFile , current_key );
+        if( pic != -1 ) {
+            renderCharacter2(renderer, DM, npcs[pic-1].picture_file_name , (DM -> w)/1.8 , (DM -> h)/8 , 250 , 400 );
+        }
+
         // renderAvatar(renderer, DM, "img/street_fighter_avatar.jpg");
         // 背包 button
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);

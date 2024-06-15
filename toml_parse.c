@@ -207,7 +207,17 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs, SDL_Renderer *re
             strcpy( tmp , strchr( buffer , '=') );
             int32_t npc_id=0;
             sscanf( tmp , "=%d", &npc_id);
-            renderCharacter(renderer, DM, "img/street_fighter.png");
+            printf("npc%d", npc_id);
+            fflush(stdin);
+            
+            if( npc_id == 1 ) {
+                renderCharacter2(renderer, DM, "img/bad-man.png" , (DM -> w)/1.8 , (DM -> h)/8 , 250 , 400 );
+            } else if( npc_id == 1 ) {
+                renderCharacter2(renderer, DM, "img/bad-man.png" , (DM -> w)/1.8 , (DM -> h)/8 , 250 , 400 );
+            } else if(npc_id == 1 ) {
+                renderCharacter2(renderer, DM, "img/bad-man.png" , (DM -> w)/1.8 , (DM -> h)/8 , 250 , 400 );
+            }
+            
             //printf("NPC %d show up, name: %s\n", npc_id, npcs[npc_id-1].name);
             return 0;
         }
@@ -215,6 +225,7 @@ int32_t get_npc_showup( FILE *p_file , int32_t key , Npc *npcs, SDL_Renderer *re
             return 2;
         }
     }
+    
     return 3;
 }
 
@@ -335,4 +346,30 @@ int8_t getBackground(FILE *pFile, int32_t key, char *backgroundPath){
     }
 
     return FALSE;
+}
+
+int32_t get_npc( FILE *p_file , int32_t key ){
+
+    if( !p_file ) return -1;
+
+    char buffer[256];
+    char tmp[256];
+
+    if( __find_key( p_file , key ) == -1 ) return -1;
+
+    while( !feof(p_file) ) {
+
+        fgets( buffer , sizeof(buffer) , p_file );
+        if( strstr( buffer , "npc" ) != NULL ) {
+            strcpy( tmp , strchr( buffer , '=') );
+            int32_t npc_id=0;
+            sscanf( tmp , "=%d", &npc_id);
+            return npc_id;
+        }
+        if( strchr( buffer , '[' ) != NULL ) {
+            return -1;
+        }
+    }
+    
+    return -1;
 }
