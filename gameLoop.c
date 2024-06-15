@@ -277,11 +277,11 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             return FALSE;
         }
         if(option[0] == 0 && option[1] == 0 && option[2] == 0){
-            printf("bad ending\n"); //placeholder for bad ending screen
+            printf("good ending\n"); //placeholder for good ending screen
             return FALSE;
         } 
         if(option[0] == -1 && option[1] == -1 && option[2] == -1){
-            printf("good ending\n"); //placeholder for good ending screen
+            printf("bad ending\n"); //placeholder for bad ending screen
             return FALSE;
         }
         char *str1 = NULL, *str2 = NULL, *str3 = NULL;
