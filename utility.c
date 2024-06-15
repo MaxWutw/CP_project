@@ -114,7 +114,7 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
                 SDL_Delay(800);
                 Mix_HaltChannel(-1);
                 if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
-                return FALSE;
+                return TRUE;
             }
             if(mouseX > fillRect3->x && mouseX < fillRect3->x + fillRect3->w && \
                 mouseY > fillRect3->y && mouseY < fillRect3->y + fillRect3->h){

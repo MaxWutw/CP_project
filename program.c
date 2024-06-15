@@ -124,7 +124,18 @@ int main(int argc, char *argv[]){
     }
     // game setup end
     while(title_is_running){
-        
+        if(title_status == 2){
+            FILE *pHow = NULL;
+            Mix_Music *HowMusic = NULL;
+            PlayMusic("music/loadMusic.mp3", HowMusic, 64);
+            howToPlay(renderer, &DM, pHow);
+            while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
+                // wait for any fades to complete
+                SDL_Delay(100);
+            }
+            if(HowMusic != NULL) Mix_FreeMusic(HowMusic);
+            title_status = 0;
+        }
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
@@ -165,9 +176,6 @@ int main(int argc, char *argv[]){
             alpha -= 5;
         }
         game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 0);
-    }
-    else if(title_status == 2){
-        // pass
     }
     else if(title_status == 3){
         Mix_Music *LoadMusic = NULL;

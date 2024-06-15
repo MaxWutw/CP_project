@@ -33,5 +33,6 @@ void renderLuckBar(SDL_Renderer*, int, SDL_DisplayMode *);
 void handleChoice(GameState*, int);
 const char* getDialogText(GameState);
 int getLuckValue(GameState);
+int8_t howToPlay(SDL_Renderer *, SDL_DisplayMode *, FILE *);
 
 #endif
