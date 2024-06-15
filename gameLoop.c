@@ -83,7 +83,9 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
     // int8_t finish = 1;
     // extern int8_t finish;
     // SDL_Rect img = {0, 0, DM->w, DM->h};
+
     SDL_Surface *bg = IMG_Load("img/background.jpg");
+   
     if(bg == NULL){
         printf("Error Read Image: %s\n", SDL_GetError());
         return FALSE;
