@@ -159,7 +159,7 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
                 int32_t x, y;
                 SDL_GetMouseState(&x, &y);
                 if(x >= nextX && x <= nextX + controlW && y >= nextY && y <= nextY + controlH){
-                    slideLeft = (current_select - 1 < 0) ? 0 : 1;
+                    slideRight = (current_select - 1 < 0) ? 0 : 1;
                     current_select = (current_select - 1 < 0) ? current_select : current_select - 1;
                     // SDL_Rect BlockRect = {loadingX, loadingY, loadingW, loadingH};
                     // option1X, option1Y, optionW , optionH,
@@ -186,7 +186,7 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
                     return TRUE;
                 }
                 else if(x >= backX && x <= backX + controlW && y >= backY && y <= backY + controlH){
-                    slideRight = (current_select + 1 >= loadFileCnt) ? 0 : 1;
+                    slideLeft = (current_select + 1 >= loadFileCnt) ? 0 : 1;
                     current_select = (current_select + 1 >= loadFileCnt) ? current_select : current_select + 1;
                 }
             }
@@ -320,7 +320,7 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
         if( __getInventory(filenameArr[current_select], &invent) == TRUE){
             // printf("%s\n", invent);
             char _invent[256];
-            snprintf(_invent, sizeof(_invent), "Player Name: %s", invent);
+            snprintf(_invent, sizeof(_invent), "Player Inventory: %s", invent);
             rendertext(renderer, "font_lib/biakai.ttf", _invent, \
                 option1X, option1Y + 120, optionW , optionH, 38, &color);
             // free(invent);
