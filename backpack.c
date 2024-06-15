@@ -1,9 +1,10 @@
 #include "backpack.h"
 #include "utility.h"
 #include "constants.h"
+#include "toml_parse.h"
 
 static int8_t __updateBackpack(SDL_Renderer *, sBackPack *, int32_t , int32_t , int32_t, int32_t);
-int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpack){
+int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpack, FILE *pFile, int32_t current_key){
     int8_t quit = 0;
     while(!quit){
         // SDL_SetRenderDrawColor(renderer, 91, 245, 173, 0xFF);
@@ -22,12 +23,24 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
         SDL_SetRenderDrawColor(renderer, 91, 245, 173, 0xFF);
         SDL_RenderFillRect(renderer, &backpackRect);
 
+        char moodPicturePath[256];
+        int32_t moodValue = 0;
+        get_player_mood(pFile, current_key, moodPicturePath, &moodValue);
+
         int32_t portraitSize = backpackWidth / 4;
         SDL_Rect portraitRect = {backpackX + backpackWidth / 20, backpackY, portraitSize, portraitSize};
-
+        SDL_Surface *charImg = IMG_Load(moodPicturePath);
+        if(charImg == NULL){
+            printf("Error Read Image: %s\n", SDL_GetError());
+            return FALSE;
+        }
+        SDL_Texture *charTex = SDL_CreateTextureFromSurface(renderer, charImg);
         // head
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
-        SDL_RenderFillRect(renderer, &portraitRect);
+        // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+        // SDL_RenderFillRect(renderer, &portraitRect);
+        SDL_RenderCopy(renderer, charTex, NULL, &portraitRect);
+        SDL_FreeSurface(charImg);
+        SDL_DestroyTexture(charTex);
 
         // SDL_Rect personInfoRect = {backpackX + backpackWidth / 20 + portraitSize, backpackY, portraitSize, portraitSize};
         // person info
@@ -36,13 +49,16 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
         SDL_Color textColor = { 0, 0, 0, 0xFF };
         int32_t InfoStartX = backpackX + backpackWidth / 20 + portraitSize + 50, InfoStartY = backpackY;
 
-        char deposit_output[100];
-        snprintf(deposit_output, sizeof(deposit_output), "銀子： %d 兩銀子", calPersonDeposit());
-        rendertext(renderer, "font_lib/biakai.ttf", deposit_output, InfoStartX + 25, InfoStartY + 10, windowWidth, windowHeight, 24, &textColor);
-        char curStatus[100];
-        snprintf(curStatus, sizeof(curStatus), "位階： %s", PersonCurStatus());
-        rendertext(renderer, "font_lib/biakai.ttf", curStatus, InfoStartX + 25, InfoStartY + 46, windowWidth, windowHeight, 24, &textColor);
-        
+        // char deposit_output[100];
+        // snprintf(deposit_output, sizeof(deposit_output), "銀子： %d 兩銀子", calPersonDeposit());
+        // rendertext(renderer, "font_lib/biakai.ttf", deposit_output, InfoStartX + 25, InfoStartY + 10, windowWidth, windowHeight, 24, &textColor);
+        // char curStatus[100];
+        // snprintf(curStatus, sizeof(curStatus), "位階： %s", PersonCurStatus());
+        // rendertext(renderer, "font_lib/biakai.ttf", curStatus, InfoStartX + 25, InfoStartY + 46, windowWidth, windowHeight, 24, &textColor);
+        char moodOutput[512];
+        snprintf(moodOutput, sizeof(moodOutput), "開心值： %d", moodValue);
+        rendertext(renderer, "font_lib/biakai.ttf", moodOutput, InfoStartX + 25, InfoStartY + 10, windowWidth, windowHeight, 24, &textColor);
+
         // close
         int32_t closeX = backpackX + backpackWidth - 40, closeY = backpackY - 10, closeSize = 30;
         SDL_Rect closeRect = {closeX, closeY, closeSize, closeSize};

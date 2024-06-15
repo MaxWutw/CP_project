@@ -329,7 +329,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         renderLuckBar(renderer, luck_val, DM);
         // printBackpackItem(backpack);
         if(openBackPack){
-            if( backpack_interface(renderer, DM, backpackObj) == FALSE){
+            if( backpack_interface(renderer, DM, backpackObj, pFile, current_key) == FALSE){
                 return FALSE;
             }
         }

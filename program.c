@@ -122,16 +122,6 @@ int main(int argc, char *argv[]){
     } else {
         printf("Failed to read player attribute.\n");
     }
-    // SDL_Event e;
-    // while(title_is_running){
-    //     winInterface(renderer, &DM);
-    //     while(SDL_PollEvent(&e) != 0){
-    //         if(e.type == SDL_QUIT){
-    //             title_is_running = 0;
-    //         }
-    //     }
-    // }
-    // return 0;
     // game setup end
     while(title_is_running){
         
@@ -175,6 +165,9 @@ int main(int argc, char *argv[]){
             alpha -= 5;
         }
         game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 0);
+    }
+    else if(title_status == 2){
+        // pass
     }
     else if(title_status == 3){
         Mix_Music *LoadMusic = NULL;

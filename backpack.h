@@ -38,7 +38,7 @@ typedef struct _sBackPack{
     struct _sListNode *pTail;
 }sBackPack;
 
-int8_t backpack_interface(SDL_Renderer *, SDL_DisplayMode *, sBackPack *);
+int8_t backpack_interface(SDL_Renderer *, SDL_DisplayMode *, sBackPack *, FILE *, int32_t);
 int32_t calPersonDeposit();
 char* PersonCurStatus();
 sBackPack* SetupBackpack();
