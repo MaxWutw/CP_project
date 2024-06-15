@@ -17,14 +17,14 @@ int8_t PlayMusic(const char *musicPath, Mix_Music *music, int32_t volume){
 }
 
 // 短暫的音效
-int8_t PlayChunk(const char *musicPath, Mix_Chunk *sound, int32_t channel, int32_t volume){
+int8_t PlayChunk(const char *musicPath, Mix_Chunk *sound, int32_t channel, int32_t volume, int32_t repeat){
     sound = Mix_LoadWAV(musicPath);
     Mix_Volume(channel, volume);
     if(sound == NULL){
         printf("Mixer Error: %s\n", Mix_GetError());
         return FALSE;
     }
-    if(Mix_PlayChannel(channel, sound, -1) == -1){ // infinity: -1
+    if(Mix_PlayChannel(channel, sound, repeat) == -1){ // infinity: -1
         printf("Mixer Error: %s\n", Mix_GetError());
         return FALSE;
     }

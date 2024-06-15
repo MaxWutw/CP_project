@@ -66,6 +66,7 @@ int8_t setup(const char* program_name, SDL_Window **win, SDL_Renderer **renderer
 
 int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillRect2, SDL_Rect *fillRect3, SDL_Renderer *renderer, int32_t *title_status){
     SDL_Event event;
+    Mix_Chunk *soundEffect = NULL;
     while(SDL_PollEvent(&event)){
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
@@ -100,16 +101,28 @@ int8_t process_input(int8_t *selected_item, SDL_Rect *fillRect1, SDL_Rect *fillR
             if(mouseX > fillRect1->x && mouseX < fillRect1->x + fillRect1->w && \
                 mouseY > fillRect1->y && mouseY < fillRect1->y + fillRect1->h){
                 *title_status = 1;
+                PlayChunk("music/menuPress.mp3", soundEffect, -1, MIX_MAX_VOLUME, 1);
+                SDL_Delay(800);
+                Mix_HaltChannel(-1);
+                if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
                 return FALSE;
             }
             if(mouseX > fillRect2->x && mouseX < fillRect2->x + fillRect2->w && \
                 mouseY > fillRect2->y && mouseY < fillRect2->y + fillRect2->h) {
                 *title_status = 2;
+                PlayChunk("music/menuPress.mp3", soundEffect, -1, MIX_MAX_VOLUME, 1);
+                SDL_Delay(800);
+                Mix_HaltChannel(-1);
+                if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
                 return FALSE;
             }
             if(mouseX > fillRect3->x && mouseX < fillRect3->x + fillRect3->w && \
                 mouseY > fillRect3->y && mouseY < fillRect3->y + fillRect3->h){
                 *title_status = 3;
+                PlayChunk("music/menuPress.mp3", soundEffect, -1, MIX_MAX_VOLUME, 1);
+                SDL_Delay(800);
+                Mix_HaltChannel(-1);
+                if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
                 return FALSE;
             }
         }
@@ -433,7 +446,7 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
     // extern int8_t finish;
     Mix_Chunk *sound = NULL;
     if(finish){
-        PlayChunk("music/keyboard_typing.mp3", sound, -1, 128);
+        PlayChunk("music/keyboard_typing.mp3", sound, -1, 128, -1);
     }
     while(*it && finish){
         SDL_Event event;

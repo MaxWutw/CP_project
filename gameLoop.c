@@ -95,6 +95,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
     SDL_FreeSurface(bg);
     inEffect = 1;
     outEffect = 0;
+    Mix_Chunk *soundEffect = NULL;
     while(!quit){
         // printBackpackItem(backpackObj);
         while(SDL_PollEvent(&e) != 0){
@@ -107,6 +108,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                 // option1 button
                 if(x >= 30 && x <= 30 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 1);
+                    PlayChunk("music/buttonPress.wav", soundEffect, -1, MIX_MAX_VOLUME, 1);
+                    SDL_Delay(150);
+                    Mix_HaltChannel(-1);
+                    if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
                     current_key = option[0];
                     finish = 1;
                     outEffect = 1;
@@ -119,6 +124,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                 // option2 button
                 else if(x >= 80 + (DM->w / 3) - 50 && x <= 80 + (DM->w / 3) - 50 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 2);
+                    PlayChunk("music/buttonPress.wav", soundEffect, -1, MIX_MAX_VOLUME, 1);
+                    SDL_Delay(150);
+                    Mix_HaltChannel(-1);
+                    if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
                     current_key = option[1];
                     finish = 1;
                     outEffect = 1;
@@ -131,6 +140,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                 // option3 button
                 else if(x >= 120 + ((DM->w / 3) - 50) * 2 && x <= 120 + ((DM->w / 3) - 50) * 2 + (DM->w / 3) - 50 && y >= DM->h - (DM->h / 4) + 30 && y <= DM->h - (DM->h / 4) + 30 + (DM->h / 4) - 100){
                     // handleChoice(&state, 3);
+                    PlayChunk("music/buttonPress.wav", soundEffect, -1, MIX_MAX_VOLUME, 1);
+                    SDL_Delay(150);
+                    Mix_HaltChannel(-1);
+                    if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
                     current_key = option[2];
                     finish = 1;
                     outEffect = 1;

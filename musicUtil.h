@@ -30,6 +30,6 @@ int8_t PlayMusic(const char *, Mix_Music *, int32_t);
 // free is your own businuss
 // Mix_FreeChunk()
 // volume: 0 ~ 128
-int8_t PlayChunk(const char *, Mix_Chunk *, int32_t, int32_t);
+int8_t PlayChunk(const char *, Mix_Chunk *, int32_t, int32_t, int32_t);
 
 #endif

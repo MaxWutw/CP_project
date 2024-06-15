@@ -12,6 +12,7 @@
 #include "backpack.h"
 #include "player_stats.h"
 #include "toml_parse_item.h"
+#include "musicUtil.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
@@ -167,9 +168,16 @@ int main(int argc, char *argv[]){
         game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 0);
     }
     else if(title_status == 3){
+        Mix_Music *LoadMusic = NULL;
+        PlayMusic("music/loadMusic.mp3", LoadMusic, 64);
         if( load(renderer, &DM, &current_key, &luck_val, items, npcs, backpackObj) == FALSE ){
             return FALSE;
         }
+        while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
+            // wait for any fades to complete
+            SDL_Delay(100);
+        }
+        if(LoadMusic != NULL) Mix_FreeMusic(LoadMusic);
         finish = 1;
         game_loop(renderer, &DM, backpackObj, current_key, luck_val, items, npcs, 1);
     }
