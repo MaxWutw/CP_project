@@ -112,12 +112,15 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                     SDL_Delay(150);
                     Mix_HaltChannel(-1);
                     if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
-                    current_key = option[0];
-                    finish = 1;
                     outEffect = 1;
-                    renderBackground(renderer, DM, "img/background.jpg");
+                    char backgroundPath[256];
+                    if( getBackground(pFile, current_key, backgroundPath) == TRUE ){
+                        renderBackground(renderer, DM, backgroundPath);
+                    }
                     inEffect = 1;
                     outEffect = 0;
+                    current_key = option[0];
+                    finish = 1;
                     add_item_flag = 0;
                     SDL_Delay(250);
                 }
@@ -128,12 +131,15 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                     SDL_Delay(150);
                     Mix_HaltChannel(-1);
                     if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
-                    current_key = option[1];
-                    finish = 1;
                     outEffect = 1;
-                    renderBackground(renderer, DM, "img/background.jpg");
+                    char backgroundPath[256];
+                    if( getBackground(pFile, current_key, backgroundPath) == TRUE ){
+                        renderBackground(renderer, DM, backgroundPath);
+                    }
                     inEffect = 1;
                     outEffect = 0;
+                    current_key = option[1];
+                    finish = 1;
                     add_item_flag = 0;
                     SDL_Delay(250);
                 }
@@ -144,12 +150,15 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                     SDL_Delay(150);
                     Mix_HaltChannel(-1);
                     if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
-                    current_key = option[2];
-                    finish = 1;
                     outEffect = 1;
-                    renderBackground(renderer, DM, "img/background.jpg");
+                    char backgroundPath[256];
+                    if( getBackground(pFile, current_key, backgroundPath) == TRUE ){
+                        renderBackground(renderer, DM, backgroundPath);
+                    }
                     inEffect = 1;
                     outEffect = 0;
+                    current_key = option[2];
+                    finish = 1;
                     add_item_flag = 0;
                     SDL_Delay(250);
                 }
@@ -219,7 +228,11 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         // SDL_FreeSurface(bg);
         // SDL_RenderCopy(renderer, bg_texture, NULL, &img);
         get_npc_showup(pFile, current_key, npcs, renderer, DM);
-        renderBackground(renderer, DM, "img/background.jpg");
+        // renderBackground(renderer, DM, "img/background.jpg");
+        char backgroundPath[256];
+        if( getBackground(pFile, current_key, backgroundPath) == TRUE ){
+            renderBackground(renderer, DM, backgroundPath);
+        }
         // renderCharacter(renderer, DM, "img/street_fighter.png");
         // renderAvatar(renderer, DM, "img/street_fighter_avatar.jpg");
         // 背包 button

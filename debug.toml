@@ -2,10 +2,10 @@ name = "script"
 start = 6
 
 [item]
-{1,"name","name.bmp"},
-{2,"name","name.bmp"},
-{3,"name","name.bmp"},
-{4,"name","name.bmp"}
+{1,"name","name.jpg"},
+{2,"name","name.jpg"},
+{3,"name","name.jpg"},
+{4,"name","name.jpg"}
 
 [6]
 title = "出生"

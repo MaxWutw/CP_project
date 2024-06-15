@@ -7,6 +7,7 @@
 #include <math.h>
 #include "backpack.h"
 #include "freshNewScreen.h"
+#include "constants.h"
 
 #define START 1
 
@@ -232,3 +233,6 @@ int32_t check_key_format( FILE *p_file , int32_t key );
  *      3 : 其他
  */ 
 int32_t get_to( FILE *p_file , int32_t key , int32_t to[3] );
+
+
+int8_t getBackground(FILE *, int32_t, char *);

@@ -12,20 +12,20 @@ stat.name="luck"
 stat=50
 
 [npc]
-{1,"智者老頭","pic.bmp",NULL,0}
-{2,"漂亮美女","pic.bmp",NULL,0}
-{3,"陰險宦官","pic.bmp",NULL,0}
+{1,"智者老頭","pic.jpg",NULL,0}
+{2,"漂亮美女","pic.jpg",NULL,0}
+{3,"陰險宦官","pic.jpg",NULL,0}
 
 [1]
 title="出生"
-background="background.bmp" 
+background="img/background.jpg" 
 text="你好！請選擇你想要出生的家庭吧！你的選擇："  
 player.stat=50
 option={2,3,4} 
 
 [2]
 title="皇子"
-background="background.bmp" 
+background="img/background2.png" 
 text="你出生於皇室家族，但你是皇帝最小的兒子，時常被哥哥們欺負，你選擇："  
 option={5,6,7} 
 player.stat=50
@@ -35,154 +35,154 @@ npc=2
 
 [3]
 title="書生"
-background="background.bmp" 
+background="img/background.jpg" 
 text="你是一個大官的兒子，從小父母就給你很好的栽培，你選擇："  
 option={5,6,7} 
 player.stat=60 
-mood = { "pic.bmp" , 60 }
+mood = { "pic.jpg" , 60 }
 
 [4]
 title="賤民"
-background="background.bmp" 
+background="img/background.jpg" 
 text="你出生於一個貧困的家庭，家裡靠著在市集賣東西，有著微薄的收入過日子，你選擇："  
 option={5,6,7} 
 player.stat=40 
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [5]
 title="讀書"
-background="background.bmp" 
+background="img/background3.png" 
 text="你每天沒日沒夜地認真苦讀，希望讓所有人大吃一驚，但有一天你在讀書喘息之時，走在路上，看到了一個老人倒在路上，你選擇："  
 option={8,9,10} 
 player.stat=40 
 npc=1
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [6]
 title="練武"
-background="background.bmp" 
+background="img/background3.png" 
 text="你每天沒日沒夜地認真練武，希望讓所有人大吃一驚，但有一天你在練武喘息之時，走在路上，看到了一個老人倒在路上，你選擇："  
 option={8,9,10} 
 player.stat=60 
 npc=1
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [7]
 title="學習經商"
-background="background.bmp" 
+background="img/background3.png" 
 text="你每天沒日沒夜地認真學習經商，希望讓所有人大吃一驚，但有一天你在學習經商喘息之時，走在路上，看到了一個老人倒在路上，你選擇："  
 option={8,9,10} 
 player.stat=60 
 npc=1
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [8]
 title="幫助老人"
-background="background.bmp" 
+background="img/background.jpg" 
 text="這位老人其實是一位聰明的智者，他很感謝你的幫助，他決定送你神聖寶劍或是智者之書，你選擇哪一個："  
 option={11,12,13} 
 player.stat=90
 npc=1
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [9]
 title="無視老人"
-background="background.bmp" 
+background="img/background.jpg" 
 text="你真狠心... 你確定不幫助他嗎？但或許這世界就是這麼殘酷吧！你走後，看到一個美女，他看起來心事重重，你選擇："  
 option={15,16,8} 
 player.stat=20
 npc=2
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [10]
 title="踹老人一腳"
-background="background.bmp" 
+background="img/background.jpg" 
 text="你太無情了吧！但你踹完他之後，你發現他身上掉出一把神聖寶劍和一個智者之書，你決定偷走嗎，你的選擇："  
 option={11,12,14} 
 player.stat=10
 npc=1
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [11]
 title="神聖寶劍"
-background="background.bmp" 
+background="img/background.jpg" 
 text="恭喜你獲得神聖寶劍，此時你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=80 
 npc=2
 player.inventory.add=2
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [12]
 title="智者之書"
-background="background.bmp" 
+background="img/background.jpg" 
 text="恭喜你獲得智者之書，此時你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=80
 npc=2
 player.inventory.add=1 
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [13]
 title="我都要！"
-background="background.bmp" 
+background="img/background.jpg" 
 text="老人覺得你太貪心了，所以決定就都不給你了，你只好摸摸鼻子走人，但此時，你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,18} 
 player.stat=10
 npc=2
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [14]
 title="兩個垃圾，都不要！"
-background="background.bmp" 
+background="img/background.jpg" 
 text="恩...挺不錯的決定呢，但此時，你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=20
 npc=2
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [15]
 title="關心美女"
-background="background.bmp" 
+background="img/background.jpg" 
 text="完蛋...他是某個將軍的妻子，她覺得你在騷擾她，她叫丈夫派人來追殺你了，你選擇："  
 option={20,23,24} 
 player.stat=10
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [16]
 title="無視美女"
-background="background.bmp" 
+background="img/background.jpg" 
 text="好選擇啊！那個美女是一個將軍的妻子，可是不好惹的啊，但此時，你遇到了一個殺手，他好像把你認成仇人了，你選擇："  
 option={20,23,24} 
 player.stat=90 
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [17]
 title="把剛的東西送美女"
-background="background.bmp" 
+background="img/background.jpg" 
 text="完蛋...他是某個將軍的妻子，她覺得你在騷擾她，她叫丈夫派人來追殺你了，你選擇："  
 option={20,23,24} 
 player.stat=10
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [18]
 title="揍老人一頓"
-background="background.bmp" 
+background="img/background.jpg" 
 text="你太無情了吧！但你揍完他之後，你決定拿走哪個東西，你的選擇："  
 option={11,12,19} 
 player.stat=50
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [19]
 title="都揍了，當然都拿走"
-background="background.bmp" 
+background="img/background.jpg" 
 text="很棒！恭喜你獲得了神聖寶劍和智者之書，但此時，你又遇到了一位美女，他看起來心事重重，你選擇："  
 option={15,16,17} 
 player.stat=90 
 npc=2
 player.inventory.add=1 
 player.inventory.add=2
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [20]
 title="反擊"
@@ -194,7 +194,7 @@ to = { 2:21 , -1:22 }
 text="你用了你的神聖寶劍反擊成功，你解除了危機，你接下來的選擇："  
 option={25,26,27} 
 player.stat=90
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [22]
 // 反擊失敗
@@ -202,50 +202,50 @@ mood = { "pic.bmp" , 40 }
 text="由於你上沒有武器...你被無力反抗，最後被他們亂刀砍死了..."  
 option={-1,-1,-1} 
 player.stat=0 
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [23]
 title="逃跑"
-background="background.bmp" 
+background="img/background.jpg" 
 text="不錯的選擇，好險你跑得快，躲過了一截，此時你的選擇："  
 option={25,26,27} 
 player.stat=90
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [24]
 title="裝死"
-background="background.bmp" 
+background="img/background.jpg" 
 text="呵呵，你當那些職業殺手是什麼，怎麼可能騙的過他們勒，現在，你被他們大刀亂砍，你現在是真的死了..."  
 option={-1,-1,-1} 
 player.stat=0
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [25]
 title="去麵館吃麵休息"
-background="background.bmp" 
+background="img/background.jpg" 
 text="恩...這家麵不錯吃，但你在吃麵的同時，無意間發現，你隔壁的人是一個宦官，他正在籌備一起叛亂，你的選擇："  
 option={28,29,30} 
 player.stat=80
 npc=3
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [26]
 title="去市集逛逛"
-background="background.bmp" 
+background="img/background.jpg" 
 text="恩...市集東西真多，但你在逛街的同時，無意間發現，你身旁的人是一個宦官，他正在籌備一起叛亂，你的選擇："  
 option={28,29,30} 
 player.stat=80
 npc=3
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [27]
 title="去小酒館聽美女唱歌"
-background="background.bmp" 
+background="img/background.jpg" 
 text="恩...這美女歌唱得不錯，但你在欣賞的同時，無意間發現，你隔壁的人是一個宦官，他正在籌備一起叛亂，你的選擇："  
 option={28,29,30} 
 player.stat=80 
 npc=3
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [28]
 title="直接揭發他"
@@ -266,7 +266,7 @@ text="恭喜你，你運用了智者之書中的智慧，揭發了陰險宦官�
 option={0,0,0} 
 player.stat=100
 player.inventory.add=3
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [32]
 //直接揭發失敗
@@ -274,7 +274,7 @@ mood = { "pic.bmp" , 40 }
 text="陰險宦官買通了朝廷大部分的人...沒有人選擇相信你，你還因此被陰險宦官誣陷，被判了死刑，你死於劊子手的刀下..."  
 option={-1,-1,-1} 
 player.stat=0
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [33]
 //匿名揭發失敗
@@ -282,7 +282,7 @@ mood = { "pic.bmp" , 40 }
 text="結果你還是被陰險宦官發現了...他暗中派刺客把你解決掉了，你死於刺客的刀下..."  
 option={-1,-1,-1} 
 player.stat=0
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [34]
 //叛亂成功
@@ -290,7 +290,7 @@ mood = { "pic.bmp" , 40 }
 text="你運用了智者之書的智慧，和陰險宦官的陰謀，你們叛亂成功，推翻了原本的皇帝，恭喜你，當上了新的皇帝！"  
 option={0,0,0} 
 player.stat=100 
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }
 
 [35]
 //叛亂失敗
@@ -298,4 +298,4 @@ mood = { "pic.bmp" , 40 }
 text="你怎麼可以做出這種事呢...你和陰險宦官的計謀被發現了，你們被判處死刑，你死於劊子手的刀下..."  
 option={-1,-1,-1} 
 player.stat=0
-mood = { "pic.bmp" , 40 }
+mood = { "pic.jpg" , 40 }

@@ -316,3 +316,23 @@ int32_t get_to( FILE *p_file , int32_t key , int32_t to[3] ) {
     }
     return 3;
 }
+
+int8_t getBackground(FILE *pFile, int32_t key, char *backgroundPath){
+    if(pFile == NULL) return FALSE;
+
+    char buffer[256];
+    if( __find_key(pFile, key) == -1 ){
+        return FALSE;
+    }
+
+    while(!feof(pFile)){
+        fgets(buffer, sizeof(buffer), pFile);
+        if( strstr(buffer, "background") != NULL ){
+            if(sscanf(buffer, "background=\"%[^\"]\"", backgroundPath) == 1){
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}
