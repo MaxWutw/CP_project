@@ -146,6 +146,9 @@ int8_t AddItemToBackpack(sBackPack *backpack, Item *inpData){
         printf("%s(%d) %s: NULL pointer!\n", __FILE__, __LINE__, __FUNCTION__);
         return FALSE;
     }
+    if( findItemInBackpack(inpData->id, backpack) == TRUE ){
+        return TRUE;
+    }
     sListNode *pNewNode = malloc(sizeof(sListNode));
     pNewNode->pData = inpData;
     pNewNode->pNext = NULL;
