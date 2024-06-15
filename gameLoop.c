@@ -285,11 +285,29 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             return FALSE;
         }
         if(option[0] == 0 && option[1] == 0 && option[2] == 0){
-            printf("good ending\n"); //placeholder for good ending screen
+            int8_t EndGameFlag = 1;
+            SDL_Event endEvent;
+            while(EndGameFlag){
+                winInterface(renderer, DM);
+                while(SDL_PollEvent(&endEvent) != 0){
+                    if(endEvent.type == SDL_QUIT || endEvent.type == SDL_MOUSEBUTTONDOWN || endEvent.type == SDL_KEYDOWN){
+                        EndGameFlag = 0;
+                    }
+                }
+            }
             return FALSE;
         } 
         if(option[0] == -1 && option[1] == -1 && option[2] == -1){
-            printf("bad ending\n"); //placeholder for bad ending screen
+            int8_t EndGameFlag = 1;
+            SDL_Event endEvent;
+            while(EndGameFlag){
+                loseInterface(renderer, DM);
+                while(SDL_PollEvent(&endEvent) != 0){
+                    if(endEvent.type == SDL_QUIT || endEvent.type == SDL_MOUSEBUTTONDOWN || endEvent.type == SDL_KEYDOWN){
+                        EndGameFlag = 0;
+                    }
+                }
+            }
             return FALSE;
         }
         char *str1 = NULL, *str2 = NULL, *str3 = NULL;

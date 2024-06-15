@@ -122,7 +122,16 @@ int main(int argc, char *argv[]){
     } else {
         printf("Failed to read player attribute.\n");
     }
-
+    // SDL_Event e;
+    // while(title_is_running){
+    //     winInterface(renderer, &DM);
+    //     while(SDL_PollEvent(&e) != 0){
+    //         if(e.type == SDL_QUIT){
+    //             title_is_running = 0;
+    //         }
+    //     }
+    // }
+    // return 0;
     // game setup end
     while(title_is_running){
         

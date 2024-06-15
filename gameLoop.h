@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <math.h>
 #include "backpack.h"
+#include "endGame.h"
 #ifdef __linux__
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h> 
