@@ -95,11 +95,11 @@ void fadeEffect(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect, in
 }
 
 void slideEffect(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect, int32_t duration, int32_t direction){
-    int step = rect->w / (duration / 16); // assuming 60 FPS, so approximately 16 ms per frame
-    int startX = direction == 0 ? -rect->w : rect->w;
-    int endX = rect->x;
+    int32_t step = rect->w / (duration / 16); // assuming 60 FPS, so approximately 16 ms per frame
+    int32_t startX = direction == 0 ? -rect->w : rect->w;
+    int32_t endX = rect->x;
 
-    for(int x = startX; (direction == 0 ? x < endX : x > endX); x += (direction == 0 ? step : -step)){
+    for(int32_t x = startX; (direction == 0 ? x < endX : x > endX); x += (direction == 0 ? step : -step)){
         SDL_RenderClear(renderer);
         SDL_Rect tempRect = {x, rect->y, rect->w, rect->h};
         SDL_RenderCopy(renderer, texture, NULL, &tempRect);
@@ -111,13 +111,13 @@ void slideEffect(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect, i
 }
 
 void zoomEffect(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect, int32_t duration, int32_t zoomIn){
-    int step = rect->w / (duration / 16); // assuming 60 FPS, so approximately 16 ms per frame
-    int startW = zoomIn ? 0 : rect->w;
-    int endW = rect->w;
-    int startH = zoomIn ? 0 : rect->h;
-    int endH = rect->h;
+    int32_t step = rect->w / (duration / 16); // assuming 60 FPS, so approximately 16 ms per frame
+    int32_t startW = zoomIn ? 0 : rect->w;
+    int32_t endW = rect->w;
+    int32_t startH = zoomIn ? 0 : rect->h;
+    int32_t endH = rect->h;
 
-    for(int w = startW, h = startH; (zoomIn ? w < endW && h < endH : w > 0 && h > 0); 
+    for(int32_t w = startW, h = startH; (zoomIn ? w < endW && h < endH : w > 0 && h > 0); 
          w += (zoomIn ? step : -step), h += (zoomIn ? step : -step)){
         SDL_RenderClear(renderer);
         SDL_Rect tempRect = {rect->x + (rect->w - w) / 2, rect->y + (rect->h - h) / 2, w, h};
@@ -130,8 +130,8 @@ void zoomEffect(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect, in
 }
 
 void rotateEffect(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect, int32_t duration, int32_t clockwise){
-    int angle = clockwise ? 0 : 360;
-    int step = 360 / (duration / 16); // assuming 60 FPS, so approximately 16 ms per frame
+    int32_t angle = clockwise ? 0 : 360;
+    int32_t step = 360 / (duration / 16); // assuming 60 FPS, so approximately 16 ms per frame
 
     while((clockwise && angle < 360) || (!clockwise && angle > 0)){
         SDL_RenderClear(renderer);

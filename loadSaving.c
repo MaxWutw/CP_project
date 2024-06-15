@@ -148,6 +148,7 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
     SDL_Event e;
     int8_t quit = 0;
     int32_t current_select = 0;
+    int8_t slideLeft = 0, slideRight = 0;
     while(!quit){
         while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT){
@@ -158,7 +159,10 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
                 int32_t x, y;
                 SDL_GetMouseState(&x, &y);
                 if(x >= nextX && x <= nextX + controlW && y >= nextY && y <= nextY + controlH){
+                    slideLeft = (current_select - 1 < 0) ? 0 : 1;
                     current_select = (current_select - 1 < 0) ? current_select : current_select - 1;
+                    // SDL_Rect BlockRect = {loadingX, loadingY, loadingW, loadingH};
+                    // option1X, option1Y, optionW , optionH,
                 }
                 else if(x >= selectX && x <= selectX + controlW && y >= selectY && y <= selectY + controlH){
                     __applyCurState(Playername, invent, &keyValue, &LuckyValue, \
@@ -182,6 +186,7 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
                     return TRUE;
                 }
                 else if(x >= backX && x <= backX + controlW && y >= backY && y <= backY + controlH){
+                    slideRight = (current_select + 1 >= loadFileCnt) ? 0 : 1;
                     current_select = (current_select + 1 >= loadFileCnt) ? current_select : current_select + 1;
                 }
             }
@@ -212,6 +217,7 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
+
         SDL_SetRenderDrawColor(renderer, 132, 243, 155, 0xFF);
         // printf("%d %d\n",(DM->w / 5) * 3, DM->h);
         SDL_Rect LoadingRect = {loadingX, loadingY, \
@@ -233,6 +239,63 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
         SDL_RenderFillRect(renderer, &option1Rect);
         rendertext(renderer, "font_lib/biakai.ttf", filenameArr[current_select], \
         option1X, option1Y, optionW , optionH, 38, &color);
+
+        if(slideLeft || slideRight){
+            int32_t step = optionW / (300 / 16);
+            int32_t startX = option1X;
+            int32_t endX = (slideLeft == 0 ? DM->w : 0);
+            for(int32_t x = startX, x2 = (slideLeft == 0 ? -optionW : DM->w);\
+                (slideLeft == 0 ? x < DM->w + optionW : x > endX - optionW) \
+                && (slideLeft == 0 ? x2 < option1X : x2 < DM->w + optionW); \
+                x += (slideLeft == 0 ? step : -step), x2 += (slideLeft == 0 ? step : -step)){
+                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+                SDL_RenderClear(renderer);
+                // basic
+                SDL_SetRenderDrawColor(renderer, 132, 243, 155, 0xFF);
+                // printf("%d %d\n",(DM->w / 5) * 3, DM->h);
+                SDL_Rect LoadingRect = {loadingX, loadingY, \
+                    loadingW, loadingH};
+                SDL_RenderFillRect(renderer, &LoadingRect);
+                if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
+                    loadingText, loadingX, \
+                    loadingY, loadingW, loadingH, 48, &color) == FALSE){
+                    return FALSE;
+                }
+
+                if(hover[0]) SDL_SetRenderDrawColor(renderer, 201, 0, 129, 0xFF);
+                else SDL_SetRenderDrawColor(renderer, 255, 87, 194, 0xFF);
+                SDL_Rect nextRect = {nextX, nextY, controlW, controlH};
+                SDL_RenderFillRect(renderer, &nextRect);
+                rendertext(renderer, "font_lib/biakai.ttf", "上一個", \
+                        nextX, nextY, controlW , controlH, 58, &color);
+
+                if(hover[1]) SDL_SetRenderDrawColor(renderer, 201, 0, 129, 0xFF);
+                else SDL_SetRenderDrawColor(renderer, 255, 87, 194, 0xFF);
+                SDL_Rect selectRect = {selectX, selectY, controlW, controlH};
+                SDL_RenderFillRect(renderer, &selectRect);
+                rendertext(renderer, "font_lib/biakai.ttf", "確認", \
+                        selectX, selectY, controlW , controlH, 58, &color);
+
+                if(hover[2]) SDL_SetRenderDrawColor(renderer, 201, 0, 129, 0xFF);
+                else SDL_SetRenderDrawColor(renderer, 255, 87, 194, 0xFF);
+                SDL_Rect backRect = {backX, backY, controlW, controlH};
+                SDL_RenderFillRect(renderer, &backRect);
+                rendertext(renderer, "font_lib/biakai.ttf", "下一個", \
+                        backX, backY, controlW , controlH, 58, &color);
+                // basic end;
+
+                SDL_SetRenderDrawColor(renderer, 38, 201, 250, 255);
+                // printf("%d %d %d %d\n", x, option1Y, optionW , optionH);
+                SDL_Rect tmpRect = {x, option1Y, optionW , optionH};
+                SDL_Rect tmp2Rect = {x2, option1Y, optionW , optionH};
+                SDL_RenderFillRect(renderer, &tmpRect);
+                SDL_RenderFillRect(renderer, &tmp2Rect);
+                SDL_RenderPresent(renderer);
+                SDL_Delay(16);
+            }
+            slideLeft = 0;
+            slideRight = 0;
+        }
 
         // char *Playername = NULL, *invent = NULL;
         // int32_t keyValue = 0;
