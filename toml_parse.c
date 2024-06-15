@@ -166,6 +166,7 @@ int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , It
 
     char buffer[256];
     char tmp[256];
+    int32_t add_flag = 0;
 
     if( __find_key( p_file , key ) == -1 ) return 1;
 
@@ -178,10 +179,13 @@ int32_t get_add_inventory( FILE *p_file , int32_t key , sBackPack *backpack , It
             sscanf( tmp , "=%d", &item_id);
             printf("obtain item %d, name: %s\n", item_id, items[item_id-1].name);
             AddItemToBackpack(backpack, &items[item_id-1]);
-            return 0;
+            add_flag = 1;
+            continue;
+            //return 0;
         }
         if( strchr( buffer , '[' ) != NULL ) {
-            return 2;
+            if(add_flag) return 0;
+            else return 2;
         }
     }
     return 3;

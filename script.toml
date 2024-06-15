@@ -29,6 +29,8 @@ background="background.bmp"
 text="你出生於皇室家族，但你是皇帝最小的兒子，時常被哥哥們欺負，你選擇："  
 option={5,6,7} 
 player.stat=50
+player.inventory.add=2
+player.inventory.add=1
 npc=2
 
 [3]
