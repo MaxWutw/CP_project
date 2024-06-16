@@ -53,27 +53,30 @@ int32_t __find_key( FILE *p_file , int32_t key ) {
     return -1;
 }
 
-const char *get_name( FILE *p_file ) {
+int32_t get_name(FILE *pFile, char *script_name, char *title_name) {
+    if (!pFile) return -1;
+    fseek(pFile, 0, SEEK_SET);
+    char buffer[256];
 
-    if( !p_file ) return NULL;
-    
-    char buffer[256] = {0};
-    char *p = NULL;
+    while (fgets(buffer, sizeof(buffer), pFile)) {
+        if (strstr(buffer, "game.script=") != NULL) {
+            if (sscanf(buffer, "game.script=\"%[^\"]\"", script_name) == 1) {
+                printf("%s\n",script_name);
+                continue;
+            }
+        }
 
-    while( fgets( buffer , sizeof(buffer) , p_file ) ) {
-        if( ( p = strstr( buffer , "name" ) ) != NULL ) {
-            break;
+        if (strstr(buffer, "game.title=") != NULL) {
+            if (sscanf(buffer, "game.title=\"%[^\"]\"", title_name) == 1) {
+                printf("%s\n",title_name);
+                continue;
+            }
         }
     }
 
-    __delet_all_enter( p );
-    p = strchr( p , '\"' ) + 1;
-    if( p[ strlen(p) - 1 ] == '\"' ) {
-        p[ strlen(p) - 1 ] = '\0';
-    }
-
-    return (const char*)p;
+    return 0;
 }
+
 
 int32_t get_title( FILE *p_file , int32_t key , char **title ) {
 

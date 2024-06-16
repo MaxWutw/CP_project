@@ -45,20 +45,22 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Error: Failed to open the script! Program Terminated!!\n");
         return 0;
     }
-    fclose(pFile);
     // atexit(DestoryAll);
     if( (title_is_running = initializeSDL()) == 0){
         fprintf(stderr, "Error: Failed to initialize SDL! Program Termainated!!\nSDL_Error: %s\n", SDL_GetError());
         return 0;
     }
-
     // get name
-    const char *program_name = NULL;
-    if((program_name = "成為皇帝！") == NULL){
-        fprintf(stderr, "Error: Failed to get the name from get_name function! Program Terminated!!\n");
+    char program_name[100], TitleText[100];
+    if (get_name(pFile, program_name, TitleText) == 0) {
+        printf("Script Name: %s\n", program_name);
+        printf("Title Name: %s\n", TitleText);
+    } else {
+        printf("Failed to read names.\n");
         return 0;
     }
-    printf("%s\n", program_name);
+    //not sure why close file here
+    fclose(pFile);
     // setup 
     SDL_Window *win = NULL;
     SDL_DisplayMode DM;
@@ -68,7 +70,7 @@ int main(int argc, char *argv[]){
     SDL_Rect textRect;
     SDL_Color color_white = {255, 255, 255};
     // SDL_Color color_black = {0, 0, 0};
-    const char *TitleText = "Be The Emperor!";
+    //const char *TitleText = "Be The Emperor!";
     // some intiaize
     
     textRect.w = 500;

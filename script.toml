@@ -1,4 +1,5 @@
-script="成為皇帝"
+game.script="成為皇帝"
+game.title="Be The Emperor!"
 start=1 
 
 [item]

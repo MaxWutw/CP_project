@@ -37,7 +37,7 @@
  *      NULL       (p_file 是空指標)     
  * 
  */ 
-const char *get_name( FILE *p_file );
+int32_t get_name(FILE *pFile, char *script_name, char *title_name);
 
 //------------------------------------------------------------------
 /* int32_t get_title( FILE *p_file , int32_t key , char **title )
