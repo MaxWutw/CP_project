@@ -119,8 +119,8 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
     const int32_t option1X = ((DM->w - (DM->w / 5) * 4) / 2) + loadingW / 3 - (optionW / 5);
     const int32_t option1Y = DM->h - (DM->h / 4) - 500 + loadingH;
 
-    const int32_t controlW = (DM->w / 3) - 350;
-    const int32_t controlH = (DM->h / 4) - 200;
+    const int32_t controlW = (DM->w / 3) - (DM->w / 5.48571); // fix
+    const int32_t controlH = (DM->h / 4) - (DM->h / 5.4); // fix
 
     const int32_t nextX = ((DM->w - (DM->w / 5) * 4) / 2) + loadingW / 3 - controlW + 30;
     const int32_t nextY = DM->h - (DM->h / 4) - 200 + loadingH + 50;
