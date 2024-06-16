@@ -133,10 +133,11 @@ int main(int argc, char *argv[]){
                 // wait for any fades to complete
                 SDL_Delay(100);
             }
-            if( pHow ) free(pHow);
+            // if( pHow ) free(pHow);
             if(HowMusic != NULL) Mix_FreeMusic(HowMusic);
             title_status = 0;
             PlayMusic("music/music_theme.mp3", music, 64);
+            fclose(pHow);
         }
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
