@@ -39,14 +39,18 @@
 100 (不含發表)
 
 ## Installation and Running
+
 ### 安裝
+
 需要額外安裝的內容有
+
 - libsdl2-dev
 - libsdl2-image-dev
 - libsdl2-ttf-dev
 - libsdl2-mixer-dev
 - libsdl2-mixer
-在終端機執行以下指令下載以上內容
+  在終端機執行以下指令下載以上內容
+
 ```
 sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libsdl2-mixer
 ```
@@ -192,8 +196,6 @@ to = { 2:21 , -1:22 }
 - `img` : 存放所有遊戲劇本會用到的照片，可自行修改。
 - `music` : 存放遊戲中會用到的音效。
 
-### Requirements
-
 ## 如何設計一個劇本套用於我們的引擎
 
 1. 從 GitHub 下載我們的程式
@@ -202,6 +204,16 @@ to = { 2:21 , -1:22 }
 4. 將劇本會使用到的照片存入 `img` 資料夾
 5. 準備 `how_to_play.txt` 文字檔，用於玩家選案 how to play 時生成的文字
 6. load 只會讀取 DataSave 中的資料，同時只會讀取 \*.json ，值得一題的是， json 檔的第一行要是`"NTNUFINAL":2147483647` ，才會被視作我們遊戲的存檔。
+
+### Requirements
+
+```
+gcc (GCC) 13.2.1
+libsdl2-dev
+libsdl2-image-dev
+libsdl2-ttf-dev
+libsdl2-mixer-dev
+```
 
 ### Setup
 
