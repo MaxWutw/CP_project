@@ -18,7 +18,7 @@ all: engine
 engine: engine.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o \
 constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o loadSaving.o endGame.o utility.h \
 gameLoop.h constants.h musicUtil.h toml_parse_item.h player_stats.h userInput.h loadSaving.h endGame.h
-	gcc -g -fsanitize=address engine.o utility.o toml_parse.o gameLoop.o freshNewScreen.o \
+	gcc engine.o utility.o toml_parse.o gameLoop.o freshNewScreen.o \
 	 backpack.o constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o \
 	 loadSaving.o endGame.o -o engine $(LDFLAGS)
 
