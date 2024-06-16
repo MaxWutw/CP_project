@@ -1,10 +1,18 @@
-# NTNU CSIE Computer Programming II Final Project
 
-## Introduction
+# NTNU Computer Programming II Final Project
 
 作者：吳振榮、吳立宇、伍駿宇
 
-## Features
+[GitHub 連結](https://github.com/MaxWutw/CP_project.git)
+
+## 目錄
+
+1. 實作了哪些功能(p2)
+2. 我們的遊戲如何玩(p3-4)
+3. 劇本格式介紹(p5-8)
+4. 檔案的存放位置(p9)
+5. 如何設計一個劇本套用於我們的引擎(p10)
+6. 使用到的第三方工具(p11)
 
 ## 實作了哪些功能
 
@@ -38,12 +46,9 @@
 
 100 (不含發表)
 
-## Installation and Running
-
 ## 我們的遊戲如何玩
 
 1. 將我們的程式載入到您的電腦內，下 make 指令編譯後，`./engine` 即可開始運行。
-
 2. 遊戲點開出現三個選項
     - 第一個：開始遊玩
     - 第二個：查看這個遊戲的遊戲目的
@@ -180,9 +185,6 @@ to = { 2:21 , -1:22 }
 - `img` : 存放所有遊戲劇本會用到的照片，可自行修改。
 - `music` : 存放遊戲中會用到的音效。
 
-
-### Requirements
-
 ## 如何設計一個劇本套用於我們的引擎
 
 1. 從 GitHub 下載我們的程式
@@ -191,26 +193,7 @@ to = { 2:21 , -1:22 }
 4. 將劇本會使用到的照片存入 `img` 資料夾
 5. 準備 `how_to_play.txt` 文字檔，用於玩家選案 how to play 時生成的文字
 
-### Setup
-
 ## 使用到的第三方工具
 
 - SDL - [license](https://www.libsdl.org/license.php)
 - Lovepik - [https://lovepik.com/images](https://lovepik.com/images) (載圖片)
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- [吳振榮] - [WuMax13@gmail.com]
-- Project Link: [https://github.com/yourusername/sdl-game-project](https://github.com/yourusername/sdl-game-project)
