@@ -285,7 +285,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             return FALSE;
         }
         if(option[0] == 0 && option[1] == 0 && option[2] == 0){
+            SDL_Delay(2500);
             int8_t EndGameFlag = 1;
+            Mix_Music *WinMusic = NULL;
+            PlayMusic("music/YouLose.mp3", WinMusic, 64);
             SDL_Event endEvent;
             while(EndGameFlag){
                 winInterface(renderer, DM);
@@ -295,10 +298,14 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                     }
                 }
             }
+            if(WinMusic != NULL) Mix_FreeMusic(WinMusic);
             return FALSE;
         } 
         if(option[0] == -1 && option[1] == -1 && option[2] == -1){
+            SDL_Delay(2500);
             int8_t EndGameFlag = 1;
+            Mix_Music *LoseMusic = NULL;
+            PlayMusic("music/YouWin.mp3", LoseMusic, 64);
             SDL_Event endEvent;
             while(EndGameFlag){
                 loseInterface(renderer, DM);
@@ -308,6 +315,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
                     }
                 }
             }
+            if(LoseMusic != NULL) Mix_FreeMusic(LoseMusic);
             return FALSE;
         }
         char *str1 = NULL, *str2 = NULL, *str3 = NULL;
