@@ -274,6 +274,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             dialogY, dialogW, 0, 24, &color) == FALSE){
             return 0;
         }
+        if(text_name != NULL) free(text_name);
         // rendertext(renderer, "font_lib/biakai.ttf", text_name, (DM->w - (DM->w / 5) * 4) / 2, DM->h - (DM->h / 4) - 150, 750, 60, 24, &color);
         SDL_RenderDrawRect(renderer, &dialogRect);
         
@@ -343,11 +344,10 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
         }
 
         SDL_RenderPresent(renderer);
-        if(text_name != NULL) free(text_name);
-
     }
+    if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
     fclose(pFile);
-    cleanBackpack(backpackObj);
+    // cleanBackpack(backpackObj);
     SDL_DestroyTexture(bg_texture);
     Mix_FreeMusic(music);
     return TRUE;
