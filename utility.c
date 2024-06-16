@@ -454,8 +454,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             if(event.type == SDL_KEYDOWN){
                 if(event.key.keysym.sym == SDLK_SPACE){
                     finish = 0;
-                    Mix_HaltChannel(-1);
-                    if(sound != NULL) Mix_FreeChunk(sound);
+                    // Mix_HaltChannel(-1);
+                    // if(sound != NULL) Mix_FreeChunk(sound);
                     break;
                 }
                 // Enter pressed
