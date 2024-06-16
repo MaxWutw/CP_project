@@ -39,8 +39,19 @@
 100 (不含發表)
 
 ## Installation and Running
+### 安裝
+需要額外安裝的內容有
+- libsdl2-dev
+- libsdl2-image-dev
+- libsdl2-ttf-dev
+- libsdl2-mixer-dev
+- libsdl2-mixer
+在終端機執行以下指令下載以上內容
+```
+sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libsdl2-mixer
+```
 
-## 我們的遊戲如何玩
+### 我們的遊戲如何玩
 
 1. 將我們的程式載入到您的電腦內，下 make 指令編譯後，`./engine` 即可開始運行。
 
