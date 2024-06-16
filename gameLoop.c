@@ -423,10 +423,11 @@ int getLuckValue(GameState state) {
 }
 
 int8_t howToPlay(SDL_Renderer *renderer, SDL_DisplayMode *DM, FILE *pFile){
-    // if(pFile == NULL){
-    //     fprintf(stderr, "NULL File\\n");
-    //     return FALSE;
-    // }
+    int8_t fileNotFound = 0;
+    if(pFile == NULL){
+        fprintf(stderr, "NULL File\\n");
+        fileNotFound = 1;
+    }
     SDL_Event event;
     int8_t quit = 0;
     while(!quit){
@@ -446,26 +447,31 @@ int8_t howToPlay(SDL_Renderer *renderer, SDL_DisplayMode *DM, FILE *pFile){
                 finish = 1;
                 return TRUE;
             }
-            
-            SDL_Color color = {0, 0, 0};
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-            SDL_RenderClear(renderer);
-            int32_t HowToPlayX = (DM->w - (DM->w / 5) * 4) / 2;
-            int32_t HowToPlayY = DM->h - (DM->h / 4) - 550;
-            int32_t HowToPlayW = (DM->w / 5) * 4;
-            int32_t HowToPlayH = (DM->h / 4) + 300;
-            SDL_SetRenderDrawColor(renderer, 145, 252, 248, 0xFF);
-            SDL_Rect HowToPlayRect = {HowToPlayX, HowToPlayY, HowToPlayW, HowToPlayH};
-            char text[1000000] = "你好我是師大資工";
-            // fgets(text, sizeof(text), pFile);
-            SDL_RenderFillRect(renderer, &HowToPlayRect);
-            if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
-                text, HowToPlayX, \
-                HowToPlayY, HowToPlayW, 0, 24, &color) == FALSE){
-                return FALSE;
-            }
-            SDL_RenderPresent(renderer);
         }
+        SDL_Color color = {0, 0, 0};
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_RenderClear(renderer);
+        int32_t HowToPlayX = (DM->w - (DM->w / 5) * 4) / 2;
+        int32_t HowToPlayY = DM->h - (DM->h / 4) - 550;
+        int32_t HowToPlayW = (DM->w / 5) * 4;
+        int32_t HowToPlayH = (DM->h / 4) + 300;
+        SDL_SetRenderDrawColor(renderer, 145, 252, 248, 0xFF);
+        SDL_Rect HowToPlayRect = {HowToPlayX, HowToPlayY, HowToPlayW, HowToPlayH};
+        char text[1000000];
+        if(fileNotFound){
+            strcpy(text, "找不到您的「如何遊玩」說明書。");
+        }
+        else{
+            fgets(text, sizeof(text), pFile);
+        }
+        SDL_RenderFillRect(renderer, &HowToPlayRect);
+        if( rendertext_per_sec(renderer, "font_lib/biakai.ttf", \
+            text, HowToPlayX, \
+            HowToPlayY, HowToPlayW, 0, 24, &color) == FALSE){
+            finish = 1;
+            return FALSE;
+        }
+        SDL_RenderPresent(renderer);
     }
     
     return TRUE;

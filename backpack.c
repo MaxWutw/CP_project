@@ -44,6 +44,7 @@ int8_t backpack_interface(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack
 
         // SDL_Rect personInfoRect = {backpackX + backpackWidth / 20 + portraitSize, backpackY, portraitSize, portraitSize};
         // person info
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
         SDL_Rect personInfoRect = {backpackX + backpackWidth / 20 + portraitSize + 50, backpackY, backpackWidth - (backpackWidth / 20 + portraitSize + 50) - 50, portraitSize + 50};
         SDL_RenderDrawRect(renderer, &personInfoRect);
         SDL_Color textColor = { 0, 0, 0, 0xFF };

@@ -127,14 +127,15 @@ int main(int argc, char *argv[]){
         if(title_status == 2){
             FILE *pHow = NULL;
             Mix_Music *HowMusic = NULL;
-            PlayMusic("music/loadMusic.mp3", HowMusic, 64);
+            PlayMusic("music/howToPlay.mp3", HowMusic, 64);
             howToPlay(renderer, &DM, pHow);
-            while(!Mix_FadeOutMusic(3000) && Mix_PlayingMusic()) {
+            while(!Mix_FadeOutMusic(500) && Mix_PlayingMusic()) {
                 // wait for any fades to complete
                 SDL_Delay(100);
             }
             if(HowMusic != NULL) Mix_FreeMusic(HowMusic);
             title_status = 0;
+            PlayMusic("music/music_theme.mp3", music, 64);
         }
         update_title_screen(&last_frame_time, &textRect, &inc, &base_y);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
