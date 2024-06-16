@@ -125,7 +125,7 @@ int main(int argc, char *argv[]){
     // game setup end
     while(title_is_running){
         if(title_status == 2){
-            FILE *pHow = NULL;
+            FILE *pHow = fopen( "how_to_play.txt" , "r" );
             Mix_Music *HowMusic = NULL;
             PlayMusic("music/howToPlay.mp3", HowMusic, 64);
             howToPlay(renderer, &DM, pHow);
@@ -133,6 +133,7 @@ int main(int argc, char *argv[]){
                 // wait for any fades to complete
                 SDL_Delay(100);
             }
+            if( pHow ) free(pHow);
             if(HowMusic != NULL) Mix_FreeMusic(HowMusic);
             title_status = 0;
             PlayMusic("music/music_theme.mp3", music, 64);
