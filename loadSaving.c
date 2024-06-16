@@ -244,6 +244,8 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
             int32_t step = optionW / (300 / 16);
             int32_t startX = option1X;
             int32_t endX = (slideLeft == 0 ? DM->w : 0);
+            Mix_Chunk *soundEffect = NULL;
+            PlayChunk("music/fly.mp3", soundEffect, -1, MIX_MAX_VOLUME, 0);
             for(int32_t x = startX, x2 = (slideLeft == 0 ? -optionW : DM->w);\
                 (slideLeft == 0 ? x < DM->w + optionW : x > endX - optionW) \
                 && (slideLeft == 0 ? x2 < option1X : x2 < DM->w + optionW); \
@@ -295,6 +297,8 @@ int8_t load(SDL_Renderer *renderer, SDL_DisplayMode *DM, \
             }
             slideLeft = 0;
             slideRight = 0;
+            Mix_HaltChannel(-1);
+            if(soundEffect == NULL) Mix_FreeChunk(soundEffect);
         }
 
         // char *Playername = NULL, *invent = NULL;

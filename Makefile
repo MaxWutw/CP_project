@@ -13,20 +13,20 @@
 CFLAGS := `sdl2-config --cflags` -ggdb3 -O0 --std=gnu99 -Wall
 LDFLAGS := `sdl2-config --libs` -lm -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
-all: program
+all: engine
 
-program: program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o \
+engine: engine.o utility.o toml_parse.o gameLoop.o freshNewScreen.o backpack.o \
 constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o loadSaving.o endGame.o utility.h \
 gameLoop.h constants.h musicUtil.h toml_parse_item.h player_stats.h userInput.h loadSaving.h endGame.h
-	gcc -g -fsanitize=address program.o utility.o toml_parse.o gameLoop.o freshNewScreen.o \
+	gcc -g -fsanitize=address engine.o utility.o toml_parse.o gameLoop.o freshNewScreen.o \
 	 backpack.o constants.o musicUtil.o toml_parse_item.o player_stats.o userInput.o \
-	 loadSaving.o endGame.o -o program $(LDFLAGS)
+	 loadSaving.o endGame.o -o engine $(LDFLAGS)
 
 # main: main.o toml_parse.o
 # 	gcc main.o toml_parse.o -o main $(LDFLAGS)
 
-program.o: program.c
-	gcc -c program.c $(CFLAGS)
+engine.o: engine.c
+	gcc -c engine.c $(CFLAGS)
 
 gameLoop.o: gameLoop.c
 	gcc -c gameLoop.c $(CFLAGS)
@@ -68,5 +68,5 @@ endGame.o: endGame.c endGame.h
 	gcc -c endGame.c $(CFLAGS)
 
 clean:
-	rm -f test main game_frontend program *.o 
+	rm -f test main game_frontend engine *.o 
 
