@@ -68,7 +68,7 @@ int main(int argc, char *argv[]){
     SDL_Rect textRect;
     SDL_Color color_white = {255, 255, 255};
     // SDL_Color color_black = {0, 0, 0};
-    const char *TitleText = "Life Simulator";
+    const char *TitleText = "Be The Emperor!";
     // some intiaize
     
     textRect.w = 500;

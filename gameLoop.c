@@ -353,26 +353,69 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
     return TRUE;
 }
 
+// void renderChoices(SDL_Renderer* renderer, const char* option1, const char* option2, const char* option3, SDL_DisplayMode *DM, int8_t *hover){
+//     SDL_Color color = {0, 0, 0};
+//     if(*hover == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+//     else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+//     SDL_Rect choiceRect1 = {30, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+//     SDL_RenderDrawRect(renderer, &choiceRect1);
+//     rendertext(renderer, "font_lib/biakai.ttf", option1, 30, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
+
+//     if(*(hover + 1) == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+//     else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+//     SDL_Rect choiceRect2 = {80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+//     SDL_RenderDrawRect(renderer, &choiceRect2);
+//     rendertext(renderer, "font_lib/biakai.ttf", option2, 80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
+
+//     if(*(hover + 2) == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+//     else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+//     SDL_Rect choiceRect3 = {120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+//     SDL_RenderDrawRect(renderer, &choiceRect3);
+//     rendertext(renderer, "font_lib/biakai.ttf", option3, 120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
+// }
+
 void renderChoices(SDL_Renderer* renderer, const char* option1, const char* option2, const char* option3, SDL_DisplayMode *DM, int8_t *hover){
     SDL_Color color = {0, 0, 0};
-    if(*hover == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
-    else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
+    SDL_Color bgColor = {192, 192, 192, 128};
+    SDL_Color borderColor = {0, 0, 0, 255};
+
     SDL_Rect choiceRect1 = {30, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+    // background
+    SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+    SDL_RenderFillRect(renderer, &choiceRect1);
+    // border
+    if (*hover == 0)
+        SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
+    else
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
     SDL_RenderDrawRect(renderer, &choiceRect1);
     rendertext(renderer, "font_lib/biakai.ttf", option1, 30, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
 
-    if(*(hover + 1) == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
-    else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
     SDL_Rect choiceRect2 = {80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+    // background
+    SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+    SDL_RenderFillRect(renderer, &choiceRect2);
+    // border
+    if (*(hover + 1) == 0)
+        SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
+    else
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
     SDL_RenderDrawRect(renderer, &choiceRect2);
     rendertext(renderer, "font_lib/biakai.ttf", option2, 80 + (DM->w / 3) - 50, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
 
-    if(*(hover + 2) == 0) SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
-    else SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
     SDL_Rect choiceRect3 = {120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, (DM->w / 3) - 50, (DM->h / 4) - 100};
+    // background
+    SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+    SDL_RenderFillRect(renderer, &choiceRect3);
+    // border
+    if (*(hover + 2) == 0)
+        SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
+    else
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0xFF);
     SDL_RenderDrawRect(renderer, &choiceRect3);
     rendertext(renderer, "font_lib/biakai.ttf", option3, 120 + ((DM->w / 3) - 50) * 2, DM->h - (DM->h / 4) + 30, 200, 30, 24, &color);
 }
+
 
 void renderLuckBar(SDL_Renderer* renderer, int luckValue, SDL_DisplayMode *DM){
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xA5, 0x00, 0xFF);
