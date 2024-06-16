@@ -446,7 +446,7 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
     // extern int8_t finish;
     Mix_Chunk *sound = NULL;
     if(finish){
-        PlayChunk("music/keyboard_typing.mp3", sound, -1, 128, -1);
+        PlayChunk("music/keyboard_typing.mp3", sound, -1, MIX_MAX_VOLUME, -1);
     }
     while(*it && finish){
         SDL_Event event;
@@ -465,8 +465,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             }
             else if(event.type == SDL_QUIT){
                 Mix_HaltChannel(-1);
-                if(sound != NULL) Mix_FreeChunk(sound);
-                return FALSE;
+                // if(sound != NULL) Mix_FreeChunk(sound);
+                // return FALSE;
             }
         }
         wchar_t wc;
@@ -476,8 +476,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             SDL_DestroyTexture(texture);
             TTF_CloseFont(font);
             Mix_HaltChannel(-1);
-            if(sound != NULL) Mix_FreeChunk(sound);
-            return FALSE;
+            // if(sound != NULL) Mix_FreeChunk(sound);
+            // return FALSE;
         }
         char utf8_char[MB_CUR_MAX + 1];
         memcpy(utf8_char, it, leng);
@@ -489,8 +489,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             SDL_DestroyTexture(texture);
             TTF_CloseFont(font);
             Mix_HaltChannel(-1);
-            if(sound != NULL) Mix_FreeChunk(sound);
-            return FALSE;
+            // if(sound != NULL) Mix_FreeChunk(sound);
+            // return FALSE;
         }
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         int32_t tmp_increase = surface->w;
@@ -499,8 +499,8 @@ int8_t rendertext_per_sec(SDL_Renderer* renderer, const char* font_path, const c
             SDL_DestroyTexture(texture);
             TTF_CloseFont(font);
             Mix_HaltChannel(-1);
-            if(sound != NULL) Mix_FreeChunk(sound);
-            return FALSE;
+            // if(sound != NULL) Mix_FreeChunk(sound);
+            // return FALSE;
         }
         // printf("%d %d\n", tmp_increase, w);
         SDL_Rect dstrect = {cur_x, y, tmp_increase, surface->h};
