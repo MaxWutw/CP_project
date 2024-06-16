@@ -208,7 +208,7 @@ mood = { "img/sad.jpg" , 10 }
 [23]
 title="逃跑"
 background="img/background3.png" 
-text="不錯的選擇，好險你跑得快，躲過了一截，此時你的選擇："  
+text="不錯的選擇，好險你跑得快，躲過了一劫，此時你的選擇："  
 option={25,26,27} 
 player.stat=90
 mood = { "img/happy.jpg" , 100 }
