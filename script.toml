@@ -158,7 +158,7 @@ player.stat=90
 mood = { "img/nomood.jpg" , 60 }
 
 [17]
-title="把剛的東西送美女"
+title="把剛剛的東西送美女"
 background="img/background3.png" 
 text="完蛋...他是某個將軍的妻子，她覺得你在騷擾她，她叫丈夫派人來追殺你了，你選擇："  
 option={20,23,24} 

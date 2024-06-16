@@ -286,7 +286,16 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             return FALSE;
         }
         if(option[0] == 0 && option[1] == 0 && option[2] == 0){
-            SDL_Delay(2500);
+            SDL_Event LastFrame;
+            int8_t waitFor = 1;
+            while(waitFor){
+                while(SDL_PollEvent(&LastFrame) != 0){
+                    if(LastFrame.type == SDL_QUIT || LastFrame.type == SDL_MOUSEBUTTONDOWN || LastFrame.type == SDL_KEYDOWN){
+                        waitFor = 0;
+                    }
+                }
+                SDL_Delay(50);
+            }
             int8_t EndGameFlag = 1;
             Mix_Music *WinMusic = NULL;
             PlayMusic("music/YouLose.mp3", WinMusic, 64);
@@ -294,7 +303,7 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             while(EndGameFlag){
                 winInterface(renderer, DM);
                 while(SDL_PollEvent(&endEvent) != 0){
-                    if(endEvent.type == SDL_QUIT || endEvent.type == SDL_MOUSEBUTTONDOWN || endEvent.type == SDL_KEYDOWN){
+                    if(endEvent.type == SDL_QUIT || endEvent.type == SDL_MOUSEBUTTONDOWN){
                         EndGameFlag = 0;
                     }
                 }
@@ -303,7 +312,16 @@ int8_t game_loop(SDL_Renderer *renderer, SDL_DisplayMode *DM, sBackPack *backpac
             return FALSE;
         } 
         if(option[0] == -1 && option[1] == -1 && option[2] == -1){
-            SDL_Delay(2500);
+            SDL_Event LastFrame;
+            int8_t waitFor = 1;
+            while(waitFor){
+                while(SDL_PollEvent(&LastFrame) != 0){
+                    if(LastFrame.type == SDL_QUIT || LastFrame.type == SDL_MOUSEBUTTONDOWN){
+                        waitFor = 0;
+                    }
+                }
+                SDL_Delay(50);
+            }
             int8_t EndGameFlag = 1;
             Mix_Music *LoseMusic = NULL;
             PlayMusic("music/YouWin.mp3", LoseMusic, 64);
