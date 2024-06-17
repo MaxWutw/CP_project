@@ -9,9 +9,9 @@
 
 ## Features
 
-## 實作了哪些功能
+### 實作了哪些功能
 
-### 基本需求
+#### 基本需求
 
 - 至少支援場景、人物、物品三種實體（完成）
 - 至少支援場景背景、人物頭像、人物立繪、物品圖標等圖片素材（完成）
@@ -36,10 +36,6 @@
 - 音效播放（完成）
 - LLM（未實作）
 - 進階 Script 使用 Lua（未實作）
-
-### 預期得分
-
-100 (不含發表)
 
 ## Installation and Running
 
@@ -244,4 +240,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 - [吳振榮] - [WuMax13@gmail.com]
-- Project Link: [https://github.com/yourusername/sdl-game-project](https://github.com/yourusername/sdl-game-project)
+- Project Link: [https://github.com/MaxWutw/CP_project](https://github.com/MaxWutw/CP_project)
